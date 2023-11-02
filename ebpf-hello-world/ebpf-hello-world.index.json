@@ -1,0 +1,17 @@
+{
+  "version": "2.0",
+  "clipId": "1698919135",
+  "format": "md",
+  "title": "ebpf hello-world",
+  "link": "https://jasper1024.com/jasper/20231030102702/",
+  "category": "default",
+  "tags": [
+    "jasper1024.com"
+  ],
+  "created_at": "2023-11-02 17:58:55",
+  "mainPath": "ebpf-hello-world.md",
+  "paths": [
+    "ebpf-hello-world.index.json",
+    "ebpf-hello-world.md"
+  ]
+}

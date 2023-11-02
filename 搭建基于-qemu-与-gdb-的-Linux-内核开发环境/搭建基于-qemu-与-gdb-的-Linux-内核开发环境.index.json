@@ -1,0 +1,19 @@
+{
+  "version": "2.0",
+  "clipId": "1698919004",
+  "format": "md",
+  "title": "搭建基于 qemu 与 gdb 的 Linux 内核开发环境",
+  "link": "https://www.less-bug.com/posts/build-a-linux-kernel-development-environment-based-on-qemu-and-gdb/",
+  "category": "default",
+  "tags": [
+    "www.less-bug.com"
+  ],
+  "created_at": "2023-11-02 17:56:44",
+  "mainPath": "搭建基于-qemu-与-gdb-的-Linux-内核开发环境.md",
+  "paths": [
+    "搭建基于-qemu-与-gdb-的-Linux-内核开发环境.index.json",
+    "assets/1698919004-ee0d4e4e7f4a9a9264b9d9555c2cbf13.svg",
+    "assets/1698919004-06b1d0fa348a6372aa5bd192527bfe9b.svg",
+    "搭建基于-qemu-与-gdb-的-Linux-内核开发环境.md"
+  ]
+}
