@@ -1,0 +1,22 @@
+{
+  "version": "2.0",
+  "clipId": "1698903542",
+  "format": "md",
+  "title": "OAuth 2.0 认证和攻击面",
+  "link": "http://zeo.cool/2023/02/25/OAuth%202.0%20%E8%AE%A4%E8%AF%81%E5%92%8C%E6%94%BB%E5%87%BB%E9%9D%A2/",
+  "category": "default",
+  "tags": [
+    "zeo.cool"
+  ],
+  "created_at": "2023-11-02 13:39:02",
+  "mainPath": "OAuth-2-0-认证和攻击面.md",
+  "paths": [
+    "OAuth-2-0-认证和攻击面.index.json",
+    "assets/1698903542-e5c40b821d3e41f12912d42f6f347cb6.png",
+    "assets/1698903542-2333b6fe85d0d9b7c90f78d700b5cba5.png",
+    "assets/1698903542-ffc5dee4b96945b3dd6877321846ef50.png",
+    "assets/1698903542-7d57304c57084a139444eeb341e32f91.png",
+    "assets/1698903542-3336a261a471d5c2cf7173e6df16a148.png",
+    "OAuth-2-0-认证和攻击面.md"
+  ]
+}
