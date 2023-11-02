@@ -1,0 +1,20 @@
+{
+  "version": "2.0",
+  "clipId": "1698893988",
+  "format": "md",
+  "title": "Break frida-objc-bridge",
+  "link": "https://tttang.com/archive/1889/",
+  "category": "default",
+  "tags": [
+    "tttang.com"
+  ],
+  "created_at": "2023-11-02 10:59:48",
+  "mainPath": "Break-frida-objc-bridge.md",
+  "paths": [
+    "Break-frida-objc-bridge.index.json",
+    "assets/1698893988-81f575ad3c17184952ff58408b9ed57f.png",
+    "assets/1698893988-cb627b7f47d7770b75d13b22805acc9b.png",
+    "assets/1698893988-3f443c3d9936367a582fc5c79cf4ce7b.png",
+    "Break-frida-objc-bridge.md"
+  ]
+}

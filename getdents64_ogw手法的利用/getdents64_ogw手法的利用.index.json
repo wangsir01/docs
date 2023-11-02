@@ -1,0 +1,29 @@
+{
+  "version": "2.0",
+  "clipId": "1698893341",
+  "format": "md",
+  "title": "getdents64_ogw手法的利用",
+  "link": "https://xz.aliyun.com/t/12923",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2023-11-02 10:49:01",
+  "mainPath": "getdents64_ogw手法的利用.md",
+  "paths": [
+    "getdents64_ogw手法的利用.index.json",
+    "assets/1698893341-e5fc169858763c75ce34e3222123f8af.png",
+    "assets/1698893341-1533c8977985a2018ede8e3acc82002d.png",
+    "assets/1698893341-3b5fed30e4b88776c0c1264dc0cc2f45.png",
+    "assets/1698893341-60e9ddfc5c8b556932b4f779087896b5.png",
+    "assets/1698893341-f6f5887f00c78de5767da2482b8a9d02.png",
+    "assets/1698893341-1561263e8bce7d9051deb6064542f515.png",
+    "assets/1698893341-6500445ba4eb292124875849e96b4d2d.png",
+    "assets/1698893341-c3469a33af439fc73e270324393fde57.png",
+    "assets/1698893341-c8e366e00de5292c6656b5eb29388803.png",
+    "assets/1698893341-f116ab9480ec76b68424d3ff31ed0996.png",
+    "assets/1698893341-a10a02f43ac3c38de851181ab6a14032.png",
+    "assets/1698893341-6021a435a03f5817a714d2e062960381.png",
+    "getdents64_ogw手法的利用.md"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "version": "2.0",
+  "clipId": "1698894650",
+  "format": "md",
+  "title": "服务器端模版注入SSTI分析与归纳",
+  "link": "https://tttang.com/archive/1412/",
+  "category": "default",
+  "tags": [
+    "tttang.com"
+  ],
+  "created_at": "2023-11-02 11:10:50",
+  "mainPath": "服务器端模版注入SSTI分析与归纳.md",
+  "paths": [
+    "服务器端模版注入SSTI分析与归纳.index.json",
+    "assets/1698894650-ef14ee5e796739e37a669f50079e811f.png",
+    "assets/1698894650-221dfd888b21017934d53ba5937970dd.png",
+    "assets/1698894650-74bec5c610e21729d07bc1eafc8a92c3.png",
+    "assets/1698894650-1296dbe80f7baf569407aa6cd4c8d85b.png",
+    "assets/1698894650-9266fda00509e810c59cdf9a37443353.png",
+    "assets/1698894650-c7b4bddd8217d35876d1f03fb30e6bd4.png",
+    "assets/1698894650-a27250b2ba92d63d43632a07f253fdd4.png",
+    "assets/1698894650-3603d821ecdc44556288ec861bee73c2.png",
+    "assets/1698894650-953533a66e03f3b771465508224384f6.png",
+    "assets/1698894650-6f703b3b6d55e5baa01d45b32410b0d2.png",
+    "assets/1698894650-474e8eb45345b83b6c563f5bd2bc62e5.png",
+    "assets/1698894650-018398d3f2115af66f10e424fc705ff3.png",
+    "assets/1698894650-4458901ac3f8aa1ab0146740403173b6.png",
+    "assets/1698894650-f353e26a5b21f52b5741a5d3e1755d9b.png",
+    "assets/1698894650-cb124e8fe804d0c48d5d7a169be5f582.png",
+    "服务器端模版注入SSTI分析与归纳.md"
+  ]
+}

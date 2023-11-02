@@ -1,0 +1,26 @@
+{
+  "version": "2.0",
+  "clipId": "1698894099",
+  "format": "md",
+  "title": "XML外部实体注入（XXE）攻击方式汇总",
+  "link": "https://tttang.com/archive/1813/",
+  "category": "default",
+  "tags": [
+    "tttang.com"
+  ],
+  "created_at": "2023-11-02 11:01:39",
+  "mainPath": "XML外部实体注入-XXE-攻击方式汇总.md",
+  "paths": [
+    "XML外部实体注入-XXE-攻击方式汇总.index.json",
+    "assets/1698894099-82a7e33bac03e06944ea536287b1e5f5.png",
+    "assets/1698894099-f7aba0c10238f7446b1475471820f9ff.png",
+    "assets/1698894099-121f39352c589ae94d29c87787a1415e.png",
+    "assets/1698894099-968ce2c46f3ca5225ab7ede1a2a31115.png",
+    "assets/1698894099-d59f19418c9f828c7d6c3c3cb4940c65.png",
+    "assets/1698894099-b032d10c16ba832267cfab2b02624bfc.png",
+    "assets/1698894099-96cb63032d24c028ea31c4300c7a04bd.png",
+    "assets/1698894099-f02504b193779908ca3e3bfefdd27d26.png",
+    "assets/1698894099-e66a7ac42035ac8a2ac9eeb87115e34f.png",
+    "XML外部实体注入-XXE-攻击方式汇总.md"
+  ]
+}

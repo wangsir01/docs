@@ -1,0 +1,26 @@
+{
+  "version": "2.0",
+  "clipId": "1698894623",
+  "format": "md",
+  "title": "shiro反序列化漏洞攻击拓展面--修改key",
+  "link": "https://tttang.com/archive/1457/",
+  "category": "default",
+  "tags": [
+    "tttang.com"
+  ],
+  "created_at": "2023-11-02 11:10:23",
+  "mainPath": "shiro反序列化漏洞攻击拓展面-修改key.md",
+  "paths": [
+    "shiro反序列化漏洞攻击拓展面-修改key.index.json",
+    "assets/1698894623-bc31fc5d81936e1c8063ac128a37ebf0.png",
+    "assets/1698894623-0d5451c9c6c80d84748232161987e87c.png",
+    "assets/1698894623-d38e491e99f8e5c113fad0e3c712d03c.png",
+    "assets/1698894623-4c3682590ec49447e88b1d31a1058786.png",
+    "assets/1698894623-de9ba3f4a30b4ca1ab0a94d8ba459d3b.png",
+    "assets/1698894623-2c85c0a6bb2a55ebed4e3ba699d93d52.png",
+    "assets/1698894623-68b359f12f4a1f7656ace97a853d8e90.png",
+    "assets/1698894623-aa58b77be08de15103cb0e13a66595a0.png",
+    "assets/1698894623-3235071a5739f9a2434930d5958cc4fb.png",
+    "shiro反序列化漏洞攻击拓展面-修改key.md"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "version": "2.0",
+  "clipId": "1698894658",
+  "format": "md",
+  "title": "Kubernetes安全测试实践录",
+  "link": "https://tttang.com/archive/1389/",
+  "category": "default",
+  "tags": [
+    "tttang.com"
+  ],
+  "created_at": "2023-11-02 11:10:58",
+  "mainPath": "Kubernetes安全测试实践录.md",
+  "paths": [
+    "Kubernetes安全测试实践录.index.json",
+    "assets/1698894658-2bb22bb7b67f668c7d456cf92f3bf1dc.png",
+    "assets/1698894658-181613b7f2ff00b9f04441da78394d7f.jpg",
+    "assets/1698894658-2b03241a0ab598099d934fb3a37e63b3.png",
+    "assets/1698894658-b028c173e7d92a7bb867a838f3754937.png",
+    "assets/1698894658-1536b666a40362a638706f7ea1b83893.png",
+    "assets/1698894658-1c2a4c1ec555b94a98c0380018d3ae68.png",
+    "assets/1698894658-56b229cdbd6bd1784fd4273573bcac97.png",
+    "assets/1698894658-fd4fa3d3aa817d72ffae7e6b6b8d5a5b.png",
+    "assets/1698894658-dc3b458be5fb796ffae0a1b6248d450d.png",
+    "assets/1698894658-2a54e366b70bc5c3d2db9113f78fb3d2.png",
+    "assets/1698894658-d4188dcd587c55479eacd304c29986c8.png",
+    "assets/1698894658-49e37b1a7ea22e52c046e16eb702db63.png",
+    "assets/1698894658-dfc09f9f7a7908fd922204f5badd69d2.png",
+    "assets/1698894658-a839ed0956ee46655065a879a3fb6b52.png",
+    "Kubernetes安全测试实践录.md"
+  ]
+}

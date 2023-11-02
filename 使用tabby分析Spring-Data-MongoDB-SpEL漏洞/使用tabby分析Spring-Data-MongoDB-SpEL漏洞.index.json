@@ -1,0 +1,26 @@
+{
+  "version": "2.0",
+  "clipId": "1698894237",
+  "format": "md",
+  "title": "使用tabby分析Spring Data MongoDB SpEL漏洞",
+  "link": "https://tttang.com/archive/1647/",
+  "category": "default",
+  "tags": [
+    "tttang.com"
+  ],
+  "created_at": "2023-11-02 11:03:57",
+  "mainPath": "使用tabby分析Spring-Data-MongoDB-SpEL漏洞.md",
+  "paths": [
+    "使用tabby分析Spring-Data-MongoDB-SpEL漏洞.index.json",
+    "assets/1698894237-f6aa3de9a06175f55d5c867a071b7310.png",
+    "assets/1698894237-7ab92bd1d6462cb993ad453eeb401290.png",
+    "assets/1698894237-d0e6da5c0647ff2be22ff23a6ca0faea.png",
+    "assets/1698894237-ce02a322af49a68bdcee58777db4280a.png",
+    "assets/1698894237-6dac600115a6b5b8734caf4c6ae90a90.png",
+    "assets/1698894237-15d3d486df205e80d6748518c02e316e.png",
+    "assets/1698894237-dffa47a259092408afe9f15b23e1691e.png",
+    "assets/1698894237-27d85bceeb512b3a9f3c47d0a0f2caef.png",
+    "assets/1698894237-b7d7877fa156c1cd0304bb3649de0b4f.png",
+    "使用tabby分析Spring-Data-MongoDB-SpEL漏洞.md"
+  ]
+}
