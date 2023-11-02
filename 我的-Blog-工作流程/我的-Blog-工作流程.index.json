@@ -1,0 +1,22 @@
+{
+  "version": "2.0",
+  "clipId": "1698901112",
+  "format": "md",
+  "title": "我的 Blog 工作流程",
+  "link": "https://www.less-bug.com/posts/my-blog-workflow/",
+  "category": "default",
+  "tags": [
+    "www.less-bug.com"
+  ],
+  "created_at": "2023-11-02 12:58:32",
+  "mainPath": "我的-Blog-工作流程.md",
+  "paths": [
+    "我的-Blog-工作流程.index.json",
+    "assets/1698901112-f484b79d98c7cfbea6702188683c2f1f.png",
+    "assets/1698901112-6fec31db7135306347016ea59945e231.png",
+    "assets/1698901112-91976b87828515799ecc42c447842d07.png",
+    "assets/1698901112-ee0d4e4e7f4a9a9264b9d9555c2cbf13.svg",
+    "assets/1698901112-06b1d0fa348a6372aa5bd192527bfe9b.svg",
+    "我的-Blog-工作流程.md"
+  ]
+}
