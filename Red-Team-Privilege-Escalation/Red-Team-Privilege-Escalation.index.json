@@ -1,0 +1,36 @@
+{
+  "version": "2.0",
+  "clipId": "1698895488",
+  "format": "md",
+  "title": "Red Team: Privilege Escalation",
+  "link": "https://www.raingray.com/archives/2346.html",
+  "category": "default",
+  "tags": [
+    "www.raingray.com"
+  ],
+  "created_at": "2023-11-02 11:24:48",
+  "mainPath": "Red-Team-Privilege-Escalation.md",
+  "paths": [
+    "Red-Team-Privilege-Escalation.index.json",
+    "assets/1698895488-703bbd753413ba191826bdc29f490a0f.png",
+    "assets/1698895488-80aaa4a702f23b030942a7c9b4d37211.png",
+    "assets/1698895488-1b383b34f072e9d3392d0e925f8e4ad1.png",
+    "assets/1698895488-63f8feb3be25545fa4661e59711450f0.png",
+    "assets/1698895488-859e95e8b6775284cff199ec1304bfc4.png",
+    "assets/1698895488-8005d9b52dcd8d3b41b991a1741c2a7b.png",
+    "assets/1698895488-4d021bbe99004b55a7391ed32c005db5.png",
+    "assets/1698895488-bb9eb0dbfb352ad6a5f8b2b6d209ab4a.png",
+    "assets/1698895488-7b751022359942f9b6e1e30aa8bc366f.png",
+    "assets/1698895488-78e3005fbe92a1b531e8df06a416650a.png",
+    "assets/1698895488-916d50eb6a0f44dc7814a7cac5bd66f3.png",
+    "assets/1698895488-67d1309d6645a68224fda61ca8333494.png",
+    "assets/1698895488-eb22c6b09a8cb1bbafb4fbad4e18348e.png",
+    "assets/1698895488-1d5b784ee20fede8de73772d5e693386.png",
+    "assets/1698895488-98181a81257e370bd9c1e26db99c9dc4.png",
+    "assets/1698895488-87f4572bc92e8bf7bf71a640d43b1000.png",
+    "assets/1698895488-0d1a699358f8ce7eeaf4db81643c04cf.png",
+    "assets/1698895488-cdc7755a2f2384b5e2ea5f33fa3c4ec7.png",
+    "assets/1698895488-db913063d691980ff35ddf5cf11186fe.png",
+    "Red-Team-Privilege-Escalation.md"
+  ]
+}

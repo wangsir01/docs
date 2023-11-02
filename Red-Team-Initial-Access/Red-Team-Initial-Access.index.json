@@ -1,0 +1,42 @@
+{
+  "version": "2.0",
+  "clipId": "1698895429",
+  "format": "md",
+  "title": "Red Team: Initial Access",
+  "link": "https://www.raingray.com/archives/4386.html",
+  "category": "default",
+  "tags": [
+    "www.raingray.com"
+  ],
+  "created_at": "2023-11-02 11:23:49",
+  "mainPath": "Red-Team-Initial-Access.md",
+  "paths": [
+    "Red-Team-Initial-Access.index.json",
+    "assets/1698895429-3b45f9e7271205c1ae1dd66a9a60c89b.png",
+    "assets/1698895429-76d4a9c5a1450d30ff4c65b3869cc33a.png",
+    "assets/1698895429-bc180bd2dc9e4b0dfb27a93cda10a62a.png",
+    "assets/1698895429-b567117e394bbc3589cd94d19870b050.png",
+    "assets/1698895429-6141296cbba3278e0216f6e471c7b31e.png",
+    "assets/1698895429-c319afde8acef83af9b3b597cbee09bd.png",
+    "assets/1698895429-d7e4ac31c01b1e7799cc18a77459d1b2.png",
+    "assets/1698895429-cdd6432d9f98c9d200b067c555d25514.png",
+    "assets/1698895429-9e80e9d93032c4b812d13e0d9741d0e0.png",
+    "assets/1698895429-e0973e38379574c72870994f4783b170.png",
+    "assets/1698895429-0a64d04ef8804b9998b76a195c75cdaf.png",
+    "assets/1698895429-033503d05411fd59025debb9edf4f571.png",
+    "assets/1698895429-0f509580c323463d7ca6d7f1daebe74b.png",
+    "assets/1698895429-400847c0136c0c496ce795a89f1a2f56.png",
+    "assets/1698895429-168adfd426c708b0cfc06bff5e0efe8b.png",
+    "assets/1698895429-9a69eaa6168369f784a9984beb99f5c5.png",
+    "assets/1698895429-06805aefcd59df6df528753d1a7a23d0.png",
+    "assets/1698895429-530ea9231bc5f57a8ba158d61cc84f32.png",
+    "assets/1698895429-3e02e75eb04ea5e9cb133768bb531275.png",
+    "assets/1698895429-9b7ae067198114c61395275b9830d70a.png",
+    "assets/1698895429-d501d31ad46a86824a65a88a52c52468.png",
+    "assets/1698895429-32bd81b38ce603bcda7db5549fdb4e70.png",
+    "assets/1698895429-79f8ff36a4589e6bd46f893d43994820.png",
+    "assets/1698895429-ef0623339b2d8d343faeb1334aab8a7a.png",
+    "assets/1698895429-3e92a46f9ea1d563387972e2ee273721.gif",
+    "Red-Team-Initial-Access.md"
+  ]
+}

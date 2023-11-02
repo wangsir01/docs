@@ -1,0 +1,38 @@
+{
+  "version": "2.0",
+  "clipId": "1698895465",
+  "format": "md",
+  "title": "Red Team: Lateral Movement",
+  "link": "https://www.raingray.com/archives/2474.html",
+  "category": "default",
+  "tags": [
+    "www.raingray.com"
+  ],
+  "created_at": "2023-11-02 11:24:25",
+  "mainPath": "Red-Team-Lateral-Movement.md",
+  "paths": [
+    "Red-Team-Lateral-Movement.index.json",
+    "assets/1698895465-f7ce4e78957f2859fcc3f9882677bf44.png",
+    "assets/1698895465-cf9d400b8895cd6d276522ac2bab09c8.png",
+    "assets/1698895465-5caa3f1f79967f5ebbe6d467adb09526.png",
+    "assets/1698895465-da5ae3fd3fce9b617046f7afc83a5b78.png",
+    "assets/1698895465-be2e86bb74253db79b19c1257884f963.png",
+    "assets/1698895465-38af7b3484a655eaf2e1086aca07ee70.png",
+    "assets/1698895465-14b3bfe2e010bbaeed123071d4d7dea1.png",
+    "assets/1698895465-d7e34c6867a886b8b512658e2db60369.png",
+    "assets/1698895465-530672f9efd3d1c3f61f5b222a11466a.png",
+    "assets/1698895465-d8fafb95a502047a6c014298ec9962cb.jpg",
+    "assets/1698895465-a86b091f4022e89cb9b4e41b2c59cd29.png",
+    "assets/1698895465-3c2112ea97a0dc048fa691e038f75dca.svg",
+    "assets/1698895465-10423bbe9f1fc97ffd5026a8acd19aff.png",
+    "assets/1698895465-9893fee93a4b5c4724a1279e51eaefd9.png",
+    "assets/1698895465-8808a91d124ecf8dbff60a98f1e79d73.png",
+    "assets/1698895465-79b82d81355901aa45d247da7f2a955a.png",
+    "assets/1698895465-f30d13384548b8ef5c9f81bc4fcbd358.svg",
+    "assets/1698895465-adad5405a71fde301930ff756e40dff4.png",
+    "assets/1698895465-446660b9c2a1e2d0449296ed843ecbeb.png",
+    "assets/1698895465-85908cea3f0ed69aa66c7d9b2c1f61de.svg",
+    "assets/1698895465-d53a79d6bbaa425883930fa2b5db03f1.svg",
+    "Red-Team-Lateral-Movement.md"
+  ]
+}
