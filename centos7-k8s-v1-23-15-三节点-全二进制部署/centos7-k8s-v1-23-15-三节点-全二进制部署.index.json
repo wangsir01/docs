@@ -1,0 +1,19 @@
+{
+  "version": "2.0",
+  "clipId": "1698896614",
+  "format": "md",
+  "title": "centos7 k8s v1.23.15 三节点 全二进制部署",
+  "link": "https://www.cnblogs.com/chuyiwang/p/17590393.html#%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98",
+  "category": "default",
+  "tags": [
+    "www.cnblogs.com"
+  ],
+  "created_at": "2023-11-02 11:43:34",
+  "mainPath": "centos7-k8s-v1-23-15-三节点-全二进制部署.md",
+  "paths": [
+    "centos7-k8s-v1-23-15-三节点-全二进制部署.index.json",
+    "assets/1698896614-6fca6e0e00200fdf2d3eec52ba924b07.png",
+    "assets/1698896614-7e50081241416ed69d69eb1596032cf1.png",
+    "centos7-k8s-v1-23-15-三节点-全二进制部署.md"
+  ]
+}

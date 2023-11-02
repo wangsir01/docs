@@ -1,0 +1,23 @@
+{
+  "version": "2.0",
+  "clipId": "1698897104",
+  "format": "md",
+  "title": "通过参数污染触发XSS - 先知社区",
+  "link": "http://xz.aliyun.com/t/9560",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2023-11-02 11:51:44",
+  "mainPath": "通过参数污染触发XSS-先知社区.md",
+  "paths": [
+    "通过参数污染触发XSS-先知社区.index.json",
+    "assets/1698897104-4ec972b16b6fec84fd6fd248c30003d5.png",
+    "assets/1698897104-adbef7cc7924fb6100347a1f320457ef.png",
+    "assets/1698897104-6b6850ff5639c2de6caa128ee839a81a.png",
+    "assets/1698897104-3b030e01c479238c2bda916a0bd684e3.png",
+    "assets/1698897104-337563e81409850f15c0f5ea0ae061ad.png",
+    "assets/1698897104-5d9d230102ada78d4c92d9446817f6e9.png",
+    "通过参数污染触发XSS-先知社区.md"
+  ]
+}

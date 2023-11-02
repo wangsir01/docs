@@ -1,0 +1,20 @@
+{
+  "version": "2.0",
+  "clipId": "1698897039",
+  "format": "md",
+  "title": "盲XXE攻击 -带外交互技术(OAST) 泄露数据",
+  "link": "http://xz.aliyun.com/t/9519",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2023-11-02 11:50:39",
+  "mainPath": "盲XXE攻击-带外交互技术-OAST-泄露数据.md",
+  "paths": [
+    "盲XXE攻击-带外交互技术-OAST-泄露数据.index.json",
+    "assets/1698897039-733fabf0d62315aa254adf73923199ed.png",
+    "assets/1698897039-38593fe01d59bb0ab2277bebc26842d8.png",
+    "assets/1698897039-e6720049c639a6f43139b83d7088ec0f.png",
+    "盲XXE攻击-带外交互技术-OAST-泄露数据.md"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "version": "2.0",
+  "clipId": "1698897471",
+  "format": "md",
+  "title": "从XML相关一步一步到XXE漏洞 - 先知社区",
+  "link": "http://xz.aliyun.com/t/6887",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2023-11-02 11:57:51",
+  "mainPath": "从XML相关一步一步到XXE漏洞-先知社区.md",
+  "paths": [
+    "从XML相关一步一步到XXE漏洞-先知社区.index.json",
+    "assets/1698897471-faaf2fc21a0d6c52a94c8b3295c10c0c.png",
+    "assets/1698897471-dcb2ffd77e4414e9d0946f9a1bb32c22.png",
+    "assets/1698897471-1ee34acb14443e15b665ec7a19478f93.png",
+    "assets/1698897471-3d8ac175bbdbece645eaf194523b4400.png",
+    "assets/1698897471-ac7134e4c103699a41b5159be4f26d11.png",
+    "assets/1698897471-342a6d96025fde9ba7fa50b1ac3deae3.jpg",
+    "assets/1698897471-bd650087a08cea22548ef2684849edcc.jpg",
+    "assets/1698897471-3a0aee3a0f38d84582f5eb0a2b25af27.jpg",
+    "assets/1698897471-7cc7a52771325a55c740779b3adf82b3.jpg",
+    "assets/1698897471-24a787444346a201208c84132afed987.jpg",
+    "assets/1698897471-ce50cacf069548f39a4ba9e47ffbe63d.jpg",
+    "assets/1698897471-43e7c6a750bef5640711b905ab2af2d8.jpg",
+    "assets/1698897471-03c0029cf9c3abbf8724c1935d965844.jpg",
+    "assets/1698897471-229994d1407217aeb15e4c7dc83d6d04.jpg",
+    "assets/1698897471-3d47a5a8ebaebe984044cb773cfb735f.jpg",
+    "assets/1698897471-54fdf325bf20d983ac4eb6f637075d6f.jpg",
+    "assets/1698897471-2644a0fcd666d6efc490d68eeddd106d.jpg",
+    "assets/1698897471-cb0392191039272755b2374e9b124164.jpg",
+    "assets/1698897471-6d5d8b8d8d7e911177653d2aaf2dbe68.png",
+    "assets/1698897471-934d159eee114ab693147ed28ae3d5b2.jpg",
+    "assets/1698897471-92da4efc5bc6e987b719c6534782f2be.jpg",
+    "从XML相关一步一步到XXE漏洞-先知社区.md"
+  ]
+}
