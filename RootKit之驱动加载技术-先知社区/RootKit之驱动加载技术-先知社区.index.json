@@ -1,0 +1,28 @@
+{
+  "version": "2.0",
+  "clipId": "1699005703",
+  "format": "md",
+  "title": "RootKit之驱动加载技术 - 先知社区",
+  "link": "https://xz.aliyun.com/t/12965",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2023-11-03 18:01:43",
+  "mainPath": "RootKit之驱动加载技术-先知社区.md",
+  "paths": [
+    "RootKit之驱动加载技术-先知社区.index.json",
+    "assets/1699005703-bac655a6d7ed7acd61a43facd68a3151.png",
+    "assets/1699005703-b495c24638945f5c14a126e116660fa9.png",
+    "assets/1699005703-1e594f213dae10c36803134e23beaf54.png",
+    "assets/1699005703-281a3ba067f19a5e4af066c2b207132e.png",
+    "assets/1699005703-3d04a4104c1db826100303b539fdf7b3.png",
+    "assets/1699005703-345f556b59f90565892691a9c8f875cd.png",
+    "assets/1699005703-0bee5ee66fa324439d478b0ad20bdc7e.png",
+    "assets/1699005703-e284668f55a6fd790e3998bad1efc9fd.png",
+    "assets/1699005703-01d1a4e82a94790591555e3b46d32cf4.png",
+    "assets/1699005703-ddb10b330cf472e25b5357b91c675d4e.png",
+    "assets/1699005703-f91e35fafc384a096f4c830a3a44f5fd.png",
+    "RootKit之驱动加载技术-先知社区.md"
+  ]
+}

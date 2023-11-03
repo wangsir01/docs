@@ -8,9 +8,9 @@
 
 之前朋友检测APK壳是用的APKiD - [https://github.com/rednaga/APKiD](https://github.com/rednaga/APKiD) ，看了一下项目简介发现参加过两次BlackHat orz
 
-[![](assets/1698990336-df41a167b9cfb580fbace0b5e2ba4c62.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102180859-d7611874-7967-1.png)
+[![](assets/1699005756-df41a167b9cfb580fbace0b5e2ba4c62.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102180859-d7611874-7967-1.png)
 
-[![](assets/1698990336-40773993aa485cb912a4356dc91527d6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102180904-da730ce8-7967-1.png)
+[![](assets/1699005756-40773993aa485cb912a4356dc91527d6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102180904-da730ce8-7967-1.png)
 
 一个是工具介绍，一个是快速识别RASP SDK，不过感觉中文网络上对于这个工具还停留在使用阶段，简单看一下代码实现，本篇文章使用的是 APKiD 2.1.5
 
@@ -27,7 +27,7 @@ PS：这里提到的PEiD是一个查壳工具，所以APKiD即APK查壳的工具
 
 这种方式的安装可以直接通过apkid命令来对目标进行探测
 
-[![](assets/1698990336-18bdf791005bc5028106b74f8c21a7e9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102180915-e10bf2d6-7967-1.png)
+[![](assets/1699005756-18bdf791005bc5028106b74f8c21a7e9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102180915-e10bf2d6-7967-1.png)
 
 可以看到这里使用了腾讯的加壳保护
 
@@ -79,11 +79,11 @@ APK其实就是一个ZIP文件，APK文件的基本结构如下
 
 APKID作者们在blackhat 2018上的PPT
 
-[![](assets/1698990336-86c46b30abf5f5a3ca183b834c14d514.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102180933-eb6e9c60-7967-1.png)
+[![](assets/1699005756-86c46b30abf5f5a3ca183b834c14d514.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102180933-eb6e9c60-7967-1.png)
 
 我们解压一个APK也可以看到相关文件
 
-[![](assets/1698990336-0ecf819f7e492fc04e33b3840859a117.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102180943-f1bab8a6-7967-1.png)
+[![](assets/1699005756-0ecf819f7e492fc04e33b3840859a117.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102180943-f1bab8a6-7967-1.png)
 
 ### Yara文件
 
@@ -100,7 +100,7 @@ Yara的每一条描述、规则都由一系列字符串和一个布尔型表达�
 
 打开apkid 的 rules 文件夹，里面的都是yara规则
 
-[![](assets/1698990336-617b14dcb0a7db0cc66b3ed4438eb1a6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102180953-f7af294a-7967-1.png)
+[![](assets/1699005756-617b14dcb0a7db0cc66b3ed4438eb1a6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102180953-f7af294a-7967-1.png)
 
 我们查看这一条规则，这里的描述是腾讯乐固的壳，不过感觉特征跟腾讯御安全相似
 
@@ -135,7 +135,7 @@ rule分为三部分
 可以看到这里的规则就是需要满足是APK、存在 assets/0OO00l111l1l，以及 a,c,d对应字符串中的一个  
 打开我们通过腾讯加壳的APK软件，可以看到对应的特征值确实存在
 
-[![](assets/1698990336-46c64ac784fce1e8c43568974a27bf98.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102181003-fd525e58-7967-1.png)
+[![](assets/1699005756-46c64ac784fce1e8c43568974a27bf98.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102181003-fd525e58-7967-1.png)
 
 而 is\_apk 这个判定条件实际上在 common.yara里面
 
@@ -156,11 +156,11 @@ rule is_apk : file_type
 
 这里的规则就是检查目标文件开头是否匹配字符串PK，对于压缩包我们知道头文件是50 4B 也就是PK
 
-[![](assets/1698990336-832970675bc556fa54545c8097164960.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102181010-01de95fe-7968-1.png)
+[![](assets/1699005756-832970675bc556fa54545c8097164960.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102181010-01de95fe-7968-1.png)
 
 同是目标文件包含字符串"AndroidManifest.xml"，且数量>=2
 
-[![](assets/1698990336-4fb0a668d9a606675808aedb16078a5e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102181016-05224328-7968-1.png)
+[![](assets/1699005756-4fb0a668d9a606675808aedb16078a5e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102181016-05224328-7968-1.png)
 
 这就是这条tencent\_legu规则的详情
 
@@ -174,7 +174,7 @@ rule is_apk : file_type
 
 工作流程
 
-[![](assets/1698990336-accd0c94f599533a0b8aa67dcf0cec8c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102181027-0bfdc19a-7968-1.png)
+[![](assets/1699005756-accd0c94f599533a0b8aa67dcf0cec8c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231102181027-0bfdc19a-7968-1.png)
 
 主要实现逻辑的方法在
 
@@ -256,3 +256,5 @@ if file_name.has_key("key.dat") and all_dir_name.has_key("apkprotect.com"):
 -   [https://www.anquanke.com/post/id/211501](https://www.anquanke.com/post/id/211501)
 -   [https://www.shuziguanxing.com/newsinfo/1315722.html](https://www.shuziguanxing.com/newsinfo/1315722.html)
 -   [https://www.anquanke.com/post/id/211501](https://www.anquanke.com/post/id/211501)
+
+打赏
