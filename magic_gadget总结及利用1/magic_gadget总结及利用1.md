@@ -116,7 +116,7 @@ pl+=csu(0, 1, read_got, 0x100, elf.bss()+0x100, 0,magic_gadget)+p64(0x400788)+p6
 
 效果：
 
-[![](assets/1699250287-6be63881b47f1a1fa870f30e5034dfaf.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231105004716-cf8c7668-7b31-1.png)
+[![](assets/1699257230-6be63881b47f1a1fa870f30e5034dfaf.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231105004716-cf8c7668-7b31-1.png)
 
 接下来直接orw构造链就好了
 
@@ -753,13 +753,13 @@ if __name__ == '__main__':
 
 那么利用House of apple2的思想劫持IO\_wide\_data来进行io流调用，gadget写在伪造的io\_file中
 
-[![](assets/1699250287-820739f05e7a2148ab4b8c9fa8dd6286.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231105004629-b40ba2ec-7b31-1.png)
+[![](assets/1699257230-820739f05e7a2148ab4b8c9fa8dd6286.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231105004629-b40ba2ec-7b31-1.png)
 
 那么当执行了magic\_gadget后
 
-[![](assets/1699250287-bf6f108a924cbe8cf3772ab40057d5af.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231105004619-ae084206-7b31-1.png)
+[![](assets/1699257230-bf6f108a924cbe8cf3772ab40057d5af.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231105004619-ae084206-7b31-1.png)
 
-[![](assets/1699250287-bfe5e2e85d6d0675696e6d1415e252be.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231105004624-b09ae118-7b31-1.png)
+[![](assets/1699257230-bfe5e2e85d6d0675696e6d1415e252be.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231105004624-b09ae118-7b31-1.png)
 
 可以看到rbp和rsp迁移到了堆上执行了orw调用链
 
