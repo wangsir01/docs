@@ -1,0 +1,23 @@
+{
+  "version": "2.0",
+  "clipId": "1699250015",
+  "format": "md",
+  "title": "XXL-JOB 默认 accessToken 身份绕过漏洞复现",
+  "link": "https://blog.csdn.net/qq_41904294/article/details/134201486",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-11-06 13:53:35",
+  "mainPath": "XXL-JOB-默认-accessToken-身份绕过漏洞复现.md",
+  "paths": [
+    "XXL-JOB-默认-accessToken-身份绕过漏洞复现.index.json",
+    "assets/1699250015-cb819a2c5bbd673a302156996bb9daa6.png",
+    "assets/1699250015-427a2cf5d4e589f0d4d17d1e3112487b.png",
+    "assets/1699250015-c095ecbba83f6761216178013771c2e3.png",
+    "assets/1699250015-1f6f84c859bb6e2087fcce24b9c05688.png",
+    "assets/1699250015-bb0ff5eaa3874cefab77d779f28a8254.png",
+    "assets/1699250015-17e293d816555990ddb76bf29461868f.png",
+    "XXL-JOB-默认-accessToken-身份绕过漏洞复现.md"
+  ]
+}

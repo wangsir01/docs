@@ -1,0 +1,25 @@
+{
+  "version": "2.0",
+  "clipId": "1699250170",
+  "format": "md",
+  "title": ".NET 反序列化漏洞最新gadget链 GetterSecurityException - 先知社区",
+  "link": "https://xz.aliyun.com/t/12977",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2023-11-06 13:56:10",
+  "mainPath": "NET-反序列化漏洞最新gadget链-GetterSecurityException-先知社区.md",
+  "paths": [
+    "NET-反序列化漏洞最新gadget链-GetterSecurityException-先知社区.index.json",
+    "assets/1699250170-0493c1472674eb226758c384dede44d1.png",
+    "assets/1699250170-21187a49ded8050d34b3fac84df5554e.png",
+    "assets/1699250170-49b53c6854f606d38027f53f6406f66b.png",
+    "assets/1699250170-a8913aac90a32c859f7b59356456ca64.png",
+    "assets/1699250170-76c37930293c6abdcfe565bdb281fbaf.png",
+    "assets/1699250170-6431ec659b702b77b37ce0cb042f2c32.png",
+    "assets/1699250170-05058ce492ea3db42dedbf481790133a.png",
+    "assets/1699250170-b2b14342c30f20ec73821f995a2575a4.png",
+    "NET-反序列化漏洞最新gadget链-GetterSecurityException-先知社区.md"
+  ]
+}
