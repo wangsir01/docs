@@ -1,0 +1,28 @@
+{
+  "version": "2.0",
+  "clipId": "1699409345",
+  "format": "md",
+  "title": "域渗透之 Windows Access Token 攻击",
+  "link": "https://www.geekby.site/2020/05/%E5%9F%9F%E6%B8%97%E9%80%8F%E4%B9%8B-windows-access-token-%E6%94%BB%E5%87%BB/",
+  "category": "default",
+  "tags": [
+    "www.geekby.site"
+  ],
+  "created_at": "2023-11-08 10:09:05",
+  "mainPath": "域渗透之-Windows-Access-Token-攻击.md",
+  "paths": [
+    "域渗透之-Windows-Access-Token-攻击.index.json",
+    "assets/1699409345-6690897d8e8df3fe17b60485821ca422.jpg",
+    "assets/1699409345-e7e8080dc6fbe0aa19baeadd2560f17a.jpg",
+    "assets/1699409345-54dee7aab8e8a3b122d4c4d1625d9a78.jpg",
+    "assets/1699409345-4f87619898b6c377f5ce1dc9c38d2df4.jpg",
+    "assets/1699409345-c3900c7073e3cf6cdc2649c0e147b1c7.jpg",
+    "assets/1699409345-8829f4cad6bcf75066a81f7dce00421e.jpg",
+    "assets/1699409345-ccb75bdd84bcbd8940788e4fd4d0c925.jpg",
+    "assets/1699409345-ca754c39c3f9739dbff1171f10f032af.jpg",
+    "assets/1699409345-44f7f31e95477ce8c62996269f32edb2.jpg",
+    "assets/1699409345-cbd1cefcae525c15cbc1a97ef9ba525d.jpg",
+    "assets/1699409345-4d076a4aafd82d4780e20ddb1263dd07.jpg",
+    "域渗透之-Windows-Access-Token-攻击.md"
+  ]
+}

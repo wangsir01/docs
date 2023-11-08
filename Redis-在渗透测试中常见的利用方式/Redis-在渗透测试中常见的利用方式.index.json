@@ -1,0 +1,25 @@
+{
+  "version": "2.0",
+  "clipId": "1699409268",
+  "format": "md",
+  "title": "Redis 在渗透测试中常见的利用方式",
+  "link": "https://www.geekby.site/2020/05/redis%E5%9C%A8%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E5%88%A9%E7%94%A8%E6%96%B9%E5%BC%8F/",
+  "category": "default",
+  "tags": [
+    "www.geekby.site"
+  ],
+  "created_at": "2023-11-08 10:07:48",
+  "mainPath": "Redis-在渗透测试中常见的利用方式.md",
+  "paths": [
+    "Redis-在渗透测试中常见的利用方式.index.json",
+    "assets/1699409268-800973274304f4af7e1a76ce381ddb09",
+    "assets/1699409268-7795843d6bf34ee1243fb2ffbe84f220",
+    "assets/1699409268-844a3924230d5ff56b050abbedda7fc0",
+    "assets/1699409268-fa07510f08dfc6fd627a82327572de6f.jpg",
+    "assets/1699409268-1dd3131b03f639e3e58c3a78d625c67c.jpg",
+    "assets/1699409268-e4cb3b72ba47d7d07c2f852cd68d2a0f.jpg",
+    "assets/1699409268-fd5e9eac0c8cfe82b1c6638a50cd2f34.jpg",
+    "assets/1699409268-8d87e395a92e9e3226b794201ba7f8d3.jpg",
+    "Redis-在渗透测试中常见的利用方式.md"
+  ]
+}

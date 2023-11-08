@@ -1,0 +1,20 @@
+{
+  "version": "2.0",
+  "clipId": "1699411396",
+  "format": "md",
+  "title": "Weblogic T3 反序列化漏洞复现",
+  "link": "https://www.geekby.site/2021/04/weblogic-t3-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/",
+  "category": "default",
+  "tags": [
+    "www.geekby.site"
+  ],
+  "created_at": "2023-11-08 10:43:16",
+  "mainPath": "Weblogic-T3-反序列化漏洞复现.md",
+  "paths": [
+    "Weblogic-T3-反序列化漏洞复现.index.json",
+    "assets/1699411396-52a58f3f263558738dbc45e170179f3d.jpg",
+    "assets/1699411396-bd3889ce9ac9b1b0b45bf3c229b052cd.jpg",
+    "assets/1699411396-84fa05f0c0c5202e84b5b1efff4e9595.jpg",
+    "Weblogic-T3-反序列化漏洞复现.md"
+  ]
+}

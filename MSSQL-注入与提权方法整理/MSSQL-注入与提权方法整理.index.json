@@ -1,0 +1,33 @@
+{
+  "version": "2.0",
+  "clipId": "1699408935",
+  "format": "md",
+  "title": "MSSQL 注入与提权方法整理",
+  "link": "https://www.geekby.site/2021/01/mssql%E6%B3%A8%E5%85%A5%E4%B8%8E%E6%8F%90%E6%9D%83%E6%96%B9%E6%B3%95%E6%95%B4%E7%90%86/",
+  "category": "default",
+  "tags": [
+    "www.geekby.site"
+  ],
+  "created_at": "2023-11-08 10:02:15",
+  "mainPath": "MSSQL-注入与提权方法整理.md",
+  "paths": [
+    "MSSQL-注入与提权方法整理.index.json",
+    "assets/1699408935-1795884a078e956735463af9b4d32284.jpg",
+    "assets/1699408935-bc546370e50407020566fa9600e92547.jpg",
+    "assets/1699408935-de1a1c1dd28667d6f6153e440f7c56bd.jpg",
+    "assets/1699408935-8daf028f03501932227c8e8a85a88492.jpg",
+    "assets/1699408935-9c537f52af6226b9c3bd363bcd205266.jpg",
+    "assets/1699408935-e0a516cb34c4d0f52d0b00f22301ebd5.jpg",
+    "assets/1699408935-99e68becd8dd7aabe9a847f8e1f54d34.jpg",
+    "assets/1699408935-2d09d632e3bf3cfdad46df60f372b3c2.jpg",
+    "assets/1699408935-5ede7308be8d3b679bc6c48707a8bcc6.jpg",
+    "assets/1699408935-4007b534e7fb0824de079c6934bcbb76.jpg",
+    "assets/1699408935-a97988434f255884c912a399dac6f113.jpg",
+    "assets/1699408935-51e080c70f25469316f61941aee16ab7.jpg",
+    "assets/1699408935-011fdc3afb569af766ea34326f606912.jpg",
+    "assets/1699408935-88240c6df0a35f5d3971f779aaba2a65.jpg",
+    "assets/1699408935-e5dea19362e0ad9f5c249e04b0241fee.jpg",
+    "assets/1699408935-7adceb6330a6082431345e3742d0c3a9.jpg",
+    "MSSQL-注入与提权方法整理.md"
+  ]
+}

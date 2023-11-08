@@ -1,0 +1,24 @@
+{
+  "version": "2.0",
+  "clipId": "1699408077",
+  "format": "md",
+  "title": "Spring beans RCE 漏洞分析",
+  "link": "https://www.geekby.site/2022/03/spring-beans-rce%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/",
+  "category": "default",
+  "tags": [
+    "www.geekby.site"
+  ],
+  "created_at": "2023-11-08 09:47:57",
+  "mainPath": "Spring-beans-RCE-漏洞分析.md",
+  "paths": [
+    "Spring-beans-RCE-漏洞分析.index.json",
+    "assets/1699408077-cf199eb872ebe18eb260b2f511752eb4.jpg",
+    "assets/1699408077-2fd78c810970706cab9a3ba5c320630f.jpg",
+    "assets/1699408077-13238832f37baef2ed5ab70cb1322a94.jpg",
+    "assets/1699408077-32c912933cfd7b46970adfa611a9938b.jpg",
+    "assets/1699408077-24bbc902f3ea2c1dd03c187d326ca8d5.jpg",
+    "assets/1699408077-0b1957b0092b713e1426fa67cc358859.jpg",
+    "assets/1699408077-d4779e03c3ea8c3c7064439a725e0a69.jpg",
+    "Spring-beans-RCE-漏洞分析.md"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "version": "2.0",
+  "clipId": "1699411563",
+  "format": "md",
+  "title": "XSS 漏洞相关",
+  "link": "https://www.geekby.site/2021/01/xss%E6%BC%8F%E6%B4%9E%E7%9B%B8%E5%85%B3/#6-html-5-%E6%96%B0%E7%89%B9%E6%80%A7%E5%8F%8A%E7%9B%B8%E5%BA%94%E7%9A%84%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90",
+  "category": "default",
+  "tags": [
+    "www.geekby.site"
+  ],
+  "created_at": "2023-11-08 10:46:03",
+  "mainPath": "XSS-漏洞相关.md",
+  "paths": [
+    "XSS-漏洞相关.index.json",
+    "assets/1699411563-7aec81ed2b477edafcbbd0b7cbb4a112.jpg",
+    "assets/1699411563-3db5b3e2a8aad681a1586dae538f9d22.jpg",
+    "assets/1699411563-b1793424c9c9fe011823489cc39e0692.jpg",
+    "assets/1699411563-4462fc8f55199a0c70b9230319dd62ce.jpg",
+    "assets/1699411563-e458bfcfda652099a0cd5c7b8903bc5d.jpg",
+    "assets/1699411563-c3f6890639b8e4fffb1b5bb9d509a8a8.jpg",
+    "assets/1699411563-60295f71b00c1cd3514a4597aa2da2ed.jpg",
+    "assets/1699411563-4f18e089f96725de2d73274df792cf75.jpg",
+    "XSS-漏洞相关.md"
+  ]
+}

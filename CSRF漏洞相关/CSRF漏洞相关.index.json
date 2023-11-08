@@ -1,0 +1,22 @@
+{
+  "version": "2.0",
+  "clipId": "1699411583",
+  "format": "md",
+  "title": "CSRF漏洞相关",
+  "link": "https://www.geekby.site/2021/01/csrf%E6%BC%8F%E6%B4%9E%E7%9B%B8%E5%85%B3/",
+  "category": "default",
+  "tags": [
+    "www.geekby.site"
+  ],
+  "created_at": "2023-11-08 10:46:23",
+  "mainPath": "CSRF漏洞相关.md",
+  "paths": [
+    "CSRF漏洞相关.index.json",
+    "assets/1699411583-6e4d42c90c289698775526e1d45c60be.jpg",
+    "assets/1699411583-007497a977b7bf948ae5946350dce760.jpg",
+    "assets/1699411583-ad02796cd517d53e7419c71239844e39.jpg",
+    "assets/1699411583-a6b3e32c7052ff36c095ad30aa3071e8.jpg",
+    "assets/1699411583-d3393ec7c1d8d9c10cdbe173f649b53f.jpg",
+    "CSRF漏洞相关.md"
+  ]
+}

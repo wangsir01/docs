@@ -1,0 +1,19 @@
+{
+  "version": "2.0",
+  "clipId": "1699407228",
+  "format": "md",
+  "title": "Python：简单文本过滤自动机的实现",
+  "link": "https://www.less-bug.com/posts/python-implementation-of-a-simple-text-filtering-automaton/",
+  "category": "default",
+  "tags": [
+    "www.less-bug.com"
+  ],
+  "created_at": "2023-11-08 09:33:48",
+  "mainPath": "Python-简单文本过滤自动机的实现.md",
+  "paths": [
+    "Python-简单文本过滤自动机的实现.index.json",
+    "assets/1699407228-ee0d4e4e7f4a9a9264b9d9555c2cbf13.svg",
+    "assets/1699407228-06b1d0fa348a6372aa5bd192527bfe9b.svg",
+    "Python-简单文本过滤自动机的实现.md"
+  ]
+}

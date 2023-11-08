@@ -1,0 +1,40 @@
+{
+  "version": "2.0",
+  "clipId": "1699411715",
+  "format": "md",
+  "title": "Java反序列化漏洞系列-2",
+  "link": "https://www.geekby.site/2021/08/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E-2/",
+  "category": "default",
+  "tags": [
+    "www.geekby.site"
+  ],
+  "created_at": "2023-11-08 10:48:35",
+  "mainPath": "Java反序列化漏洞系列-2.md",
+  "paths": [
+    "Java反序列化漏洞系列-2.index.json",
+    "assets/1699411715-2fe47b0b71299b87132c2484a9947a42.jpg",
+    "assets/1699411715-f0f673c697022a9e9fca0c9f27eade67.jpg",
+    "assets/1699411715-4ebe271bb8403bfd5d06dd383daf9579.jpg",
+    "assets/1699411715-17b4e58ff5e131314962d25f3b838aa6.jpg",
+    "assets/1699411715-23cbd6b6726355650f4137769f8d1362.jpg",
+    "assets/1699411715-25089014e9dcf9698ed98c26ddd9fa5d.jpg",
+    "assets/1699411715-9245fd1146d81570069e2d4122983afd.jpg",
+    "assets/1699411715-a9f0d2fa3d37ec9ba041254160603b5b.jpg",
+    "assets/1699411715-58477fc41f9bbc869dd8d153730ac527.jpg",
+    "assets/1699411715-aca3b35449ee9160914f604894d67826.jpg",
+    "assets/1699411715-e1358a231bbf3bc9c6f62004ab5dc333.jpg",
+    "assets/1699411715-e918413e503bbdc691a2edb7fba8af2b.jpg",
+    "assets/1699411715-7d88d29dbc1c7dfc2b08a239b9942f44.jpg",
+    "assets/1699411715-83aecdb587b2f8d3fc30ce917cd4f26b.jpg",
+    "assets/1699411715-707b5696a538ef881f42ad64f61ee92d.jpg",
+    "assets/1699411715-0c6f8cf6b9cc4a43dfeeeaecb33cde01.jpg",
+    "assets/1699411715-7e2870adb6e8174583d9a1540e658f3f.jpg",
+    "assets/1699411715-105860057a8cca1deadd3c357d4ce0e3.jpg",
+    "assets/1699411715-1ced770b5dd6d25031d510d2236af87c.jpg",
+    "assets/1699411715-b014a7117c19e0ab740a4475fa70b5ac.jpg",
+    "assets/1699411715-19b9ee134414686c1a0c423d6e796a85.jpg",
+    "assets/1699411715-486cb0b2a0f083a622fbe928a64f6a8e.jpg",
+    "assets/1699411715-9f0983a2ceef50a5b1a4e6bb4c1b8060.jpg",
+    "Java反序列化漏洞系列-2.md"
+  ]
+}

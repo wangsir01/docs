@@ -1,0 +1,23 @@
+{
+  "version": "2.0",
+  "clipId": "1699411683",
+  "format": "md",
+  "title": "Java反序列化漏洞系列-3",
+  "link": "https://www.geekby.site/2021/08/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E-3/",
+  "category": "default",
+  "tags": [
+    "www.geekby.site"
+  ],
+  "created_at": "2023-11-08 10:48:03",
+  "mainPath": "Java反序列化漏洞系列-3.md",
+  "paths": [
+    "Java反序列化漏洞系列-3.index.json",
+    "assets/1699411683-64992fe2b1d770bb8afe21b64c93a47e.jpg",
+    "assets/1699411683-867cfd91d6d2b514cb993c9ae5fee0fd.jpg",
+    "assets/1699411683-b50969e909efc6823a70d0faa4906021.jpg",
+    "assets/1699411683-b2db2265893424724301259edcfcda5a.jpg",
+    "assets/1699411683-be6e1794701fafc333110c9d43b12db8.jpg",
+    "assets/1699411683-ddc500e4f599e9137ace18db8affcc7a.jpg",
+    "Java反序列化漏洞系列-3.md"
+  ]
+}

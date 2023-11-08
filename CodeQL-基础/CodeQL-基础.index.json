@@ -1,0 +1,19 @@
+{
+  "version": "2.0",
+  "clipId": "1699411001",
+  "format": "md",
+  "title": "CodeQL 基础",
+  "link": "https://www.geekby.site/2022/02/codeql%E5%9F%BA%E7%A1%80/#%E5%8F%82%E8%80%83",
+  "category": "default",
+  "tags": [
+    "www.geekby.site"
+  ],
+  "created_at": "2023-11-08 10:36:41",
+  "mainPath": "CodeQL-基础.md",
+  "paths": [
+    "CodeQL-基础.index.json",
+    "assets/1699411001-ee1a0f136c6c0e04f0822a2be1926230",
+    "assets/1699411001-2bed9b60cb6f2443532b249289e39a62",
+    "CodeQL-基础.md"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "version": "2.0",
+  "clipId": "1699409472",
+  "format": "md",
+  "title": "LDAP 协议相关",
+  "link": "https://www.geekby.site/2020/12/ldap-%E5%8D%8F%E8%AE%AE/",
+  "category": "default",
+  "tags": [
+    "www.geekby.site"
+  ],
+  "created_at": "2023-11-08 10:11:12",
+  "mainPath": "LDAP-协议相关.md",
+  "paths": [
+    "LDAP-协议相关.index.json",
+    "LDAP-协议相关.md"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "version": "2.0",
+  "clipId": "1699409053",
+  "format": "md",
+  "title": "MySQL 提权方法整理",
+  "link": "https://www.geekby.site/2021/01/mysql%E6%8F%90%E6%9D%83%E6%96%B9%E6%B3%95%E6%95%B4%E7%90%86/",
+  "category": "default",
+  "tags": [
+    "www.geekby.site"
+  ],
+  "created_at": "2023-11-08 10:04:13",
+  "mainPath": "MySQL-提权方法整理.md",
+  "paths": [
+    "MySQL-提权方法整理.index.json",
+    "assets/1699409053-26e648bbf50fcf36f211d63d2d90d7e0.jpg",
+    "assets/1699409053-3ba27dddc9617ffad8d4c36fc016d2c1.jpg",
+    "assets/1699409053-5e94ef70fd439b3ad680146956817ff4.jpg",
+    "assets/1699409053-8810d5470c35e8e06546d677d766ff97.jpg",
+    "assets/1699409053-d4db07aa5c52884551c81d013375660e.jpg",
+    "assets/1699409053-b31d1009cb9082128195bba7a3eced3f.jpg",
+    "assets/1699409053-6677a5761c4ee364fb52eafde9b96637.jpg",
+    "MySQL-提权方法整理.md"
+  ]
+}

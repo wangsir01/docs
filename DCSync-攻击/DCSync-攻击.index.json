@@ -1,0 +1,20 @@
+{
+  "version": "2.0",
+  "clipId": "1699409132",
+  "format": "md",
+  "title": "DCSync 攻击",
+  "link": "https://www.geekby.site/2020/05/dcsync-%E6%94%BB%E5%87%BB/",
+  "category": "default",
+  "tags": [
+    "www.geekby.site"
+  ],
+  "created_at": "2023-11-08 10:05:32",
+  "mainPath": "DCSync-攻击.md",
+  "paths": [
+    "DCSync-攻击.index.json",
+    "assets/1699409132-decd32aeb2182c02592746d3238fb537",
+    "assets/1699409132-a1b09d9b6ec41406752a16e7ebe51758.jpg",
+    "assets/1699409132-e43afa2f9b98b846e1f27dceab8cd36a.jpg",
+    "DCSync-攻击.md"
+  ]
+}

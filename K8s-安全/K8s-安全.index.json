@@ -1,0 +1,41 @@
+{
+  "version": "2.0",
+  "clipId": "1699410706",
+  "format": "md",
+  "title": "K8s 安全",
+  "link": "https://www.geekby.site/2021/11/k8s%E5%AE%89%E5%85%A8/#1-%E8%83%8C%E6%99%AF",
+  "category": "default",
+  "tags": [
+    "www.geekby.site"
+  ],
+  "created_at": "2023-11-08 10:31:46",
+  "mainPath": "K8s-安全.md",
+  "paths": [
+    "K8s-安全.index.json",
+    "assets/1699410706-5a177378cc255871f91973f57559603c",
+    "assets/1699410706-2edc5bf9831e0f995d4ba59e14d1f5c7",
+    "assets/1699410706-e40517ea476e0797b7638928c4a27244",
+    "assets/1699410706-33ec81b94fb371eb78bccdc640a902a9",
+    "assets/1699410706-020f16c4b96812953cc4554a7a02a970",
+    "assets/1699410706-97270b0a7915810fd91fbf55390b90fe",
+    "assets/1699410706-92635144909e7a36222e40d5a69e7f95",
+    "assets/1699410706-80e604f1b4e829dc3cdc8caebb661b1e",
+    "assets/1699410706-495e3016d10024e3dda49d15a0cca60a",
+    "assets/1699410706-4e26eed47ab37528fdc9f485b54e5ad9",
+    "assets/1699410706-f2a5849baba90f8735ef65eaa364c007.jpg",
+    "assets/1699410706-83ea662d3cdf399ca80795d9bbab7a68",
+    "assets/1699410706-80376b6db39ff2adb9575083629bd682",
+    "assets/1699410706-7b714451008d2c7a62ae73e4e4c30b16",
+    "assets/1699410706-cc727a48b030cc540d2b201054cde807",
+    "assets/1699410706-d467cfb4166f0dbe6f9b76c1471ddf00",
+    "assets/1699410706-fcebe1128a56dcd2334983f38af9caf8",
+    "assets/1699410706-38b8c0958535d4f40096094c92a3ae93",
+    "assets/1699410706-ba3eadc10a442801abf2097d7ff844cf",
+    "assets/1699410706-db1759f8cad0df1c5a3157c98623a342",
+    "assets/1699410706-066ab4d40b31a3651ac63ee553b22d94",
+    "assets/1699410706-2b49f1e9d63d813677505961ce3fdbd4",
+    "assets/1699410706-4c00a485a7b6ccd2e1903c1e634450a3",
+    "assets/1699410706-756e14c642e9e879eecb443dc41948fe",
+    "K8s-安全.md"
+  ]
+}

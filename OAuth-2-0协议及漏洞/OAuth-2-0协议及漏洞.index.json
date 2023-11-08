@@ -1,0 +1,20 @@
+{
+  "version": "2.0",
+  "clipId": "1699407708",
+  "format": "md",
+  "title": "OAuth 2.0协议及漏洞",
+  "link": "https://www.geekby.site/2023/05/oauth-2.0%E5%8D%8F%E8%AE%AE%E5%8F%8A%E6%BC%8F%E6%B4%9E/",
+  "category": "default",
+  "tags": [
+    "www.geekby.site"
+  ],
+  "created_at": "2023-11-08 09:41:48",
+  "mainPath": "OAuth-2-0协议及漏洞.md",
+  "paths": [
+    "OAuth-2-0协议及漏洞.index.json",
+    "assets/1699407708-dca4c1fcadb0c9672b59409e16eb2afe.jpg",
+    "assets/1699407708-d47d049d2911f291f0778856d1582489.jpg",
+    "assets/1699407708-3366e042fb9a2ea5790c939363b6484d.svg",
+    "OAuth-2-0协议及漏洞.md"
+  ]
+}

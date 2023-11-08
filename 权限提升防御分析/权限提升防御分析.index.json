@@ -1,0 +1,18 @@
+{
+  "version": "2.0",
+  "clipId": "1699410292",
+  "format": "md",
+  "title": "权限提升防御分析",
+  "link": "https://www.geekby.site/2020/02/%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87%E9%98%B2%E5%BE%A1%E5%88%86%E6%9E%90/",
+  "category": "default",
+  "tags": [
+    "www.geekby.site"
+  ],
+  "created_at": "2023-11-08 10:24:52",
+  "mainPath": "权限提升防御分析.md",
+  "paths": [
+    "权限提升防御分析.index.json",
+    "assets/1699410292-5737ba33d8a61fa1694477044136e2a2",
+    "权限提升防御分析.md"
+  ]
+}

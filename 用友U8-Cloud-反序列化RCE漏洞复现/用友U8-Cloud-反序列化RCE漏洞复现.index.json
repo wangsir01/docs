@@ -1,0 +1,23 @@
+{
+  "version": "2.0",
+  "clipId": "1699406333",
+  "format": "md",
+  "title": "用友U8 Cloud 反序列化RCE漏洞复现",
+  "link": "https://blog.csdn.net/qq_41904294/article/details/134277353",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-11-08 09:18:53",
+  "mainPath": "用友U8-Cloud-反序列化RCE漏洞复现.md",
+  "paths": [
+    "用友U8-Cloud-反序列化RCE漏洞复现.index.json",
+    "assets/1699406333-60abbee1f79f2aef2f392c4b07bfc936.png",
+    "assets/1699406333-7eae4d74e076ca6043234a3d5070148d.png",
+    "assets/1699406333-c2b1169d4a40ef23ae616a906f3dbb9e.png",
+    "assets/1699406333-b57d3b68ca1b9bb9a8229f8aa92821ab.png",
+    "assets/1699406333-daf90c0bc6d53db5a44337add3b09223.png",
+    "assets/1699406333-5af93c219c722f5aef8eec0d707da993.png",
+    "用友U8-Cloud-反序列化RCE漏洞复现.md"
+  ]
+}
