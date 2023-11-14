@@ -3,7 +3,7 @@
 
 [evilpan](https://evilpan.com/ "Author")  收录于  类别 [Security](https://evilpan.com/categories/security/)
 
- 2023-11-01  2023-11-01  约 9012 字   预计阅读 18 分钟   64 次阅读  
+ 2023-11-01  2023-11-01  约 9012 字   预计阅读 18 分钟   326 次阅读  
 
 最近分析 confluence 的漏洞，发现是基于 Struts 框架的，其中有很多相关知识点并不了解，因此专门来学习一下 Struts 2。
 
@@ -130,7 +130,7 @@ Action 中通常包含具体的数据源，比如上面的 MessageStore (POJO)�
 
 [↓↓↓](https://evilpan.com/img/2023-11-01-struts2-internal/0.png "img")  
   
-![/img/2023-11-01-struts2-internal/0.png](assets/1698896132-722fcf96a399185bdf0a94c2e047330f.png)  
+![/img/2023-11-01-struts2-internal/0.png](assets/1699429497-722fcf96a399185bdf0a94c2e047330f.png)  
   
 [↑↑↑](https://evilpan.com/img/2023-11-01-struts2-internal/0.png "img")
 
@@ -1029,7 +1029,23 @@ com.opensymphony.xwork2.config.impl.DefaultConfiguration.RuntimeConfigurationImp
 
 提交
 
-来发评论吧~
+1 评论
+
+![](assets/1699429497-a1dd90732e2b5f08fe5f3bdcb4ddbd4c.jpg)
+
+[m4ra7h0n](http://m4ra7h0n.com/) Chrome 118.0.0.0 macOS 10.15.7
+
+6 天前回复
+
+666
+
+![](assets/1699429497-a1dd90732e2b5f08fe5f3bdcb4ddbd4c.jpg)
+
+[m4ra7h0n](http://m4ra7h0n.com/) Chrome 118.0.0.0 macOS 10.15.7
+
+6 天前回复
+
+[@m4ra7h0n](#65431e5d117ff355ed3820f5) , 大佬，咱们思路一样，我也从confluence开始然后去学struts2的
 
 Powered By [Valine](https://valine.js.org/)  
 v1.4.16

@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "clipId": "1699409953",
+  "clipId": "1699411917",
   "format": "md",
   "title": "对象存储攻防案例",
   "link": "https://www.geekby.site/2022/03/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E6%94%BB%E9%98%B2%E6%A1%88%E4%BE%8B/#1-%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8",
@@ -8,21 +8,21 @@
   "tags": [
     "www.geekby.site"
   ],
-  "created_at": "2023-11-08 10:19:13",
+  "created_at": "2023-11-08 10:51:57",
   "mainPath": "对象存储攻防案例.md",
   "paths": [
     "对象存储攻防案例.index.json",
-    "assets/1699409953-2c9e5a65efd1d3348fad59485b2b0f77",
-    "assets/1699409953-981004f9cd76443d1656708f0a6a85a5",
-    "assets/1699409953-53586c3ed4c70de7876d5cde1d8bae7b",
-    "assets/1699409953-eed3862a3902c9b679a2307b66c4107a",
-    "assets/1699409953-707e5ee2c340a052702920737f6852ce",
-    "assets/1699409953-e3e2d82889db92185ca78535f69f1fcf",
-    "assets/1699409953-1c92bb08e69851dacee9d5b60a7b4da8",
-    "assets/1699409953-a136c2991c2603d937d140e48b5001f0",
-    "assets/1699409953-5178cf7ce574b1d48a0d0ba1c7237f88",
-    "assets/1699409953-1b0c7751834072234f872c55248a61df",
-    "assets/1699409953-c3e4219efc5fc1bac7d70a449f2e1c94.jpg",
+    "assets/1699411917-2c9e5a65efd1d3348fad59485b2b0f77",
+    "assets/1699411917-981004f9cd76443d1656708f0a6a85a5",
+    "assets/1699411917-53586c3ed4c70de7876d5cde1d8bae7b.jpg",
+    "assets/1699411917-eed3862a3902c9b679a2307b66c4107a.jpg",
+    "assets/1699411917-707e5ee2c340a052702920737f6852ce.jpg",
+    "assets/1699411917-e3e2d82889db92185ca78535f69f1fcf.jpg",
+    "assets/1699411917-1c92bb08e69851dacee9d5b60a7b4da8.jpg",
+    "assets/1699411917-a136c2991c2603d937d140e48b5001f0.jpg",
+    "assets/1699411917-5178cf7ce574b1d48a0d0ba1c7237f88.jpg",
+    "assets/1699411917-1b0c7751834072234f872c55248a61df.jpg",
+    "assets/1699411917-c3e4219efc5fc1bac7d70a449f2e1c94.jpg",
     "对象存储攻防案例.md"
   ]
 }

@@ -1,0 +1,20 @@
+{
+  "version": "2.0",
+  "clipId": "1699929237",
+  "format": "md",
+  "title": "金和OA jc6 任意文件上传漏洞复现",
+  "link": "https://blog.csdn.net/qq_41904294/article/details/134362455",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-11-14 10:33:57",
+  "mainPath": "金和OA-jc6-任意文件上传漏洞复现.md",
+  "paths": [
+    "金和OA-jc6-任意文件上传漏洞复现.index.json",
+    "assets/1699929237-bda0d44f0b2dc26b3d8d4189efabcfc9.png",
+    "assets/1699929237-8f950e17d5b58994ce7fe5c1db8415a8.png",
+    "assets/1699929237-91cb4709862e54f0cc712da0ae9e86c1.png",
+    "金和OA-jc6-任意文件上传漏洞复现.md"
+  ]
+}

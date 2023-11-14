@@ -1,0 +1,19 @@
+{
+  "version": "2.0",
+  "clipId": "1699429224",
+  "format": "md",
+  "title": "Finding A RCE Gadget Chain In WordPress Core | WPScan --- 在 WordPress 核心中寻找 RCE 小工具链 |WPS扫描",
+  "link": "https://wpscan.com/blog/finding-a-rce-gadget-chain-in-wordpress-core/",
+  "category": "default",
+  "tags": [
+    "wpscan.com"
+  ],
+  "created_at": "2023-11-08 15:40:24",
+  "mainPath": "Finding-A-RCE-Gadget-Chain-In-WordPress-Core-WPScan-在-WordPress-核心中寻找-RCE-小工具链-WPS扫描.md",
+  "paths": [
+    "Finding-A-RCE-Gadget-Chain-In-WordPress-Core-WPScan-在-WordPress-核心中寻找-RCE-小工具链-WPS扫描.index.json",
+    "assets/1699429224-004c4d3ccc33b8feadab150a7abd7167.png",
+    "assets/1699429224-dfad7ed0ad7ad35509471543c09ba9fc.png",
+    "Finding-A-RCE-Gadget-Chain-In-WordPress-Core-WPScan-在-WordPress-核心中寻找-RCE-小工具链-WPS扫描.md"
+  ]
+}
