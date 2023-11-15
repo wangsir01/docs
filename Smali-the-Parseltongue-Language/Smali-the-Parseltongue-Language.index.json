@@ -1,0 +1,20 @@
+{
+  "version": "2.0",
+  "clipId": "1700011230",
+  "format": "md",
+  "title": "Smali the Parseltongue Language",
+  "link": "https://blog.quarkslab.com/smali-the-parseltongue-language.html",
+  "category": "default",
+  "tags": [
+    "blog.quarkslab.com"
+  ],
+  "created_at": "2023-11-15 09:20:30",
+  "mainPath": "Smali-the-Parseltongue-Language.md",
+  "paths": [
+    "Smali-the-Parseltongue-Language.index.json",
+    "assets/1700011230-72e631fcc1c5df243023230a71887872.png",
+    "assets/1700011230-af6008f7e02c8b3205130fcf1b94b199.png",
+    "assets/1700011230-ae6be2483eb541d07a388ce7e4fb2d7e.png",
+    "Smali-the-Parseltongue-Language.md"
+  ]
+}
