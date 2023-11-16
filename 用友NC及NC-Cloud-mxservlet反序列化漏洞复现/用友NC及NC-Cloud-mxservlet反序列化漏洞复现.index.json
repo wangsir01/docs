@@ -1,0 +1,19 @@
+{
+  "version": "2.0",
+  "clipId": "1700100583",
+  "format": "md",
+  "title": "用友NC及NC Cloud mxservlet反序列化漏洞复现",
+  "link": "https://blog.csdn.net/qq_41904294/article/details/134430713",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-11-16 10:09:43",
+  "mainPath": "用友NC及NC-Cloud-mxservlet反序列化漏洞复现.md",
+  "paths": [
+    "用友NC及NC-Cloud-mxservlet反序列化漏洞复现.index.json",
+    "assets/1700100583-5b860116c0da78d13546dca667fa85a2.png",
+    "assets/1700100583-5ec5a74acaa670c8677393ce5f2db920.png",
+    "用友NC及NC-Cloud-mxservlet反序列化漏洞复现.md"
+  ]
+}
