@@ -1,0 +1,26 @@
+{
+  "version": "2.0",
+  "clipId": "1700126100",
+  "format": "md",
+  "title": "用友GRP-U8 ReturnForWcp RCE漏洞复现",
+  "link": "https://blog.csdn.net/qq_41904294/article/details/134432703",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-11-16 17:15:00",
+  "mainPath": "用友GRP-U8-ReturnForWcp-RCE漏洞复现.md",
+  "paths": [
+    "用友GRP-U8-ReturnForWcp-RCE漏洞复现.index.json",
+    "assets/1700126100-aceb230083ecde5fe9623daf6b4ca7ed.png",
+    "assets/1700126100-184eee9bc03ebf0b841d683c79f089ff.png",
+    "assets/1700126100-de524c5540a338cd0b8f1455e5bb4750.png",
+    "assets/1700126100-9ca3137f298d210b970d370edfd64e0b.png",
+    "assets/1700126100-c88caf3ec2118550f33d2a7875b381e8.png",
+    "assets/1700126100-20c23dbceda16b9e27de805a9e230b73.png",
+    "assets/1700126100-8e2659b6fbdd044f8b2ef84728716852.png",
+    "assets/1700126100-2ce7f34e390e6e2a6787ef5fd69c8c8c.png",
+    "assets/1700126100-de89e33ab3fe5af569c6b790131dd4df.png",
+    "用友GRP-U8-ReturnForWcp-RCE漏洞复现.md"
+  ]
+}
