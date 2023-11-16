@@ -3,7 +3,7 @@ name: Compress Images and Push
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - '**.jpg'
       - '**.jpeg'
