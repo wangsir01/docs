@@ -1,0 +1,24 @@
+{
+  "version": "2.0",
+  "clipId": "1700190815",
+  "format": "md",
+  "title": "微信RCE 复现",
+  "link": "https://mp.weixin.qq.com/s?__biz=MzUxMjc0MTE3Mw==&mid=2247486425&idx=1&sn=b62132640382dcdbb8b8dda61c471d9b",
+  "category": "default",
+  "tags": [
+    "mp.weixin.qq.com"
+  ],
+  "created_at": "2023-11-17 11:13:35",
+  "mainPath": "微信RCE-复现.md",
+  "paths": [
+    "微信RCE-复现.index.json",
+    "assets/1700190815-be2cc6195423d878a11785fd7474dfdd.png",
+    "assets/1700190815-9aeca14db308b6e92fb37c5972aa77c2.png",
+    "assets/1700190815-65259f860672c1aa0f140a897f354c56.png",
+    "assets/1700190815-62d71206d753f67cdd9104fa13d91caa.png",
+    "assets/1700190815-15b67da0e64bc242c74d36c723238a11.png",
+    "assets/1700190815-4cc1fa8628f7c5efb4e9864ff2077607.png",
+    "assets/1700190815-8516cc1d0c67597f313df25c5b64cba2.png",
+    "微信RCE-复现.md"
+  ]
+}
