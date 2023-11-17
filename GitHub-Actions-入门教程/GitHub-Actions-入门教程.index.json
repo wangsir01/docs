@@ -1,0 +1,23 @@
+{
+  "version": "2.0",
+  "clipId": "1700189034",
+  "format": "md",
+  "title": "GitHub Actions 入门教程",
+  "link": "https://www.ruanyifeng.com/blog/2019/09/getting-started-with-github-actions.html",
+  "category": "default",
+  "tags": [
+    "www.ruanyifeng.com"
+  ],
+  "created_at": "2023-11-17 10:43:54",
+  "mainPath": "GitHub-Actions-入门教程.md",
+  "paths": [
+    "GitHub-Actions-入门教程.index.json",
+    "assets/1700189034-866cf23fb2556a449e425aeece84e165.jpg",
+    "assets/1700189034-c0c32ed6c7e61ef89c91a083316f50ea.jpg",
+    "assets/1700189034-050e7830fa3ae2adc78d802fbca4c61a.jpg",
+    "assets/1700189034-9ed3636bc417d2b9c8e92ee988776050.jpg",
+    "assets/1700189034-30dc772ef9cd2b6cf93c3e3a404e0093.jpg",
+    "assets/1700189034-cf462d1d04f09dba4a50cfe36205ecee.jpg",
+    "GitHub-Actions-入门教程.md"
+  ]
+}
