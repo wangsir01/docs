@@ -21,7 +21,7 @@ jobs:
       - name: Compress Images
         uses: calibreapp/image-actions@main
         with:
-          githubToken: ${{ secrets.GIT_TOKEN }}
+          githubToken: ${{ secrets.DOCS_PUSH_TOKEN }}
           compressOnly: true
           jpegQuality: '60'
           jpegProgressive: false
@@ -38,5 +38,5 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GIT_TOKEN }}
+          github_token: ${{ secrets.GDOCS_PUSH_TOKENN }}
           branch: ${{ github.ref }}
