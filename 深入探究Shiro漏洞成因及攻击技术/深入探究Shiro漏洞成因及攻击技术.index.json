@@ -1,0 +1,39 @@
+{
+  "version": "2.0",
+  "clipId": "1700442790",
+  "format": "md",
+  "title": "深入探究Shiro漏洞成因及攻击技术",
+  "link": "https://xz.aliyun.com/t/13059",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2023-11-20 09:13:10",
+  "mainPath": "深入探究Shiro漏洞成因及攻击技术.md",
+  "paths": [
+    "深入探究Shiro漏洞成因及攻击技术.index.json",
+    "assets/1700442790-aecc36963c0d355690d0ac98be115d89.png",
+    "assets/1700442790-c39157c3f83eb3ddc82c7d6e612f1170.png",
+    "assets/1700442790-2f8e50c568276bb99bf23fc46b09f024.png",
+    "assets/1700442790-4184356b5078a0fc34ad91b0200f1720.png",
+    "assets/1700442790-2f1bf4d7dcb52629007ba857ea3f272c.png",
+    "assets/1700442790-11bc9e0ed5c8b76ef05ba4433b1f6867.png",
+    "assets/1700442790-dfd7714824891947238ec50cd975dcd1.png",
+    "assets/1700442790-e544c2e84ca599a0cf56c6c6f5723fb8.png",
+    "assets/1700442790-cad2359dfce77271fc1a671a969414af.png",
+    "assets/1700442790-83444bddecfb26e4de0ca3a657e86ca8.png",
+    "assets/1700442790-36ad0a2ce717a767466d2cd5af7ba0b9.png",
+    "assets/1700442790-4f084e34fa885d847c29a450422b61d0.png",
+    "assets/1700442790-a5d441550622a1e1967d4595bcadbbac.png",
+    "assets/1700442790-56712d702b82a4077fb208a6d5e6e8dd.png",
+    "assets/1700442790-06721fdcb52e5918f1f7ad17d315303b.png",
+    "assets/1700442790-0c0cf66c6b4511449deeb9d47d5b80a3.png",
+    "assets/1700442790-48401622ca71e057961ae38555342c3c.png",
+    "assets/1700442790-4eca64ab37f6510c69b5ef4bc525b93d.png",
+    "assets/1700442790-1583d464f091804b8f4bb0c1a3331877.png",
+    "assets/1700442790-3d446a4d119fc434bd8f004f2a35cafb.png",
+    "assets/1700442790-1502811dd8342e6dc61dc8d51faaf07a.png",
+    "assets/1700442790-c251320134b0c14b0dce4d892d47879c.png",
+    "深入探究Shiro漏洞成因及攻击技术.md"
+  ]
+}
