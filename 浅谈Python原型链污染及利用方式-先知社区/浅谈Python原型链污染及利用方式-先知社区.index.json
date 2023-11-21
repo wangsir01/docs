@@ -1,0 +1,33 @@
+{
+  "version": "2.0",
+  "clipId": "1700528987",
+  "format": "md",
+  "title": "浅谈Python原型链污染及利用方式 - 先知社区",
+  "link": "https://xz.aliyun.com/t/13072",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2023-11-21 09:09:47",
+  "mainPath": "浅谈Python原型链污染及利用方式-先知社区.md",
+  "paths": [
+    "浅谈Python原型链污染及利用方式-先知社区.index.json",
+    "assets/1700528987-d3e39e3c9e1766ecccc2ebadab2abd32.png",
+    "assets/1700528987-b733f216da96d908e9a56c989005ce57.png",
+    "assets/1700528987-ff0838e5fa58d54528e6ca4566dfae13.png",
+    "assets/1700528987-3ff13ef4ac7c2997b7ee56676c3f402b.png",
+    "assets/1700528987-f1bc4571af3d178fd1a100aa70795d4b.png",
+    "assets/1700528987-06da672f1dc6a6c994c3073537e14a0b.png",
+    "assets/1700528987-9860916a555aa11adaa1a50e6e2e8635.png",
+    "assets/1700528987-2c1b8f6f842483ab55ef51881e390838.png",
+    "assets/1700528987-e1b001a4cee59db494bb855148c3945a.png",
+    "assets/1700528987-d4b771dd2c234844f98bba255660ca37.png",
+    "assets/1700528987-72d7cc24e1f516c5d9e48d0f027c98d6.png",
+    "assets/1700528987-392038f533d74f3432e957f205b195a8.png",
+    "assets/1700528987-de3c3d6ec18c8815ca91b12e19a1ee64.png",
+    "assets/1700528987-b0ccafe99c7058a6e784eddf72edaa3b.png",
+    "assets/1700528987-f54cb680fd82b4e4e29cd94542be3480.png",
+    "assets/1700528987-d5a5e64a3d5cdf712429b8769a414ff4.png",
+    "浅谈Python原型链污染及利用方式-先知社区.md"
+  ]
+}
