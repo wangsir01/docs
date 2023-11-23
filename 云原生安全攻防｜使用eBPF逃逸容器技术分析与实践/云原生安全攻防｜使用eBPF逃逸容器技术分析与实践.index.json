@@ -1,0 +1,24 @@
+{
+  "version": "2.0",
+  "clipId": "1700701462",
+  "format": "md",
+  "title": "云原生安全攻防｜使用eBPF逃逸容器技术分析与实践",
+  "link": "https://security.tencent.com/index.php/blog/msg/206",
+  "category": "default",
+  "tags": [
+    "security.tencent.com"
+  ],
+  "created_at": "2023-11-23 09:04:22",
+  "mainPath": "云原生安全攻防｜使用eBPF逃逸容器技术分析与实践.md",
+  "paths": [
+    "云原生安全攻防｜使用eBPF逃逸容器技术分析与实践.index.json",
+    "assets/1700701462-71ffc38cdeea38bcc6b7504665daeadd.jpeg",
+    "assets/1700701462-c38af0b3d93992f31ea037acd0aa3cb8.jpeg",
+    "assets/1700701462-39b893d7b7bba721316223dbf5f959fc.png",
+    "assets/1700701462-2bc6a99fc96008e65105d058cb00b26c.jpeg",
+    "assets/1700701462-85afd8b834753ea567ede11a444679f1.jpeg",
+    "assets/1700701462-10abe5ee93f66b67d54b24756227ec65.png",
+    "assets/1700701462-2abe37d9c2ccee15e10b5bf062b8c0dc.jpeg",
+    "云原生安全攻防｜使用eBPF逃逸容器技术分析与实践.md"
+  ]
+}

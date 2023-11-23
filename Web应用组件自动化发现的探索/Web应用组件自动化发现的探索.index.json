@@ -1,0 +1,24 @@
+{
+  "version": "2.0",
+  "clipId": "1700701587",
+  "format": "md",
+  "title": "Web应用组件自动化发现的探索",
+  "link": "https://security.tencent.com/index.php/blog/msg/201",
+  "category": "default",
+  "tags": [
+    "security.tencent.com"
+  ],
+  "created_at": "2023-11-23 09:06:27",
+  "mainPath": "Web应用组件自动化发现的探索.md",
+  "paths": [
+    "Web应用组件自动化发现的探索.index.json",
+    "assets/1700701587-677218fc1747ddb668bb83bc0860b1d9.png",
+    "assets/1700701587-f58fb261a3445d4780d5a87b8363b528.png",
+    "assets/1700701587-dac2a99c798e850e749ee530eb6693bd.png",
+    "assets/1700701587-df7ffc0dd21ad91bc5e9af3d8a8d9a11.png",
+    "assets/1700701587-adc3ef3e7273e31b525565aa4eecc232.png",
+    "assets/1700701587-476700303d85c2a41bd5a0fbfb2cfa12.png",
+    "assets/1700701587-72149d0f66fa4f0cd62ec5fa54b21016.png",
+    "Web应用组件自动化发现的探索.md"
+  ]
+}

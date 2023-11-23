@@ -1,0 +1,23 @@
+{
+  "version": "2.0",
+  "clipId": "1700701614",
+  "format": "md",
+  "title": "浅析软件供应链攻击之包抢注低成本钓鱼",
+  "link": "https://security.tencent.com/index.php/blog/msg/185",
+  "category": "default",
+  "tags": [
+    "security.tencent.com"
+  ],
+  "created_at": "2023-11-23 09:06:54",
+  "mainPath": "浅析软件供应链攻击之包抢注低成本钓鱼.md",
+  "paths": [
+    "浅析软件供应链攻击之包抢注低成本钓鱼.index.json",
+    "assets/1700701614-b476dfc290795c800fbf0963d2399d33.png",
+    "assets/1700701614-9cf71eb1d00d162a915e49fed9720c4d.png",
+    "assets/1700701614-3922f2f00109393c17510a25bd026927.png",
+    "assets/1700701614-1acb3617b627f9814f16ecd01b940607.png",
+    "assets/1700701614-57767a71f7800b70ae549292cee73868.png",
+    "assets/1700701614-ae5b8bdfae8c3725bb4c28945e2cd322.png",
+    "浅析软件供应链攻击之包抢注低成本钓鱼.md"
+  ]
+}

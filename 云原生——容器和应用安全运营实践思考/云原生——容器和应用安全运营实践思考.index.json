@@ -1,0 +1,25 @@
+{
+  "version": "2.0",
+  "clipId": "1700701597",
+  "format": "md",
+  "title": "云原生——容器和应用安全运营实践思考",
+  "link": "https://security.tencent.com/index.php/blog/msg/200",
+  "category": "default",
+  "tags": [
+    "security.tencent.com"
+  ],
+  "created_at": "2023-11-23 09:06:37",
+  "mainPath": "云原生——容器和应用安全运营实践思考.md",
+  "paths": [
+    "云原生——容器和应用安全运营实践思考.index.json",
+    "assets/1700701597-137bdb07b2602d354eb376aaf5b82dec.png",
+    "assets/1700701597-41e88c3f81853c9885d19eb492102ff6.png",
+    "assets/1700701597-cba29987b4c8a1f193e07d8390da9da7.png",
+    "assets/1700701597-39e8f0acb6cb2908002c361454d2b1d0.png",
+    "assets/1700701597-2156a419345476a470e3ddab683f7780.png",
+    "assets/1700701597-ed3c0950f5f7a2942a8bf1bcb9c1cf11.png",
+    "assets/1700701597-e5f4201e6319599e1373700366a0dfc2.png",
+    "assets/1700701597-3171f5ce55c223fcf415446a20426add.png",
+    "云原生——容器和应用安全运营实践思考.md"
+  ]
+}

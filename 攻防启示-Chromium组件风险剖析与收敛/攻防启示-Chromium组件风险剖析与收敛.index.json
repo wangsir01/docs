@@ -1,0 +1,42 @@
+{
+  "version": "2.0",
+  "clipId": "1700701605",
+  "format": "md",
+  "title": "攻防启示：Chromium组件风险剖析与收敛",
+  "link": "https://security.tencent.com/index.php/blog/msg/197",
+  "category": "default",
+  "tags": [
+    "security.tencent.com"
+  ],
+  "created_at": "2023-11-23 09:06:45",
+  "mainPath": "攻防启示-Chromium组件风险剖析与收敛.md",
+  "paths": [
+    "攻防启示-Chromium组件风险剖析与收敛.index.json",
+    "assets/1700701605-b454a6abdd89636457b0a3f37fe56ac2.png",
+    "assets/1700701605-e702dce2fb70e3be60ffe572a7859c7a.png",
+    "assets/1700701605-0ab60a4350fe56f7d7bcd1bf92214248.png",
+    "assets/1700701605-920bb9a688dd0a7d13d3cbf26ff17140.png",
+    "assets/1700701605-dde388ac8ee0b5a65bffd43d1714527c.png",
+    "assets/1700701605-230a9d0895f78147ee7ea0998996faf8.png",
+    "assets/1700701605-fe0afd2dc84365512ca75004633bade6.png",
+    "assets/1700701605-6bcf268e3647e89170ce24bebbed016d.png",
+    "assets/1700701605-4bcb32479fa540d464e95e41233bab16.png",
+    "assets/1700701605-12ee58f0641f39cfc7dee2ebb3f44467.png",
+    "assets/1700701605-4dd099b237d42e9b83c651bc9f90005e.png",
+    "assets/1700701605-65fdee942271057f45f793ce0c1fd5f2.png",
+    "assets/1700701605-19e1b24d7871eacfb023c9e57694d19f.png",
+    "assets/1700701605-2d4bf3f4aa3eee7afe0397f03ca45fc3.png",
+    "assets/1700701605-5ec370ddc7a1af231b3307237bdf179d.png",
+    "assets/1700701605-63272b051ffbb0cb1630749be19b7bb7.png",
+    "assets/1700701605-065d4c31ece5802b779dcd9be8caa480.jpeg",
+    "assets/1700701605-27c9882e8ec9eef4de4b6760586e5468.png",
+    "assets/1700701605-dd7dabc542587fa86483942e83f93944.png",
+    "assets/1700701605-8df1b2574738f349b3a95e08ac054eec.png",
+    "assets/1700701605-b76b4d12c130c1163afb1e962625c93c.png",
+    "assets/1700701605-13bfd8ef6b8e2562c24c28ce8776a28f.png",
+    "assets/1700701605-8c6f8df6d1eeda32c7285ce1ac9e056e.png",
+    "assets/1700701605-d7d5bfe470a2b083269ad91881e8a767.png",
+    "assets/1700701605-3b138372bdb91dc0533f406204566d26.jpeg",
+    "攻防启示-Chromium组件风险剖析与收敛.md"
+  ]
+}

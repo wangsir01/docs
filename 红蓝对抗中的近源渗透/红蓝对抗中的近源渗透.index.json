@@ -1,0 +1,28 @@
+{
+  "version": "2.0",
+  "clipId": "1700701655",
+  "format": "md",
+  "title": "红蓝对抗中的近源渗透",
+  "link": "https://security.tencent.com/index.php/blog/msg/167",
+  "category": "default",
+  "tags": [
+    "security.tencent.com"
+  ],
+  "created_at": "2023-11-23 09:07:35",
+  "mainPath": "红蓝对抗中的近源渗透.md",
+  "paths": [
+    "红蓝对抗中的近源渗透.index.json",
+    "assets/1700701655-7957c4387577c1d13d30e5da2c1c5576.png",
+    "assets/1700701655-6be9a7435944917b1fda984966db1091.png",
+    "assets/1700701655-135aa1379deb6b6913451d5114c39c0f.png",
+    "assets/1700701655-407421ece5915a2c97f0f31d7c640fab.png",
+    "assets/1700701655-49f1c0cccbf410ea8db2662bd4ab63be.png",
+    "assets/1700701655-f9ab72750766d3caf72ebd96b04b8d33.png",
+    "assets/1700701655-340fbc7d02b1df31ccaaab14d9f82dfa.png",
+    "assets/1700701655-1ba085bfd17ae1a30e2fa417cd60a91d.png",
+    "assets/1700701655-fc7c5f1d4849efaa942d1b0d365024b1.png",
+    "assets/1700701655-6fc47da9cd6859b676e980d9e86fe514.png",
+    "assets/1700701655-b2233c7a7ef6da7acf875de7b4d5bfdf.png",
+    "红蓝对抗中的近源渗透.md"
+  ]
+}

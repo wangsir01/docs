@@ -1,0 +1,36 @@
+{
+  "version": "2.0",
+  "clipId": "1700701630",
+  "format": "md",
+  "title": "SSRF安全指北",
+  "link": "https://security.tencent.com/index.php/blog/msg/179",
+  "category": "default",
+  "tags": [
+    "security.tencent.com"
+  ],
+  "created_at": "2023-11-23 09:07:10",
+  "mainPath": "SSRF安全指北.md",
+  "paths": [
+    "SSRF安全指北.index.json",
+    "assets/1700701630-efb667751eb751f4a081c55de8501caa.png",
+    "assets/1700701630-33598ae2c3552ff039b8e41e0d28184c.png",
+    "assets/1700701630-980ee36921a50c2b7751d4608a8cc452.png",
+    "assets/1700701630-684c928d18a38c3671436ab3b774a529.png",
+    "assets/1700701630-cffb7d81d4f0e81f57b36948efbe7a17.png",
+    "assets/1700701630-e3f35cd83aabb1207dd10ab6f1d4f1d3.png",
+    "assets/1700701630-c2dc9616bef6fb4eac63270392bb93c5.png",
+    "assets/1700701630-8a3b04e9a498439eb6151dd3667227f2.png",
+    "assets/1700701630-94395da707859dd4f329acd5fa691f70.png",
+    "assets/1700701630-22aadb09696094e115f8f9d5aaaf4735.png",
+    "assets/1700701630-13530bdf9ca1935fb34f43d48b5bf2f1.png",
+    "assets/1700701630-3e1008c53c5e044a10a9b2d8bf28c759.png",
+    "assets/1700701630-ba70318a9861026ce3d9c8f52dbcd478.png",
+    "assets/1700701630-8f2e8b47e5bc1b7abbedfe45886d3a5b.png",
+    "assets/1700701630-dd259b7ac8afa4c10104ebaf58476c2f.png",
+    "assets/1700701630-59cea9d9203d7050cd1b7ed3a4d92beb.png",
+    "assets/1700701630-db4b1603e232a9fe5a0050022ca99270.png",
+    "assets/1700701630-6d53c560b667b6b2d56a4b263c909eb5.png",
+    "assets/1700701630-77f0767963c76e727dd203eae1f0574d.png",
+    "SSRF安全指北.md"
+  ]
+}
