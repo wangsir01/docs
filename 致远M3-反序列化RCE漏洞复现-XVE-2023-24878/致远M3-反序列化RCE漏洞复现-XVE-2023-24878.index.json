@@ -1,0 +1,25 @@
+{
+  "version": "2.0",
+  "clipId": "1700809137",
+  "format": "md",
+  "title": "致远M3 反序列化RCE漏洞复现(XVE-2023-24878)",
+  "link": "https://blog.csdn.net/qq_41904294/article/details/134588105",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-11-24 14:58:57",
+  "mainPath": "致远M3-反序列化RCE漏洞复现-XVE-2023-24878.md",
+  "paths": [
+    "致远M3-反序列化RCE漏洞复现-XVE-2023-24878.index.json",
+    "assets/1700809137-45b69730892a57f021c033a28319df58.png",
+    "assets/1700809137-a58ec679aff477c520b0810ce5668bce.png",
+    "assets/1700809137-854f60c49bc9292399fa1717174e0d4e.png",
+    "assets/1700809137-51a205808d029a479786ff14a7cdccc3.png",
+    "assets/1700809137-58f0f7d503e568d2a76ba97e90516877.png",
+    "assets/1700809137-f33fdd984f27ac853bc04128de5194f3.png",
+    "assets/1700809137-e26db5bda2204df405c39ab9b9d55186.png",
+    "assets/1700809137-9c8f3d91c00fa7f1dd298fd3f4008471.png",
+    "致远M3-反序列化RCE漏洞复现-XVE-2023-24878.md"
+  ]
+}

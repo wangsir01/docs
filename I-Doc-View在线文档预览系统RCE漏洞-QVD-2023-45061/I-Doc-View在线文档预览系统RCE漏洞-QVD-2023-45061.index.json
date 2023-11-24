@@ -1,0 +1,23 @@
+{
+  "version": "2.0",
+  "clipId": "1700812556",
+  "format": "md",
+  "title": "I Doc View在线文档预览系统RCE漏洞(QVD-2023-45061)",
+  "link": "https://blog.csdn.net/qq_41904294/article/details/134561209",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-11-24 15:55:56",
+  "mainPath": "I-Doc-View在线文档预览系统RCE漏洞-QVD-2023-45061.md",
+  "paths": [
+    "I-Doc-View在线文档预览系统RCE漏洞-QVD-2023-45061.index.json",
+    "assets/1700812556-96830dba9faba6f93f61b367e3e3169f.png",
+    "assets/1700812556-650d044ae1818404906dae774325cf8b.png",
+    "assets/1700812556-6d47fef7ac24d3782567b50f1f0ebe0a.png",
+    "assets/1700812556-d5d6af0f6bb26045a2543a087e75818f.png",
+    "assets/1700812556-1dcd59165f97b71604303629dd94824a.png",
+    "assets/1700812556-9e890f7534e25d10ad2ce39526707764.png",
+    "I-Doc-View在线文档预览系统RCE漏洞-QVD-2023-45061.md"
+  ]
+}
