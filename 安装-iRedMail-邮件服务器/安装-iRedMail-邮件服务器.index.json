@@ -1,0 +1,18 @@
+{
+  "version": "2.0",
+  "clipId": "1700819908",
+  "format": "md",
+  "title": "安装 iRedMail 邮件服务器",
+  "link": "https://ruxi.org/229.html",
+  "category": "default",
+  "tags": [
+    "ruxi.org"
+  ],
+  "created_at": "2023-11-24 17:58:28",
+  "mainPath": "安装-iRedMail-邮件服务器.md",
+  "paths": [
+    "安装-iRedMail-邮件服务器.index.json",
+    "assets/1700819908-502cddb710430432c2c730e7c9440fa7.svg",
+    "安装-iRedMail-邮件服务器.md"
+  ]
+}

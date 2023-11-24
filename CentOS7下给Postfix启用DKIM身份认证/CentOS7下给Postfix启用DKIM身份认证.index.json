@@ -1,0 +1,25 @@
+{
+  "version": "2.0",
+  "clipId": "1700819932",
+  "format": "md",
+  "title": "CentOS7下给Postfix启用DKIM身份认证",
+  "link": "https://blog.csdn.net/qq_20376949/article/details/89877576",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-11-24 17:58:52",
+  "mainPath": "CentOS7下给Postfix启用DKIM身份认证.md",
+  "paths": [
+    "CentOS7下给Postfix启用DKIM身份认证.index.json",
+    "assets/1700819932-375abe23f61b2d15c09cb5506415ff0f.png",
+    "assets/1700819932-e2024fe8025fbe39d76d03b267413075.png",
+    "assets/1700819932-2d055e5d9fc1245ae0c54277b7c585f0.png",
+    "assets/1700819932-d3cb847879ea06405275bae8ffd6fa67.png",
+    "assets/1700819932-0e1a8485872184e5f24c219197a7a9de.png",
+    "assets/1700819932-07f83398ae20ab2faec64209f4f7093a.png",
+    "assets/1700819932-a63661a0c26366c179a67c0ad49f4971.png",
+    "assets/1700819932-5710f5b988d60fccd4f2f4760199cba2.png",
+    "CentOS7下给Postfix启用DKIM身份认证.md"
+  ]
+}

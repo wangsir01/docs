@@ -1,0 +1,34 @@
+{
+  "version": "2.0",
+  "clipId": "1700819996",
+  "format": "md",
+  "title": "gophish 测试平台搭建手册",
+  "link": "https://blog.csdn.net/Bulldozer_GD/article/details/119169020",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-11-24 17:59:56",
+  "mainPath": "gophish-测试平台搭建手册.md",
+  "paths": [
+    "gophish-测试平台搭建手册.index.json",
+    "assets/1700819996-4deb0d47b793a1866a9d7c8260d0205e.png",
+    "assets/1700819996-13b7b653a33b04d27b80a35327c6a332.png",
+    "assets/1700819996-baa1f6713a9e9266d489418c333c5535.png",
+    "assets/1700819996-e50f93a8997a38cf14c254f5018d5ad5.png",
+    "assets/1700819996-48169ec9f1875156514f14cfb682c312.png",
+    "assets/1700819996-e0100851c446eab7edf1b07c2278a3bd.png",
+    "assets/1700819996-98928d2322449fc114bff61014d153d6.png",
+    "assets/1700819996-e3b7e8e052518133ef45a3e06e909e50.png",
+    "assets/1700819996-5ab2a738a573b2c34c515ff553377736.png",
+    "assets/1700819996-b0d3124013e30a97c3c3328f4324173a.png",
+    "assets/1700819996-03e17480f4afd5d6de6d9b62df0b0042.png",
+    "assets/1700819996-aae7f1a82cc1346c044efc8c73072ba7.png",
+    "assets/1700819996-20cabecad71cf48b2d8ad3bbe07b7b5d.png",
+    "assets/1700819996-da5738ded9fefb1556420c8e99e8f301.png",
+    "assets/1700819996-b2cf5cd1de42ed69fa1b9d0a6445f33a.png",
+    "assets/1700819996-5d7c67927c3b4b63be45a25944cb8183.png",
+    "assets/1700819996-889299173b0f2848e65c86fa88620092.png",
+    "gophish-测试平台搭建手册.md"
+  ]
+}

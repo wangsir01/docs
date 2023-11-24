@@ -1,0 +1,17 @@
+{
+  "version": "2.0",
+  "clipId": "1700819963",
+  "format": "md",
+  "title": "CentOS 7 使用 Postfix, Dovecot 和 MariaDB 搭建邮箱服务 - Zhanming's blog",
+  "link": "https://qizhanming.com/blog/2019/08/10/how-to-config-email-server-with-postfix-dovecot-and-mariadb-on-centos-7",
+  "category": "default",
+  "tags": [
+    "qizhanming.com"
+  ],
+  "created_at": "2023-11-24 17:59:23",
+  "mainPath": "CentOS-7-使用-Postfix-Dovecot-和-MariaDB-搭建邮箱服务-Zhanming-s-blog.md",
+  "paths": [
+    "CentOS-7-使用-Postfix-Dovecot-和-MariaDB-搭建邮箱服务-Zhanming-s-blog.index.json",
+    "CentOS-7-使用-Postfix-Dovecot-和-MariaDB-搭建邮箱服务-Zhanming-s-blog.md"
+  ]
+}

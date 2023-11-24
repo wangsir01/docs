@@ -1,0 +1,17 @@
+{
+  "version": "2.0",
+  "clipId": "1700819893",
+  "format": "md",
+  "title": "Debian 11 nftables防火墙的简单配置",
+  "link": "https://www.detachd.top/index.php/archives/53/",
+  "category": "default",
+  "tags": [
+    "www.detachd.top"
+  ],
+  "created_at": "2023-11-24 17:58:13",
+  "mainPath": "Debian-11-nftables防火墙的简单配置.md",
+  "paths": [
+    "Debian-11-nftables防火墙的简单配置.index.json",
+    "Debian-11-nftables防火墙的简单配置.md"
+  ]
+}
