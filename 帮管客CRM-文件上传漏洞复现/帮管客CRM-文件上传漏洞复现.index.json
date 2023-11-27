@@ -1,0 +1,24 @@
+{
+  "version": "2.0",
+  "clipId": "1701071246",
+  "format": "md",
+  "title": "帮管客CRM 文件上传漏洞复现",
+  "link": "https://blog.csdn.net/qq_41904294/article/details/134630909",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-11-27 15:47:26",
+  "mainPath": "帮管客CRM-文件上传漏洞复现.md",
+  "paths": [
+    "帮管客CRM-文件上传漏洞复现.index.json",
+    "assets/1701071246-48d7dd70df19136e69f996576e60f41e.png",
+    "assets/1701071246-1c1ec56e681e6168b1beca0ced22a115.png",
+    "assets/1701071246-3bf4f98de537f25a5ed5432a09123839.png",
+    "assets/1701071246-01c99f0b95639843f1f6fb4944f0918e.png",
+    "assets/1701071246-cf419cc746b7bc4683d8a6b8576f8348.png",
+    "assets/1701071246-ca3bad2098c32666e642c23b1e4b0200.png",
+    "assets/1701071246-856a7627a0b7bbea56f2ca30e01db5af.png",
+    "帮管客CRM-文件上传漏洞复现.md"
+  ]
+}

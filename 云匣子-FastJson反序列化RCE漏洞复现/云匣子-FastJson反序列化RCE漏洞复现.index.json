@@ -1,0 +1,19 @@
+{
+  "version": "2.0",
+  "clipId": "1701049970",
+  "format": "md",
+  "title": "云匣子 FastJson反序列化RCE漏洞复现",
+  "link": "https://blog.csdn.net/qq_41904294/article/details/134636463",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-11-27 09:52:50",
+  "mainPath": "云匣子-FastJson反序列化RCE漏洞复现.md",
+  "paths": [
+    "云匣子-FastJson反序列化RCE漏洞复现.index.json",
+    "assets/1701049970-5f0b1ed7d908ea372030aeb7b56ff78c.png",
+    "assets/1701049970-790ad31e83ff988aa95c1616ed444f37.png",
+    "云匣子-FastJson反序列化RCE漏洞复现.md"
+  ]
+}

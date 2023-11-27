@@ -1,0 +1,19 @@
+{
+  "version": "2.0",
+  "clipId": "1701071224",
+  "format": "md",
+  "title": "帮管客CRM SQL注入漏洞复现",
+  "link": "https://blog.csdn.net/qq_41904294/article/details/134631469",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-11-27 15:47:04",
+  "mainPath": "帮管客CRM-SQL注入漏洞复现.md",
+  "paths": [
+    "帮管客CRM-SQL注入漏洞复现.index.json",
+    "assets/1701071224-224ddc4f5ba3129f8b26ab3a3d8d9101.png",
+    "assets/1701071224-27fdfa86e7abe1264ab334e250935987.png",
+    "帮管客CRM-SQL注入漏洞复现.md"
+  ]
+}

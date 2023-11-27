@@ -70,7 +70,7 @@ private List<Element> getNodes(String xmlString, String xpath) {
 
 在`com.seeyon.agent.sfu.server.apps.configuration.controller.ConfigurationController`可以找到对应的`testDBConnect`方法
 
-[![img](assets/1700703664-42b757df09fa27f3633454de47cdaf3c.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211747347.png)
+[![img](assets/1701072800-42b757df09fa27f3633454de47cdaf3c.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211747347.png)
 
 可以关注到相比原文当中的截图，现在加入了**对h2数据库连接的限制**
 
@@ -82,7 +82,7 @@ if (dbUrl.startsWith("jdbc:h2"))
 
 继续跟进到`testDBConnect`中
 
-[![img](assets/1700703664-523a3e6890f1c8a26a01bee395acb487.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211747209.png)
+[![img](assets/1701072800-523a3e6890f1c8a26a01bee395acb487.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211747209.png)
 
 从这里可以找到可以**根据dburl前缀自由连接远程jdbc**的方法，并允许**自定义链接驱动类**
 
@@ -119,13 +119,13 @@ spring.h2.console.setting.web-allow-others=true
 
 在`org.h2.engine.Engine#openSession`中，发起连接是可以**通过INIT关键字来影响初始化数据库连接的配置**
 
-[![img](assets/1700703664-e402458d99c41263b49cafda0bcd2ddb.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211747556.png)
+[![img](assets/1701072800-e402458d99c41263b49cafda0bcd2ddb.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211747556.png)
 
-[![img](assets/1700703664-612835714bc09763c74374fea97ab71b.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211747988.png)
+[![img](assets/1701072800-612835714bc09763c74374fea97ab71b.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211747988.png)
 
 **当我们使用RUNSCRIPT关键字发起远程连接时**，代码将会执行到`org.h2.command.dml.RunScriptCommand#execute`
 
-[![img](assets/1700703664-efc2cee66f7adb419069c9e749a96916.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211747682.png)
+[![img](assets/1701072800-efc2cee66f7adb419069c9e749a96916.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211747682.png)
 
 这也就意味着我们可以**通过RUNSCRIPT来执行恶意的SQL语句**，但使用RUNSCRIPT意味着，**你的客户端必须出网才有可能利用。**
 
@@ -138,11 +138,11 @@ CALL RUNCMD(command)
 
 在Spring Boot H2 console的源码中，我们可以继续寻找问题的解决办法，在SQL语句当中的JAVA方法将会执行到`org.h2.util.SourceCompiler`,一共有三种编译器，**分别是Java/Javascript/Groovy**
 
-[![img](assets/1700703664-4c1fa5fdda6e7f71476a5dd48abda2aa.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211747684.png)
+[![img](assets/1701072800-4c1fa5fdda6e7f71476a5dd48abda2aa.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211747684.png)
 
 **如果满足source开头是**`//groovy`**或者是**`@groovy`**就会使用对应Groovy引擎。**
 
-[![img](assets/1700703664-5559e2a4be23d06ec768dc40bd13e925.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211748878.png)
+[![img](assets/1701072800-5559e2a4be23d06ec768dc40bd13e925.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211748878.png)
 
 **利用**`@groovy.transform.ASTTEST`**就可以使用assert来执行命令**
 
@@ -157,7 +157,7 @@ public static void main (String[] args) throws ClassNotFoundException, SQLExcept
 
 **除了Groovy以外还有JavaScript的利用方案**
 
-[![img](assets/1700703664-9b27196dac67ed916453a8399aca3ba7.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211749239.png)
+[![img](assets/1701072800-9b27196dac67ed916453a8399aca3ba7.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211749239.png)
 
 ```python
 public static void main (String[] args) throws ClassNotFoundException, SQLException {
@@ -172,19 +172,19 @@ public static void main (String[] args) throws ClassNotFoundException, SQLExcept
 
 在前面找到对应的利用方案之后，**当我们尝试去做利用的时候会发现其实后台有额外的权限验证**。直接访问testDBConnenction，会报**非法访问的错误。**
 
-[![img](assets/1700703664-537930b7bd2604d7029e1b6f6c57a269.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211749235.png)
+[![img](assets/1701072800-537930b7bd2604d7029e1b6f6c57a269.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211749235.png)
 
 这是**因为没有传入对应的token**，在`com.seeyon.agent.common.utils.TokenUtils`中可以找到对应的检查
 
-[![img](assets/1700703664-9cf4edb5c7caf84519aa6c647bb4e7fd.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211749964.png)
+[![img](assets/1701072800-9cf4edb5c7caf84519aa6c647bb4e7fd.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211749964.png)
 
 这里的tokenMap可以在`com.seeyon.agent.common.getway.GetWayController`找到**对应的写入位置**
 
-[![img](assets/1700703664-4c1e1a766450d1346bfa4a55ca29311b.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211749377.png)
+[![img](assets/1701072800-4c1e1a766450d1346bfa4a55ca29311b.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211749377.png)
 
 **通过解密获得username、pwd、dogcode、versions**，**经过各种验证之后token会被存入全局变量**
 
-[![img](assets/1700703664-c347bd9e2f97050f8c401437ab6559b4.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211749644.png)
+[![img](assets/1701072800-c347bd9e2f97050f8c401437ab6559b4.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211749644.png)
 
 这个token会被存入最终的tokenMap当中，而到这里我们问题变成了**如何模拟这个过程**，在这个过程当中我们需要的信息有点儿多
 
@@ -195,11 +195,11 @@ public static void main (String[] args) throws ClassNotFoundException, SQLExcept
 
 跟踪 AESUtil.Decrypt到定义的位置，可以发现**秘钥和iv都是默认的**，可以直接使用
 
-[![img](assets/1700703664-d92f6340e2716479614deb87ee9d2df7.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211749701.png)
+[![img](assets/1701072800-d92f6340e2716479614deb87ee9d2df7.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211749701.png)
 
 在`com.seeyon.agent.common.controller.ConfigController`中可以**找到一个方法modifyDefaultUserInfo**
 
-[![img](assets/1700703664-e6fb4feca23b72556645bf2193767dc8.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750401.png)
+[![img](assets/1701072800-e6fb4feca23b72556645bf2193767dc8.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750401.png)
 
 这个方法可以在**没有任何限制的情况下修改默认用户seeyon的密码**
 
@@ -207,7 +207,7 @@ public static void main (String[] args) throws ClassNotFoundException, SQLExcept
 
 **在**`com.seeyon.agent.common.controller.VersionController`**的getVersion方法**里可以获取对应的版本号
 
-[![img](assets/1700703664-1cfdf65dd03b7e41eec1e6442cd6850d.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750481.png)
+[![img](assets/1701072800-1cfdf65dd03b7e41eec1e6442cd6850d.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750481.png)
 
 到这里我们获取了模拟token的所有信息，就可以在**后台进行任意操作**了
 
@@ -228,7 +228,7 @@ sink.reachableByFlows(source).p
 
 我们可以通过**连通初始化位置以及可控参数来判断是否存在路径**，正常来说如果两个节点**存在连通路径**，那么就存在**调用关系**，但数据流的过程间分析需要更合理的判定方式，就比如这个漏洞。
 
-[![img](assets/1700703664-c71be9951af61d0c7a2d0a964f5f4944.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750347.png)
+[![img](assets/1701072800-c71be9951af61d0c7a2d0a964f5f4944.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750347.png)
 
 `SAXReader`的**XXE漏洞修复方案并不是在参数的过滤上**，而是在于`SAXReader`对**解析xml的配置**
 
@@ -249,7 +249,7 @@ val res36: io.shiftleft.codepropertygraph.Cpg = Cpg (Graph [959587 nodes])
 cpg.method("testDBConnect").where(_.annotation.name(".*Mapping")).l
 ```
 
-[![img](assets/1700703664-2ee5190b8d93c8c5eb90c9e681842128.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750143.png)
+[![img](assets/1701072800-2ee5190b8d93c8c5eb90c9e681842128.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750143.png)
 
 然后再找到**设置jdbc连接的位置**，并**设置参数为3个string**
 
@@ -257,7 +257,7 @@ cpg.method("testDBConnect").where(_.annotation.name(".*Mapping")).l
 cpg.method("getConnection").callIn.filter(_.methodFullName.contains("java.lang.String,java.lang.String,java.lang.String")).l
 ```
 
-[![img](assets/1700703664-5a117040be134db1eda3dcbce7b27dff.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750355.png)
+[![img](assets/1701072800-5a117040be134db1eda3dcbce7b27dff.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750355.png)
 
 ```python
 def sink = cpg.method("getConnection").callIn.filter(_.methodFullName.contains("java.lang.String,java.lang.String,java.lang.String"))
@@ -266,7 +266,7 @@ def source = cpg.method("testDBConnect").where(_.annotation.name(".*Mapping")).p
 sink.reachableByFlows(source).p
 ```
 
-[![img](assets/1700703664-0f10595b050d7a45879a79049fffe0bb.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750337.png)
+[![img](assets/1701072800-0f10595b050d7a45879a79049fffe0bb.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750337.png)
 
 存在连通性，**表示包含注解的方法参数可以连通到sink点，存在问题。**
 
@@ -280,7 +280,7 @@ sink.reachableByFlows(source).p
 
 让我们把视角在转回S1上，其实问题很简单，**由于后台主要检查token是否有效**
 
-[![img](assets/1700703664-b2ccedd66fb6ea14cd50b493ae4fa9ee.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750184.png)
+[![img](assets/1701072800-b2ccedd66fb6ea14cd50b493ae4fa9ee.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750184.png)
 
 所以我们可以尝试**去寻找全局变量tokenMap初始化过的地方**
 
@@ -288,7 +288,7 @@ sink.reachableByFlows(source).p
 cpg.call("<operator>.fieldAccess").filter(_.code.equals("com.seeyon.agent.common.utils.TokenUtils.tokenMap")).l
 ```
 
-[![img](assets/1700703664-7026035ac354f1c26e5f8fc4dd478b67.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750489.png)
+[![img](assets/1701072800-7026035ac354f1c26e5f8fc4dd478b67.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750489.png)
 
 然后**寻找对应调用的位置**
 
@@ -296,11 +296,11 @@ cpg.call("<operator>.fieldAccess").filter(_.code.equals("com.seeyon.agent.common
 cpg.call("<operator>.fieldAccess").filter(_.code.equals("com.seeyon.agent.common.utils.TokenUtils.tokenMap")).map(n=>n.astIn.head.astIn.head._astIn.head.asInstanceOf[io.shiftleft.codepropertygraph.generated.nodes.Method].fullName).l
 ```
 
-[![img](assets/1700703664-ef81317d2e85f7a3a5356dea4867151f.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750089.png)
+[![img](assets/1701072800-ef81317d2e85f7a3a5356dea4867151f.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750089.png)
 
 可以看到**涉及到tokenMap的方法出了isChecktoken以外还有getToken**
 
-[![img](assets/1700703664-b91339db9d4cab2d4ff99059152e5274.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750945.png)
+[![img](assets/1701072800-b91339db9d4cab2d4ff99059152e5274.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211750945.png)
 
 然后我们继续**寻找调用了getToken的地方**
 
@@ -308,7 +308,7 @@ cpg.call("<operator>.fieldAccess").filter(_.code.equals("com.seeyon.agent.common
 cpg.call.filter(_.methodFullName.contains("com.seeyon.agent.common.utils.TokenUtils.getToken")).l
 ```
 
-[![img](assets/1700703664-804411f99d34b66af023f97849921f69.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211751394.png)
+[![img](assets/1701072800-804411f99d34b66af023f97849921f69.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211751394.png)
 
 然后**向上寻找对应的调用函数是什么**
 
@@ -316,7 +316,7 @@ cpg.call.filter(_.methodFullName.contains("com.seeyon.agent.common.utils.TokenUt
 cpg.call.filter(_.methodFullName.contains("com.seeyon.agent.common.utils.TokenUtils.getToken")).map(n=>n.astIn.head.astIn.head._astIn.head.asInstanceOf[io.shiftleft.codepropertygraph.generated.nodes.Method].fullName).l
 ```
 
-[![img](assets/1700703664-3aefaae21f7b3d95bc9009ac61cb16af.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211751242.png)
+[![img](assets/1701072800-3aefaae21f7b3d95bc9009ac61cb16af.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211751242.png)
 
 在这里我们找到了**调用gettoken的位置**，也正好**对应写入token的位置**。
 
@@ -330,7 +330,7 @@ cpg.call.filter(_.methodFullName.contains("com.seeyon.agent.common.utils.TokenUt
 cpg.identifier("username")._astIn.dedup.l
 ```
 
-[![img](assets/1700703664-8abc691e1decf6a0ed0f5ea1a55acbb7.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211751765.png)
+[![img](assets/1701072800-8abc691e1decf6a0ed0f5ea1a55acbb7.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211751765.png)
 
 当然这显得非常粗暴，数据量非常大，但我们可以做更多的限制，比如**调用该变量的方法必须包含put**
 
@@ -338,17 +338,17 @@ cpg.identifier("username")._astIn.dedup.l
 cpg.identifier("username").map(n=>n._callViaAstIn.filter(_.code.contains("put")).dedup.l).l
 ```
 
-[![img](assets/1700703664-43433b8f9f5ca47d5adcdfcfdac90aab.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211751942.png)我们可以**直接向上找到对应的函数方法定义位置**
+[![img](assets/1701072800-43433b8f9f5ca47d5adcdfcfdac90aab.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211751942.png)我们可以**直接向上找到对应的函数方法定义位置**
 
 ```plain
 cpg.identifier("username").map(n=>n._callViaAstIn.filter(_.code.contains("put"))._astIn._astIn.l).dedup.l
 ```
 
-[![img](assets/1700703664-c85c9bc1bccd7dc480f139a935e09d96.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211751464.png)
+[![img](assets/1701072800-c85c9bc1bccd7dc480f139a935e09d96.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211751464.png)
 
 我们可以选择几个打开看看
 
-[![img](assets/1700703664-f69c57c560961baf5c0428a3403ee633.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211751792.png)
+[![img](assets/1701072800-f69c57c560961baf5c0428a3403ee633.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211751792.png)
 
 当然我们发现**不只是有名字为password的变量，还有名为password的常量**
 
@@ -357,11 +357,11 @@ cpg.literal("\"password\"").map(n=>n._callViaAstIn.filter(_.code.contains("put")
 y raph.generated.nodes.Method].fullName)).l).dedup.l
 ```
 
-[![img](assets/1700703664-fc929f7252d39187c74f050df24d0da4.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211751799.png)
+[![img](assets/1701072800-fc929f7252d39187c74f050df24d0da4.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211751799.png)
 
 可以顺着这里找到**写入默认账户的位置**
 
-[![img](assets/1700703664-6419ee8de850f38bf7ef0fa3fda6f83e.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211751559.png)
+[![img](assets/1701072800-6419ee8de850f38bf7ef0fa3fda6f83e.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211751559.png)
 
 前面提到的**默认账户修改密码的点**也能搜索到，这里甚至可以直接用**默认账号和密码**
 
@@ -371,7 +371,7 @@ y raph.generated.nodes.Method].fullName)).l).dedup.l
 cpg.identifier("version").map(n=>n._callViaAstIn.filter(_.code.contains("put"))._astIn._astIn.map(m=>List(m.asInstanceOf[io.shiftleft.codepropertygraph.generated.nodes.Method].fullName)).l).dedup.l
 ```
 
-[![img](assets/1700703664-eb4e7f49e4b1e428501dd17728f4fc23.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211751928.png)
+[![img](assets/1701072800-eb4e7f49e4b1e428501dd17728f4fc23.png)](https://lorexxar-blog.oss-cn-shanghai.aliyuncs.com/blog/202311211751928.png)
 
 直接找到了**对应的getVersion方法**
 
