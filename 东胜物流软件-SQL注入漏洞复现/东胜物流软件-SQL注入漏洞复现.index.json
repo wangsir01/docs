@@ -1,0 +1,21 @@
+{
+  "version": "2.0",
+  "clipId": "1701134640",
+  "format": "md",
+  "title": "东胜物流软件 SQL注入漏洞复现",
+  "link": "https://blog.csdn.net/qq_41904294/article/details/134656440",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-11-28 09:24:00",
+  "mainPath": "东胜物流软件-SQL注入漏洞复现.md",
+  "paths": [
+    "东胜物流软件-SQL注入漏洞复现.index.json",
+    "assets/1701134640-878dc246fd7b10e21623127a67e6d803.png",
+    "assets/1701134640-36b13a9ef03b3aa72cfa88ba10ca0a74.png",
+    "assets/1701134640-9dae57672c471ee1226fc7bb54a662db.png",
+    "assets/1701134640-4f6d958652577c98a524e307f1dc7b17.png",
+    "东胜物流软件-SQL注入漏洞复现.md"
+  ]
+}

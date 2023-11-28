@@ -1,0 +1,20 @@
+{
+  "version": "2.0",
+  "clipId": "1701134718",
+  "format": "md",
+  "title": "金蝶Apusic应用服务器 任意文件上传漏洞复现",
+  "link": "https://blog.csdn.net/qq_41904294/article/details/134654352",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-11-28 09:25:18",
+  "mainPath": "金蝶Apusic应用服务器-任意文件上传漏洞复现.md",
+  "paths": [
+    "金蝶Apusic应用服务器-任意文件上传漏洞复现.index.json",
+    "assets/1701134718-2d82cbc6e550352e530e13fd385c4f21.png",
+    "assets/1701134718-89eb4bafa8693648cc35c6d5b108328d.png",
+    "assets/1701134718-d36f600bbd9ff306a24daabd014e5ebd.png",
+    "金蝶Apusic应用服务器-任意文件上传漏洞复现.md"
+  ]
+}
