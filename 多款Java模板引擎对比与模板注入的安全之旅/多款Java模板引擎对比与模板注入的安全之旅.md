@@ -1,15 +1,15 @@
 
 多款Java模板引擎对比与模板注入的安全之旅
 
-- - -
+* * *
 
 # 多款Java模板引擎对比与模板注入的安全之旅
 
 ## 1\. 常用模板引擎
 
--   FreeMarker
--   Velocity
--   Thymeleaf
+*   FreeMarker
+*   Velocity
+*   Thymeleaf
 
 ## 2\. FreeMarker
 
@@ -17,7 +17,7 @@
 
 官方文档：  
 Apache FreeMarker™ is a template engine: a Java library to generate text output (HTML web pages, e-mails, configuration files, source code, etc.) based on templates and changing data. Templates are written in the FreeMarker Template Language (FTL), which is a simple, specialized language.  
-[![](assets/1699257070-08e778fc51472b2ff719d10908de0514.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103172817-522ca654-7a2b-1.png)  
+[![](assets/1701606782-08e778fc51472b2ff719d10908de0514.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103172817-522ca654-7a2b-1.png)  
 This approach is often referred to as the MVC (Model View Controller) pattern, and is particularly popular for dynamic web pages. It helps in separating web page designers (HTML authors) from developers (Java programmers usually). Designers won't face complicated logic in templates, and can change the appearance of a page without programmers having to change or recompile code.
 
 FreeMarker技术将模板中占位变量和代码中响应给前台的数据，通过FreeMarker引擎对接直接输出响应给浏览器，提高了响应速度。  
@@ -230,7 +230,7 @@ run:745, Thread (java.lang)
 ```
 
 观察exec方法  
-[![](assets/1699257070-8675f54c452412516ab76284c24518a3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103172856-6939554a-7a2b-1.png)
+[![](assets/1701606782-8675f54c452412516ab76284c24518a3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103172856-6939554a-7a2b-1.png)
 
 ### 2.5 修复防御
 
@@ -410,7 +410,7 @@ poc
 $e.getClass().forName("java.lang.Runtime").getMethod("getRuntime",null).invoke(null,null).exec("cmd /C calc")
 ```
 
-[![](assets/1699257070-48d331a59570aac1cd6381d552afab86.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103172926-7b04d2fe-7a2b-1.png)  
+[![](assets/1701606782-48d331a59570aac1cd6381d552afab86.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103172926-7b04d2fe-7a2b-1.png)  
 命令执行成功，弹出计算器
 
 ### 3.5 简单分析
@@ -447,7 +447,7 @@ public boolean evaluate(Context context, Writer out, String logTag, String instr
 ```
 
 进入重载的evaluate方法  
-[![](assets/1699257070-57fcde55f2fa4a96102d6ff0bf29f98f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103172953-8b649cec-7a2b-1.png)  
+[![](assets/1701606782-57fcde55f2fa4a96102d6ff0bf29f98f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103172953-8b649cec-7a2b-1.png)  
 这个方法会调用RuntimeInstance类的parse方法进行解析  
 经过两重调用来到org\\apache\\velocity\\runtime\\parser\\Parser.class的parse方法
 
@@ -485,7 +485,7 @@ public SimpleNode parse(Reader reader, String templateName) throws ParseExceptio
 ```
 
 执行完process方法后，sn的值如下：  
-[![](assets/1699257070-e428bbdb79ed19b43cfc0b7e067a056f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173020-9b76c286-7a2b-1.png)  
+[![](assets/1701606782-e428bbdb79ed19b43cfc0b7e067a056f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173020-9b76c286-7a2b-1.png)  
 到目前为止，解析工作完成，函数调用栈如下：
 
 ```plain
@@ -550,10 +550,10 @@ run:745, Thread (java.lang)
 ```
 
 接下来就是渲染工作了，回到RuntimeInstance类的evaluate方法  
-[![](assets/1699257070-a6e5ed7a21981a1b3f186ef845a70210.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173043-a96467d6-7a2b-1.png)  
+[![](assets/1701606782-a6e5ed7a21981a1b3f186ef845a70210.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173043-a96467d6-7a2b-1.png)  
 进入render方法中进行渲染，这里从context取值去做模板解析，输出到output writer当中  
 在ASTMethod类的execute方法中反射调用runtime  
-[![](assets/1699257070-5bdf7ecb0f635e23b7d387c4ccfb34bd.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173103-b53e3744-7a2b-1.png)  
+[![](assets/1701606782-5bdf7ecb0f635e23b7d387c4ccfb34bd.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173103-b53e3744-7a2b-1.png)  
 函数调用栈：
 
 ```plain
@@ -669,9 +669,9 @@ Project is $project
 这段代码的主要作用是读取Velocity模板文件，替换模板中的占位符，然后使用给定的上下文对象进行模板渲染，并将渲染结果作为字符串返回  
 过程：
 
--   使用templateString.replace对模板文件里的内容进行替换，这里的替换值可控
--   runtimeServices.parse将模板内容进行解析
--   template.merge(ctx, out);将模板内容进行渲染，这里会调用SimpleNode#render，过程大致和上面一致
+*   使用templateString.replace对模板文件里的内容进行替换，这里的替换值可控
+*   runtimeServices.parse将模板内容进行解析
+*   template.merge(ctx, out);将模板内容进行渲染，这里会调用SimpleNode#render，过程大致和上面一致
 
 ### 3.6 参考
 
@@ -705,11 +705,11 @@ templateEngine.setTemplateResolver(templateResolver);
 
 **片段表达式**：
 
--   变量表达式：${...}
--   选择变量表达式：\*{...}
--   消息表达：#{...}
--   URL表达式：@{...}
--   片段表达式：~{...}
+*   变量表达式：${...}
+*   选择变量表达式：\*{...}
+*   消息表达：#{...}
+*   URL表达式：@{...}
+*   片段表达式：~{...}
 
 语法：  
 `~{templatename::selector}`表示在`/WEB-INF/templates/`目录下寻找名为`templatename`的模板中定义的`selector`  
@@ -1009,13 +1009,13 @@ private void addMatchingMappings(Collection<T> mappings, List<Match> matches, Ht
 }
 ```
 
-[![](assets/1699257070-c9d1f9f60de9c93c68370371075129a7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173142-cc8aa018-7a2b-1.png)  
+[![](assets/1701606782-c9d1f9f60de9c93c68370371075129a7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173142-cc8aa018-7a2b-1.png)  
 lookupHandlerMethod方法执行到最后的结果  
-[![](assets/1699257070-05a10ddba70d49d47f97ab1868ead863.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173200-d6e6dd1a-7a2b-1.png)  
+[![](assets/1701606782-05a10ddba70d49d47f97ab1868ead863.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173200-d6e6dd1a-7a2b-1.png)  
 getHandlerInternal方法执行到最后  
-[![](assets/1699257070-3b3e99ea82b8edf357a24710c7325ff6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173218-e19a2154-7a2b-1.png)  
+[![](assets/1701606782-3b3e99ea82b8edf357a24710c7325ff6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173218-e19a2154-7a2b-1.png)  
 getHandler方法执行到最后  
-[![](assets/1699257070-65d201498c6d7751ddc7872b185df22c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173236-ec58788e-7a2b-1.png)  
+[![](assets/1701606782-65d201498c6d7751ddc7872b185df22c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173236-ec58788e-7a2b-1.png)  
 获取到handler后，回到doDispatch函数，执行下面这行代码
 
 ```plain
@@ -1041,7 +1041,7 @@ protected HandlerAdapter getHandlerAdapter(Object handler) throws ServletExcepti
 ```
 
 **HandlerAdapter的作用是将具体的处理程序（handler）与Spring MVC框架进行适配，以便能够正确处理请求并生成响应。它扮演了一个桥梁的角色，连接了处理程序和框架的其他组件。包括处理程序适配、参数解析与绑定、处理程序执行、异常处理等**  
-[![](assets/1699257070-b50c9361a285f5391b3b25b6e679e216.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173254-f6fb6486-7a2b-1.png)  
+[![](assets/1701606782-b50c9361a285f5391b3b25b6e679e216.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173254-f6fb6486-7a2b-1.png)  
 继续返回doDispatch函数，执行下面代码
 
 ```plain
@@ -1073,7 +1073,7 @@ boolean applyPreHandle(HttpServletRequest request, HttpServletResponse response)
 }
 ```
 
-[![](assets/1699257070-066476cbdc75c77b7f10bfd882f1e73d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173313-0285c08a-7a2c-1.png)  
+[![](assets/1701606782-066476cbdc75c77b7f10bfd882f1e73d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173313-0285c08a-7a2c-1.png)  
 回到doDispatch函数，执行下面代码
 
 ```plain
@@ -1200,7 +1200,7 @@ protected ModelAndView invokeHandlerMethod(HttpServletRequest request,
 }
 ```
 
-[![](assets/1699257070-1d14d0d447de8382b516fe58bd4e39d9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173334-0f0c1f8e-7a2c-1.png)  
+[![](assets/1701606782-1d14d0d447de8382b516fe58bd4e39d9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173334-0f0c1f8e-7a2c-1.png)  
 进入invokeAndHandle方法
 
 ```plain
@@ -1251,7 +1251,7 @@ public Object invokeForRequest(NativeWebRequest request, @Nullable ModelAndViewC
 }
 ```
 
-[![](assets/1699257070-3019574fbe36a843f81f368c7e985c01.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173358-1da149fc-7a2c-1.png)  
+[![](assets/1701606782-3019574fbe36a843f81f368c7e985c01.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173358-1da149fc-7a2c-1.png)  
 进入doInvoke方法
 
 ```plain
@@ -1282,9 +1282,9 @@ protected Object doInvoke(Object... args) throws Exception {
 ```
 
 采用反射的方式调用目标控制方法  
-[![](assets/1699257070-7aac8c26922f921bc3716a5031b9374d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173418-293e6cea-7a2c-1.png)  
+[![](assets/1701606782-7aac8c26922f921bc3716a5031b9374d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173418-293e6cea-7a2c-1.png)  
 最终来到了自己编写的控制方法  
-[![](assets/1699257070-c4362054a8adcf2f61097dacaabbc86b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173434-330ffdc4-7a2c-1.png)  
+[![](assets/1701606782-c4362054a8adcf2f61097dacaabbc86b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173434-330ffdc4-7a2c-1.png)  
 回到invokeAndHandle方法，执行
 
 ```plain
@@ -1307,7 +1307,7 @@ public void handleReturnValue(@Nullable Object returnValue, MethodParameter retu
 }
 ```
 
-[![](assets/1699257070-3813dc85430e4432378c7b497f074f56.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173459-41b4c53a-7a2c-1.png)  
+[![](assets/1701606782-3813dc85430e4432378c7b497f074f56.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173459-41b4c53a-7a2c-1.png)  
 这里的handler为ViewNameMethodReturnValueHandler对象，进入handleReturnValue方法
 
 ```plain
@@ -1340,7 +1340,7 @@ protected boolean isRedirectViewName(String viewName) {
 }
 ```
 
-[![](assets/1699257070-dfd7e97dd91cc8f76b3a779a64aeb186.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173515-4afd5a30-7a2c-1.png)  
+[![](assets/1701606782-dfd7e97dd91cc8f76b3a779a64aeb186.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173515-4afd5a30-7a2c-1.png)  
 回到invokeHandlerMethod方法，执行下面代码
 
 ```plain
@@ -1378,7 +1378,7 @@ private ModelAndView getModelAndView(ModelAndViewContainer mavContainer,
 }
 ```
 
-[![](assets/1699257070-09d84ffdd7aca21cb54e97b118e5d5e9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173532-559b3886-7a2c-1.png)
+[![](assets/1701606782-09d84ffdd7aca21cb54e97b118e5d5e9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173532-559b3886-7a2c-1.png)
 
 再次回到doDispatch方法，执行下面代码
 
@@ -1511,7 +1511,7 @@ protected void render(ModelAndView mv, HttpServletRequest request, HttpServletRe
 }
 ```
 
-[![](assets/1699257070-542e856bec8b61a98def07e7a293bcf9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173555-62d6ca7e-7a2c-1.png)  
+[![](assets/1701606782-542e856bec8b61a98def07e7a293bcf9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173555-62d6ca7e-7a2c-1.png)  
 进入ThymeleafView对象的render方法
 
 ```plain
@@ -1651,7 +1651,7 @@ protected void renderFragment(Set<String> markupSelectorsToRender, Map<String, ?
 ```
 
 由于传入的模板名包含`::`，所以会使用Thymeleaf 解析器解析视图模板名称  
-[![](assets/1699257070-cf133f5baf33a62f68088e1c28800849.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173617-70294c42-7a2c-1.png)  
+[![](assets/1701606782-cf133f5baf33a62f68088e1c28800849.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173617-70294c42-7a2c-1.png)  
 进入StandardExpressionParser的parseExpression方法
 
 ```plain
@@ -1765,7 +1765,7 @@ static String preprocess(
 }
 ```
 
-[![](assets/1699257070-49efb96ed44ccc29a605cae9cc419dc7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173645-80a134b8-7a2c-1.png)  
+[![](assets/1701606782-49efb96ed44ccc29a605cae9cc419dc7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173645-80a134b8-7a2c-1.png)  
 进入Expression类的execute方法
 
 ```plain
@@ -1785,7 +1785,7 @@ public Object execute(
 ```
 
 逐步会到SimpleExpression类的executeSimple方法  
-[![](assets/1699257070-84c7c6462f9e2d6cf933793a7893b9c4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173703-8b6287ee-7a2c-1.png)  
+[![](assets/1701606782-84c7c6462f9e2d6cf933793a7893b9c4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231103173703-8b6287ee-7a2c-1.png)  
 之后的链会一直到达命名执行函数  
 **函数调用栈**：
 

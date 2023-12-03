@@ -4,7 +4,7 @@
 
 NSA组织“二次约会”freebsd平台样本剖析
 
-- - -
+* * *
 
 ## 概述
 
@@ -12,10 +12,10 @@ NSA组织“二次约会”freebsd平台样本剖析
 
 由于前两篇文章中，我们研究分析的1048/1060字节通信载荷样本均是在linux系统中运行，因此我们接下来尝试对适用于freebsd平台“二次约会”样本进行研究分析：
 
--   基于《NSA组织“二次约会”间谍软件通信模型剖析与对比》文章中“样本版本梳理及对比”章节内容，我们发现56字节通信载荷样本主要适用于freebsd系统，不定长字节通信载荷样本适用范围较广，适用于Linux、FreeBSD、Solaris等操作系统；
--   通过对比各版本样本的伪代码，发现NSA组织会随着样本版本迭代，从通信特征、通信算法、代码框架、编译选项、字符串加密等多个角度更新优化样本代码，加大逆向人员对其样本进行分析的难度；
--   通过多种尝试，构建freebsd系统环境，在对freebsd平台样本进行调试分析的过程中，由于程序触发多种异常导致进程退出，因此，笔者通过GDB指令对异常点函数进行绕过，强制向数据包处理函数传递IP载荷数据，并跳转至数据包处理函数处有效执行功能代码，实现在样本无法正常运行的情况下，仍可有效分析其核心功能代码的目的；
--   由于前期1048/1060字节通信载荷样本的通信解密程序无法成功解密56/60字节通信载荷样本的通信数据，因此，笔者又对通信模型进行了对比分析，发现其通信模型的不同点，并再次使用GO语言实现56/60字节通信载荷样本的通信模型解密；
+*   基于《NSA组织“二次约会”间谍软件通信模型剖析与对比》文章中“样本版本梳理及对比”章节内容，我们发现56字节通信载荷样本主要适用于freebsd系统，不定长字节通信载荷样本适用范围较广，适用于Linux、FreeBSD、Solaris等操作系统；
+*   通过对比各版本样本的伪代码，发现NSA组织会随着样本版本迭代，从通信特征、通信算法、代码框架、编译选项、字符串加密等多个角度更新优化样本代码，加大逆向人员对其样本进行分析的难度；
+*   通过多种尝试，构建freebsd系统环境，在对freebsd平台样本进行调试分析的过程中，由于程序触发多种异常导致进程退出，因此，笔者通过GDB指令对异常点函数进行绕过，强制向数据包处理函数传递IP载荷数据，并跳转至数据包处理函数处有效执行功能代码，实现在样本无法正常运行的情况下，仍可有效分析其核心功能代码的目的；
+*   由于前期1048/1060字节通信载荷样本的通信解密程序无法成功解密56/60字节通信载荷样本的通信数据，因此，笔者又对通信模型进行了对比分析，发现其通信模型的不同点，并再次使用GO语言实现56/60字节通信载荷样本的通信模型解密；
 
 ## 迭代样本对比
 
@@ -25,61 +25,61 @@ NSA组织“二次约会”freebsd平台样本剖析
 
 基于《NSA组织“二次约会”间谍软件通信模型剖析与对比》文章中“样本版本梳理及对比”章节内容，笔者发现：
 
--   样本从最初的大载荷通信（1048、1060）演变为小载荷通信（56、60），再到最后的不定长通信；
--   若尝试在海量流量数据中对其进行检测：
-    -   大载荷UDP通信数据肯定比小载荷UDP通信数据少，因此对检测系统的性能影响更小；
-    -   针对不定长UDP通信数据，意味着需要对大多数UDP数据包进行校验检测，处理的流量数据越多，对性能的影响越大；
--   样本的大载荷通信、小载荷通信中均可直接基于明文进行校验，不定长通信载荷中暂未发现明文特征；
-    -   通信载荷数据的output\[:4\]数据与output\[4:8\]数据相加等于0x61E57CC6；
+*   样本从最初的大载荷通信（1048、1060）演变为小载荷通信（56、60），再到最后的不定长通信；
+*   若尝试在海量流量数据中对其进行检测：
+    *   大载荷UDP通信数据肯定比小载荷UDP通信数据少，因此对检测系统的性能影响更小；
+    *   针对不定长UDP通信数据，意味着需要对大多数UDP数据包进行校验检测，处理的流量数据越多，对性能的影响越大；
+*   样本的大载荷通信、小载荷通信中均可直接基于明文进行校验，不定长通信载荷中暂未发现明文特征；
+    *   通信载荷数据的output\[:4\]数据与output\[4:8\]数据相加等于0x61E57CC6；
 
 ### 通信算法优化
 
 通过对比分析，笔者发现：
 
--   大载荷通信（1048、1060）使用的是修改后的RC6算法，通信算法中对RC6算子、keyWords循环次数进行了修改；
--   小载荷通信（56、60）也是使用的是修改后的RC6算法，通信算法中对RC6算子进行了修改；
--   不定长载荷通信使用的是Salsa20算法，算法的加解密性能更好；
+*   大载荷通信（1048、1060）使用的是修改后的RC6算法，通信算法中对RC6算子、keyWords循环次数进行了修改；
+*   小载荷通信（56、60）也是使用的是修改后的RC6算法，通信算法中对RC6算子进行了修改；
+*   不定长载荷通信使用的是Salsa20算法，算法的加解密性能更好；
 
 ### 代码框架优化
 
 通过对比分析，笔者发现：
 
--   随着版本的迭代，样本逆向分析的难度越来越大，代码复杂程度越来越高；
--   大载荷通信（1048、1060）、小载荷通信（56、60）样本中，通过调用libpcap 库与 libnet 库中的函数实现网络流量嗅探及特定网络会话劫持篡改功能；
--   不定长载荷通信样本中，通过调用使用BPF技术捕获数据包；
+*   随着版本的迭代，样本逆向分析的难度越来越大，代码复杂程度越来越高；
+*   大载荷通信（1048、1060）、小载荷通信（56、60）样本中，通过调用libpcap 库与 libnet 库中的函数实现网络流量嗅探及特定网络会话劫持篡改功能；
+*   不定长载荷通信样本中，通过调用使用BPF技术捕获数据包；
 
 ### 编译选项优化
 
 通过对比分析，笔者发现：
 
--   1048字节通信载荷样本中，部分反编译代码函数有明显符号标记；
--   56字节通信载荷样本中，反编译代码函数中的明显符号标记被删除，但调用的库代码相同；
+*   1048字节通信载荷样本中，部分反编译代码函数有明显符号标记；
+*   56字节通信载荷样本中，反编译代码函数中的明显符号标记被删除，但调用的库代码相同；
 
 ### 远控指令操作简单化
 
 通过对比分析，笔者发现：
 
--   随着版本的迭代，样本远控指令从最初只支持11个，到后续支持19个；
--   随着版本的迭代，从攻击操控者角度新增了部分远控指令，例如：rulewizard指令功能与rule指令功能一致，均是用于配置规则，但rule指令基于命令参数实现规则配置，rulewizard指令基于一步步的问题提示引导操控者填写规则内容，实现配置规则的功能；
+*   随着版本的迭代，样本远控指令从最初只支持11个，到后续支持19个；
+*   随着版本的迭代，从攻击操控者角度新增了部分远控指令，例如：rulewizard指令功能与rule指令功能一致，均是用于配置规则，但rule指令基于命令参数实现规则配置，rulewizard指令基于一步步的问题提示引导操控者填写规则内容，实现配置规则的功能；
 
 rulewizard指令截图如下：
 
-[![](assets/1701134922-9df09b4416c4fb5f72fa436b405ca02f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127094743-f4ad2036-8cc6-1.png)
+[![](assets/1701606481-9df09b4416c4fb5f72fa436b405ca02f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127094743-f4ad2036-8cc6-1.png)
 
 ### 字符串加密
 
 通过对比分析，笔者发现：
 
--   在低版本样本中，样本中部分字符串是以明文形式进行存放的；
--   在高版本样本中，以明文形式进行存放的字符串已经被加密存放了，且相同字符串的加密数据不同；
+*   在低版本样本中，样本中部分字符串是以明文形式进行存放的；
+*   在高版本样本中，以明文形式进行存放的字符串已经被加密存放了，且相同字符串的加密数据不同；
 
 低版本样本代码截图如下：
 
-[![](assets/1701134922-78e7ccee43d674c3e7b91fe3b1dcb4e4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127094807-036d7f58-8cc7-1.png)
+[![](assets/1701606481-78e7ccee43d674c3e7b91fe3b1dcb4e4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127094807-036d7f58-8cc7-1.png)
 
 高版本样本代码截图如下：
 
-[![](assets/1701134922-92a4db5f211846f0af52c499089a5f82.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127094822-0bd6c6fe-8cc7-1.png)
+[![](assets/1701606481-92a4db5f211846f0af52c499089a5f82.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127094822-0bd6c6fe-8cc7-1.png)
 
 ## Freebsd系统环境构建
 
@@ -87,7 +87,7 @@ rulewizard指令截图如下：
 
 通过对比分析所有公开的freebsd平台样本，发现其指令集架构为x86、x86\_64，因此我们只需要安装对应的操作系统即可，相关文件信息如下：
 
-[![](assets/1701134922-33403fd8ee4676da2c61f048e61e0b40.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127094837-15098a54-8cc7-1.png)
+[![](assets/1701606481-33403fd8ee4676da2c61f048e61e0b40.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127094837-15098a54-8cc7-1.png)
 
 通过文件信息可知，相关freebsd间谍软件对应的系统版本为4.4（2001年发布）、5.0（2003年发布）、5.4（2004年发布），因此，笔者准备尝试安装上述操作系统，通过搜索引擎查找发现可通过 [http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/old-releases/i386/ISO-IMAGES/4.4/](http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/old-releases/i386/ISO-IMAGES/4.4/) 网站下载安装低版本的freebsd系统；成功下载待安装镜像后，笔者开始尝试构建低版本freebsd系统，逻辑上安装操作系统应该很简单，但上述操作系统版本实在太老且无相关资料，因此，在操作系统构建过程中发现了不少问题，导致一直无法在操作系统中执行第三方程序。
 
@@ -97,7 +97,7 @@ rulewizard指令截图如下：
 
 ### 环境构建
 
--   逆向工具
+*   逆向工具
 
 ```plain
 #更新软件包索引
@@ -106,11 +106,11 @@ pkg update
 pkg install gdb
 ```
 
--   运行报错处理
+*   运行报错处理
 
 在开始样本分析前，发现缺少"libc.so.4"、“libc.so.6”等链接库，相关截图如下：
 
-[![](assets/1701134922-100115f7468d996320c88342028c1486.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127094859-21fe21ca-8cc7-1.png)
+[![](assets/1701606481-100115f7468d996320c88342028c1486.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127094859-21fe21ca-8cc7-1.png)
 
 经过分析，发现可执行如下命令处理：
 
@@ -132,19 +132,19 @@ pkg install misc/compat9x
 
 在尝试对freebsd平台seconddate\_ImplantStandalone\_1.7.0.3\_trunklien样本进行调试时，发现运行样本后，进程列表中无此进程，并且使用控制端也无法正常连接；同时，运行样本后，也未发现任何报错情况，相关截图如下：
 
-[![](assets/1701134922-484553162f7bce8ee5a30c2430001d96.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127094916-2c652028-8cc7-1.png)
+[![](assets/1701606481-484553162f7bce8ee5a30c2430001d96.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127094916-2c652028-8cc7-1.png)
 
 ### 曙光-环境没问题
 
 由于程序无法运行，因此推测可能是由以下原因引起：
 
--   系统环境不适配；
--   程序调用的链接库代码不适配；
--   程序遇到异常退出了；
+*   系统环境不适配；
+*   程序调用的链接库代码不适配；
+*   程序遇到异常退出了；
 
 尝试使用gdb调试，发现可以使用gdb开展正常调试活动，确定此样本是可以在此系统环境中运行的，相关截图如下：
 
-[![](assets/1701134922-8152afecbadafd2fb9291b86c3b94a26.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127094931-358cd51a-8cc7-1.png)
+[![](assets/1701606481-8152afecbadafd2fb9291b86c3b94a26.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127094931-358cd51a-8cc7-1.png)
 
 ### 修复-fork函数问题
 
@@ -188,13 +188,13 @@ Thread 3.1 hit Breakpoint 2, 0x0804992a in ?? ()
 
 相关截图如下：
 
-[![](assets/1701134922-5b1d22b5d5236662889799fcddb6439a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127094947-3f0bbd5e-8cc7-1.png)
+[![](assets/1701606481-5b1d22b5d5236662889799fcddb6439a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127094947-3f0bbd5e-8cc7-1.png)
 
-[![](assets/1701134922-1c8a802f0f7276b81c7555bde3b8d21c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095004-49053e5c-8cc7-1.png)
+[![](assets/1701606481-1c8a802f0f7276b81c7555bde3b8d21c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095004-49053e5c-8cc7-1.png)
 
 确定问题后，尝试对问题进行排查，对报错前的代码进行调试分析，发现在执行核心功能代码前，样本将执行部分初始化操作，例如开启子进程等行为，当样本调用fork函数开启子进程时，由于fork函数执行失败引发异常，相关引发异常截图如下：
 
-[![](assets/1701134922-1ff2aa7d162b4163f6fc6d4e735c05ee.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095020-523a08ea-8cc7-1.png)
+[![](assets/1701606481-1ff2aa7d162b4163f6fc6d4e735c05ee.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095020-523a08ea-8cc7-1.png)
 
 **样本执行过程中引发异常，我们就无法继续往下分析了吗？**
 
@@ -244,13 +244,13 @@ Breakpoint 3, 0x0804992a in ?? ()
 (gdb)
 ```
 
-[![](assets/1701134922-2e34dae72e09e826f7c9d68bf720e683.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095038-5d0e1aea-8cc7-1.png)
+[![](assets/1701606481-2e34dae72e09e826f7c9d68bf720e683.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095038-5d0e1aea-8cc7-1.png)
 
 ### 修复-网络流量嗅探函数问题
 
 继续调试样本，发现样本在sub\_8049AC0函数代码中调用获取网卡信息的函数时，获取网卡信息的函数无法成功获取网卡信息，因此在未执行网络流量嗅探代码前即将退出程序，相关代码截图如下：
 
-[![](assets/1701134922-9016ebde1a6bf6c432481205ef80c19d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095055-6736bf68-8cc7-1.png)
+[![](assets/1701606481-9016ebde1a6bf6c432481205ef80c19d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095055-6736bf68-8cc7-1.png)
 
 **无法执行网络流量嗅探代码，就无法对后续远控指令及通信行为进行分析了吗？**
 
@@ -260,7 +260,7 @@ Breakpoint 3, 0x0804992a in ?? ()
 
 为快速查找处理数据包的函数，我们可以根据网络通信函数或者数据包中的部分特征16进制进行搜索，最终发现sub\_8051A64函数即为数据包处理函数，相关截图如下：
 
-[![](assets/1701134922-b7f6c4d3c6b15337c9c1c0c53a17a6dd.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095111-70b2ce4c-8cc7-1.png)
+[![](assets/1701606481-b7f6c4d3c6b15337c9c1c0c53a17a6dd.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095111-70b2ce4c-8cc7-1.png)
 
 在经过多次尝试后，笔者最终构造如下gdb调试指令，可成功向数据包处理函数传递IP载荷数据，并跳转至数据包处理函数处有效执行功能代码，相关GDB调试指令如下：
 
@@ -310,7 +310,7 @@ x /10xw $esp
 
 相关截图如下：
 
-[![](assets/1701134922-6d7cdbb863ad9b2fc49a2876247b5a76.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095131-7cfaea18-8cc7-1.png)
+[![](assets/1701606481-6d7cdbb863ad9b2fc49a2876247b5a76.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095131-7cfaea18-8cc7-1.png)
 
 尝试编写辅助程序，主要用于将ip数据包载荷进行拆分，打印成待执行的GDB调试指令，相关代码如下：
 
@@ -357,11 +357,11 @@ func IntToBytes(n int) []byte {
 
 当前样本RC6算法初始化函数代码截图如下：
 
-[![](assets/1701134922-677fe60180613b60041c626d2c99ec30.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095149-8745715a-8cc7-1.png)
+[![](assets/1701606481-677fe60180613b60041c626d2c99ec30.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095149-8745715a-8cc7-1.png)
 
 1048/1060字节通信载荷样本RC6算法初始化函数代码截图如下：
 
-[![](assets/1701134922-97557dfcf1f66b93c5a69d5f0360fc6b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095205-91224522-8cc7-1.png)
+[![](assets/1701606481-97557dfcf1f66b93c5a69d5f0360fc6b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095205-91224522-8cc7-1.png)
 
 通过GDB调试，提取RC6算法的相关rk值如下：
 
@@ -429,7 +429,7 @@ func New(key []byte) (cipher.Block, error) {
 
 数据包截图如下：
 
-[![](assets/1701134922-fba4e5c47b3c9bfff11d62af8e19c3bf.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095224-9c4d9e88-8cc7-1.png)
+[![](assets/1701606481-fba4e5c47b3c9bfff11d62af8e19c3bf.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095224-9c4d9e88-8cc7-1.png)
 
 ```plain
 #加密数据
@@ -454,8 +454,8 @@ cc703df0995df927    #RC6算法随机iv值
 
 由于在调试环境中，网络流量嗅探相关的库函数无法正常运行，同时，样本处理远控指令后的响应发包也是调用的相同库中的函数代码，因此此样本暂无法正常发送响应数据包，相关代码截图如下：
 
-[![](assets/1701134922-d0bf2670798b63bfc6b2517ed7590654.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095243-a78239f8-8cc7-1.png)
+[![](assets/1701606481-d0bf2670798b63bfc6b2517ed7590654.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095243-a78239f8-8cc7-1.png)
 
-[![](assets/1701134922-e6d29e7a5c63d82d661bc79de9feff8b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095257-b000dec2-8cc7-1.png)
+[![](assets/1701606481-e6d29e7a5c63d82d661bc79de9feff8b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127095257-b000dec2-8cc7-1.png)
 
 虽然此样本无法发送响应数据包，但其实我们是可以找到发包内容的，所以我们可以自行构建程序发送响应数据包，至此，便能模拟实现此样本的所有通信行为，虽然环节过于繁琐复杂，但在无法正常运行木马程序的情况下，也算是一种较高效的问题解决思路。

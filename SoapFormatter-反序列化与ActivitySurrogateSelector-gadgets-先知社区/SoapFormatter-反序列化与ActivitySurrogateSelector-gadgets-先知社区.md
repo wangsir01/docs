@@ -4,7 +4,7 @@
 
 SoapFormatter 反序列化与ActivitySurrogateSelector gadgets
 
-- - -
+* * *
 
 ### SoapFormatter
 
@@ -57,9 +57,9 @@ namespace SoapDeserializationTest
 }
 ```
 
-[![](assets/1699929849-e5f9f3b4e1053735ee90aeb8c20867a7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201935-1498fdf6-7e31-1.png)
+[![](assets/1701606703-e5f9f3b4e1053735ee90aeb8c20867a7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201935-1498fdf6-7e31-1.png)
 
-[![](assets/1699929849-de660c0e6f2f9715155857298238e0f3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201943-19177628-7e31-1.png)
+[![](assets/1701606703-de660c0e6f2f9715155857298238e0f3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201943-19177628-7e31-1.png)
 
 BinaryFormatter一样可以设置`SerializationBinder`和`SerializationSurrogate`代理选择器
 
@@ -261,7 +261,7 @@ namespace SerializationCollection
 }
 ```
 
-[![](assets/1699929849-747f680cb417f4c2f80945c83f278ba3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202009-28c67a24-7e31-1.png)
+[![](assets/1701606703-747f680cb417f4c2f80945c83f278ba3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202009-28c67a24-7e31-1.png)
 
 因为序列化走的是`ISurrogateSelector#SetObjectData`，而反序列化使用的是原来的方式进行反序列化，所以会报错。
 
@@ -275,17 +275,17 @@ namespace SerializationCollection
 surrogateSelector.GetSurrogate`获取`Surrogate`，`this.serializationSurrogate.GetObjectData`调用`serializationSurrogate`对于的`GetObjectData
 ```
 
-[![](assets/1699929849-1494275cc44db039b665b2c127f9d357.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202018-2e39026a-7e31-1.png)
+[![](assets/1701606703-1494275cc44db039b665b2c127f9d357.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202018-2e39026a-7e31-1.png)
 
-[![](assets/1699929849-7e75cd2a0d6f28da0b9aa9bf9070e6e9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202026-32b2aa08-7e31-1.png)
+[![](assets/1701606703-7e75cd2a0d6f28da0b9aa9bf9070e6e9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202026-32b2aa08-7e31-1.png)
 
 ### SurrogateSelector反序列化调用过程
 
-[![](assets/1699929849-a3a9da11d2faf1ef7a48a57faf80ebbf.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202033-3707a798-7e31-1.png)
+[![](assets/1701606703-a3a9da11d2faf1ef7a48a57faf80ebbf.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202033-3707a798-7e31-1.png)
 
 调用`this.CheckSerializable`检查指定的Type是否可以被序列化
 
-[![](assets/1699929849-7a48da8400f9860e42f2654ee80412e1.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202048-40259f60-7e31-1.png)
+[![](assets/1701606703-7a48da8400f9860e42f2654ee80412e1.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202048-40259f60-7e31-1.png)
 
 ```plain
 private void CheckSerializable(Type t)
@@ -313,13 +313,13 @@ private bool HasSurrogate(Type t)
 
 如果可序列化或存在`Surrogate`则往下执行，`FormatterServices.GetUninitializedObject(pr.PRdtType);`
 
-[![](assets/1699929849-77ba5de832aeac0b5922e9514112d1b7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202102-486e5202-7e31-1.png)
+[![](assets/1701606703-77ba5de832aeac0b5922e9514112d1b7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202102-486e5202-7e31-1.png)
 
 获取对象
 
-[![](assets/1699929849-0822292249d5a236c0c3331a8975e105.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202109-4c7fffee-7e31-1.png)
+[![](assets/1701606703-0822292249d5a236c0c3331a8975e105.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202109-4c7fffee-7e31-1.png)
 
-[![](assets/1699929849-59b49d13daeba75581da198a02c24836.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202114-4f9f2646-7e31-1.png)
+[![](assets/1701606703-59b49d13daeba75581da198a02c24836.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202114-4f9f2646-7e31-1.png)
 
 ### ActivitySurrogateSelector
 
@@ -430,11 +430,11 @@ public void GetObjectData(object obj, SerializationInfo info, StreamingContext c
 
 在这个`GetObjectData`方法执行的时候会把obj对象获取的obj的Type类型存储到type中获取到的对象，memberDatas则存储对象，最后讲Type类型设置为`ObjectSerializedRef`类型
 
-[![](assets/1699929849-59d7f47a7de703115fa01a8e19e3b907.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202220-76fa2f74-7e31-1.png)
+[![](assets/1701606703-59d7f47a7de703115fa01a8e19e3b907.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202220-76fa2f74-7e31-1.png)
 
 而这个`ObjectSerializedRef`是标识`Serializable`的，可被序列化和反序列化的
 
-[![](assets/1699929849-028acf57644f0c4369b3786551897148.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202226-7a59a4ec-7e31-1.png)
+[![](assets/1701606703-028acf57644f0c4369b3786551897148.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202226-7a59a4ec-7e31-1.png)
 
 那么有了`ActivitySurrogateSelector`的加持下，在寻找gadgets sink点的过程中，就可以利用那些不能序列化的类。
 
@@ -512,9 +512,9 @@ class Program
 
 使用`IsEven`方法作为泛型委托进行筛选,使用`DoubleToString`方法作为泛型委托进行映射
 
-[![](assets/1699929849-4f4ef682cb2dbebaab6c9cfc996fee66.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202242-839f859e-7e31-1.png)
+[![](assets/1701606703-4f4ef682cb2dbebaab6c9cfc996fee66.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202242-839f859e-7e31-1.png)
 
-[![](assets/1699929849-c59aafb175d0e302aff95440c16c6064.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202250-889b8624-7e31-1.png)
+[![](assets/1701606703-c59aafb175d0e302aff95440c16c6064.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202250-889b8624-7e31-1.png)
 
 Where 方法里面，第一个参数传递一个集合，第二个为一个Func泛型委托,它接收类型它接收类型为
 
@@ -529,8 +529,8 @@ LINQ的延迟执行是指查询操作不会立即执行，而是在需要结果�
 1.  枚举（遍历）查询结果：当对LINQ查询结果进行迭代或枚举时，查询会立即执行并生成相应的结果。这可以通过`foreach`循环、LINQ的扩展方法（如`ToList()`、`ToArray()`等），或直接使用LINQ查询结果的迭代器方法来实现。
 2.  强制立即执行操作：某些LINQ操作会强制查询立即执行以生成结果，而不是延迟执行。这些操作包括：
     
-3.  -   聚合操作，如`Count()`、`Sum()`、`Average()`等，它们需要遍历整个查询结果来计算聚合值。
-    -   转换操作，如`ToList()`、`ToArray()`、`ToDictionary()`等，它们将查询结果转换为新的集合类型，需要立即计算并生成新的集合。
+3.  *   聚合操作，如`Count()`、`Sum()`、`Average()`等，它们需要遍历整个查询结果来计算聚合值。
+    *   转换操作，如`ToList()`、`ToArray()`、`ToDictionary()`等，它们将查询结果转换为新的集合类型，需要立即计算并生成新的集合。
 
 除了上述情况外，延迟执行的LINQ查询会在以下情况下推迟执行：
 
@@ -582,7 +582,7 @@ class Program
 
 结合上面知识点来看的话，我们只需要构造合适的方法交给LINQ来委托运行就可以了
 
-[![](assets/1699929849-9c7fdf88e87a260255b8ae3776fcfdc7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202304-90b2a356-7e31-1.png)
+[![](assets/1701606703-9c7fdf88e87a260255b8ae3776fcfdc7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202304-90b2a356-7e31-1.png)
 
 ```plain
 using System;
@@ -608,7 +608,7 @@ class Program
     }
 ```
 
-[![](assets/1699929849-13d32baaed7245ab3cbbafd77817bd2e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202415-bb6cfb6e-7e31-1.png)
+[![](assets/1701606703-13d32baaed7245ab3cbbafd77817bd2e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202415-bb6cfb6e-7e31-1.png)
 
 这个泛型委托传入的是byte类型，返回的是`Assembly`类型
 
@@ -685,7 +685,7 @@ ICollection -> AggregateDictionary -> IDictionary
 IDictionary -> DesignerVerb -> ToString
 ```
 
-[![](assets/1699929849-2ee2c3a704683f5a1336214de5a6533f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202547-f22484ec-7e31-1.png)
+[![](assets/1701606703-2ee2c3a704683f5a1336214de5a6533f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202547-f22484ec-7e31-1.png)
 
 ```plain
 // PagedDataSource maps an arbitrary IEnumerable to an ICollection
@@ -702,13 +702,13 @@ typeof(MenuCommand).GetField("properties", BindingFlags.NonPublic | BindingFlags
 
 第一步，使用`PagedDataSource`类将`IEnumerable`类型转换为`ICollection`类型，该类实现`ICollection`，dataSource类型是`IEnumerable`
 
-[![](assets/1699929849-63203072225bde16c1772e65a78c0f8a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202601-faa962a4-7e31-1.png)
+[![](assets/1701606703-63203072225bde16c1772e65a78c0f8a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202601-faa962a4-7e31-1.png)
 
 第二步：
 
 将 `ICollection` 类型转换为 `IDictionary` 类型
 
-[![](assets/1699929849-2041234d2f20b0846bbd9349e231bb77.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202608-fe96b98e-7e31-1.png)
+[![](assets/1701606703-2041234d2f20b0846bbd9349e231bb77.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202608-fe96b98e-7e31-1.png)
 
 第三步：DesignerVerb类型的ToString()函数会枚举`IDictionary`
 
@@ -730,11 +730,11 @@ public override string ToString() {
 
 他的`this.Properties`是`MenuCommand`类的`Properties`属性，类型为`IDictionary`。`ToString`会调用`Properties["Text"]`，如果将这个`Properties`属性设置为构造的`AggregateDictionary` 恶意对象。这个会触发LINQ。
 
-[![](assets/1699929849-67b80af881fbadbdba4a83a32fc9d56b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202618-04972512-7e32-1.png)
+[![](assets/1701606703-67b80af881fbadbdba4a83a32fc9d56b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202618-04972512-7e32-1.png)
 
 以上这里手工调用了`ToString`来触发，那么现在还差一步就是在反序列化的过程中怎么去触发
 
-[![](assets/1699929849-1c11d14dff387c6b37cb5c28b7df6e23.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202626-0934a900-7e32-1.png)
+[![](assets/1701606703-1c11d14dff387c6b37cb5c28b7df6e23.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202626-0934a900-7e32-1.png)
 
 ```plain
 // Hashtable.Insert()
@@ -759,13 +759,13 @@ internal static String GetResourceString(String key, params Object[] values) {
 
 在`GetResourceString`函数里，`values`被传给了`String.Format()`，由于`values`不是`string`类型，会导致其调用`ToSTring()`方法
 
-[![](assets/1699929849-0b65400648165a1aafbfd206a2b6e152.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202638-105168f4-7e32-1.png)
+[![](assets/1701606703-0b65400648165a1aafbfd206a2b6e152.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202638-105168f4-7e32-1.png)
 
 反射设置2个key为`DesignerVerb`，到抛出异常调用`GetResourceString`调用的时候会把`values`被传给了`String.Format()`，从而`DesignerVerb`的ToString方法完成串联。
 
-[![](assets/1699929849-abb32dc30e7e7b03752a1abf8fd3e467.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202654-19f41fd2-7e32-1.png)
+[![](assets/1701606703-abb32dc30e7e7b03752a1abf8fd3e467.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202654-19f41fd2-7e32-1.png)
 
-[![](assets/1699929849-d468c6a44a37c0bb729be69a587d8325.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202702-1e818d6e-7e32-1.png)
+[![](assets/1701606703-d468c6a44a37c0bb729be69a587d8325.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202702-1e818d6e-7e32-1.png)
 
 ```plain
 using System;
@@ -917,7 +917,7 @@ public void GetObjectData(SerializationInfo info, StreamingContext context)
 
 来看到`State`的构造方法就知道了
 
-[![](assets/1699929849-c5e7e2bc52ba7c43648265a1fa0e9457.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202725-2c6bb0e4-7e32-1.png)
+[![](assets/1701606703-c5e7e2bc52ba7c43648265a1fa0e9457.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202725-2c6bb0e4-7e32-1.png)
 
 遍历`enumerator`获取`PropertyBagBinary`的value，调用`this.propBag.Read`，进行`BinaryFormatter`的`Deserialize`反序列化操作。
 
@@ -950,7 +950,7 @@ byte[] -> Assembly.Load -> Assembly -> Assembly.GetType -> Type[] -> Activator.C
 
 我们将手工设置`DisableActivitySurrogateSelectorTypeCheck`给取消会发现这段代码序列化和反序列化都会失败
 
-[![](assets/1699929849-9a773dfa7c3ad8fc104ebddc9b954b39.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202736-32c3b482-7e32-1.png)
+[![](assets/1701606703-9a773dfa7c3ad8fc104ebddc9b954b39.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108202736-32c3b482-7e32-1.png)
 
 在.NET 4.8 开始，微软修复了ActivitySurrogateSelector 的漏洞，具体代码实现在`ActivitySurrogateSelector+ObjectSurrogate`类中的`GetObjectData`方法有这么一个判断
 

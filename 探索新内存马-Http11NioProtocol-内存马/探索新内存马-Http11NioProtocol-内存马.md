@@ -1,13 +1,13 @@
 
 探索新内存马 Http11NioProtocol 内存马
 
-- - -
+* * *
 
 # 探索新内存马 Http11NioProtocol 内存马
 
 ## 前言
 
-[![](assets/1698892947-7a38fadc8a239ad330e8d87d4c97e15f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231101162917-bf802dc6-7890-1.png)
+[![](assets/1701606835-7a38fadc8a239ad330e8d87d4c97e15f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231101162917-bf802dc6-7890-1.png)
 
 当我想知道访问一个 Servlet 的调用是怎么样子的时候，调用链调试出来之后，我发现其中还有一个地方可以被利用写成内存马。就是在图上的 Processor 处，而且有以下优点：
 
@@ -51,7 +51,7 @@ run:745, Thread (java.lang)
 // 代码段 -> processor.setSslSupport(wrapper.getSslSupport(getProtocol().getClientCertProvider()));
 ```
 
-[![](assets/1698892947-6f71611effd074806d224eb4e4c3e4ba.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231101162918-bfa97bc2-7890-1.png)
+[![](assets/1701606835-6f71611effd074806d224eb4e4c3e4ba.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231101162918-bfa97bc2-7890-1.png)
 
 ## 思路
 
@@ -61,7 +61,7 @@ run:745, Thread (java.lang)
 
 getProtocol() 方法得到的是一个 Http11NioProtocol 对象。
 
-[![](assets/1698892947-d6fd9a059099f3d496ac08217f5c7533.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231101162918-bfd228b0-7890-1.png)
+[![](assets/1701606835-d6fd9a059099f3d496ac08217f5c7533.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231101162918-bfd228b0-7890-1.png)
 
 ### 是否可以替换目标对象
 
@@ -69,11 +69,11 @@ getProtocol() 方法得到的是一个 Http11NioProtocol 对象。
 
 现在看到 getProtocol() 方法在 AbstractProtocol$ConnectionHandler 中，但是**不存在**一个预期中的 setProtocol() 方法。难道我们就没有办法替换掉方法得到的 proto 了吗？
 
-[![](assets/1698892947-ccf5670cbd78059bb40d8a15a305b7af.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231101162918-bff78380-7890-1.png)
+[![](assets/1701606835-ccf5670cbd78059bb40d8a15a305b7af.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231101162918-bff78380-7890-1.png)
 
 很明显这个 getProtocol() 方法是获得 AbstractProtocol$ConnectionHandler 对象中的 this.proto。假如我们可以拿到AbstractProtocol$ConnectionHandler 对象，然后替换掉对象里面的字段proto不就好了吗？看起来有点暴力，但是经过实验证明这是可行的。
 
-[![](assets/1698892947-fbd11075ef700d7c1ced0652506a2e90.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231101162918-c01cfab6-7890-1.png)
+[![](assets/1701606835-fbd11075ef700d7c1ced0652506a2e90.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231101162918-c01cfab6-7890-1.png)
 
 ### 获取 AbstractProtocol$ConnectionHandler 对象
 
@@ -139,7 +139,7 @@ field.set(obj, new EvilHttp11NioProtocol());
 
 因为在这个地方，Request 对象还没有初始化，所以在这里拿到 socket 去获取到传入的参数。但是回显的问题暂时无法解决。发现在这里就可以看到传入的报文了。
 
-[![](assets/1698892947-74a2317aeb16d6d8bf26007c73bcc063.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231101162919-c0494314-7890-1.png)
+[![](assets/1701606835-74a2317aeb16d6d8bf26007c73bcc063.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231101162919-c0494314-7890-1.png)
 
 获取参数代码如下：
 
@@ -419,10 +419,10 @@ Connection: close
 
 当前研究进度，此内存马有以下缺点：
 
--   获得的参数是上一次报文的参数；
--   无法有回显；
--   未在其他 Tomcat版本测试；
+*   获得的参数是上一次报文的参数；
+*   无法有回显；
+*   未在其他 Tomcat版本测试；
 
 ### 优点
 
--   植入后隐蔽性良好；
+*   植入后隐蔽性良好；

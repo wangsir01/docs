@@ -1,7 +1,7 @@
 
 深入研究Tomcat内存马的攻击技术
 
-- - -
+* * *
 
 # 深入研究Tomcat内存马的攻击技术
 
@@ -528,9 +528,9 @@ Filter的init方法和doFilter方法是谁调用的呢？Filter是怎么被调�
 
 根据上一节描述的Tomcat配置文件解析过程，在应用程序中动态添加一个filter的过程如下：
 
--   调用ApplicationContext的addFilter方法创建FilterDef对象
--   调用StandardContext的filterStart方法得到filterConfigs
--   调用ApplicationFilterRegistration的addMappingForUrlPatterns生成filterMaps（可以将自定义的filter放在filterMaps中的第一位，有两种方法：a.手动修改filterMaps的顺序 b.调用StandardContext的addFilterMapBefore方法将该filter放入filterMaps第一位）
+*   调用ApplicationContext的addFilter方法创建FilterDef对象
+*   调用StandardContext的filterStart方法得到filterConfigs
+*   调用ApplicationFilterRegistration的addMappingForUrlPatterns生成filterMaps（可以将自定义的filter放在filterMaps中的第一位，有两种方法：a.手动修改filterMaps的顺序 b.调用StandardContext的addFilterMapBefore方法将该filter放入filterMaps第一位）
 
 另外，在实现内存马的时候，可以模仿以上函数的代码构建filterDefs、filterMaps、filterConfigs这三个变量
 
@@ -676,11 +676,11 @@ public static ApplicationFilterChain createFilterChain(ServletRequest request, W
 ```
 
 第一：尝试从request中获取filterChain，如果获取不到，就创建一个新的filterChain  
-[![](assets/1699929571-94622aa09ef62230e18b547c6feba69f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111134355-4d5a39a4-8055-1.png)  
+[![](assets/1701606655-94622aa09ef62230e18b547c6feba69f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111134355-4d5a39a4-8055-1.png)  
 第二：设置servlet，获取filterMaps  
-[![](assets/1699929571-d80e6088ed44f214ea46a0f35556eda4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111134424-5e911062-8055-1.png)  
+[![](assets/1701606655-d80e6088ed44f214ea46a0f35556eda4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111134424-5e911062-8055-1.png)  
 第三：将相关的路径映射过滤器添加到此过滤器链中  
-[![](assets/1699929571-67efd827c75be52963a1d49af20c0493.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111134446-6bb1b9ea-8055-1.png)  
+[![](assets/1701606655-67efd827c75be52963a1d49af20c0493.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111134446-6bb1b9ea-8055-1.png)  
 filterMap.getFilterName得到的是name，而context.findFilterConfig是根据name找filterConfigs中对应的值  
 进入addFilter
 
@@ -704,17 +704,17 @@ void addFilter(ApplicationFilterConfig filterConfig) {
 }
 ```
 
-[![](assets/1699929571-0588eaab55c19304d2f60c8ec8f982e5.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111134510-7a117494-8055-1.png)  
+[![](assets/1701606655-0588eaab55c19304d2f60c8ec8f982e5.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111134510-7a117494-8055-1.png)  
 完成一轮for循环后，继续下一轮，直到所有符合条件的filterMap都添加到filterChain中  
 第四：添加与服务程序名称相匹配的筛选器，即第二个for循环  
 第五：返回完成的filterChain  
-[![](assets/1699929571-8adb69d0f04a3e1242c30e721374132e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111134532-870f5648-8055-1.png)
+[![](assets/1701606655-8adb69d0f04a3e1242c30e721374132e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111134532-870f5648-8055-1.png)
 
 接下来返回StandardWrapperValve.invoke方法，调用filterChain的doFilter方法  
-[![](assets/1699929571-1d51203db62f534b7d28968beba103de.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111134553-93cec210-8055-1.png)  
+[![](assets/1701606655-1d51203db62f534b7d28968beba103de.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111134553-93cec210-8055-1.png)  
 进入internalDoFilter方法  
 获取filterChain中的第一个filter  
-[![](assets/1699929571-489f9be12ab3fec1b8143d57df6dee32.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111134858-0204ba82-8056-1.png)  
+[![](assets/1701606655-489f9be12ab3fec1b8143d57df6dee32.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111134858-0204ba82-8056-1.png)  
 然后调用filter的doFilter方法
 
 ```plain
@@ -722,17 +722,17 @@ filter.doFilter(request, response, this);
 ```
 
 进入该filter的doFilter方法就来到了我们写的函数  
-[![](assets/1699929571-2eb18e8e6e3bc2352f4694a59886b284.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111134926-1273d98e-8056-1.png)  
+[![](assets/1701606655-2eb18e8e6e3bc2352f4694a59886b284.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111134926-1273d98e-8056-1.png)  
 **总结**
 
--   根据请求的 URL 从 FilterMaps 中找出与之 URL 对应的 Filter 名称
--   根据 Filter 名称去 FilterConfigs 中寻找对应名称的 FilterConfig
--   找到对应的 FilterConfig 之后添加到 FilterChain中，并且返回 FilterChain
--   filterChain 中调用 internalDoFilter 遍历获取 chain 中的FilterConfig，然后从 FilterConfig 中获取 Filter，然后调用 Filter 的 doFilter 方法
+*   根据请求的 URL 从 FilterMaps 中找出与之 URL 对应的 Filter 名称
+*   根据 Filter 名称去 FilterConfigs 中寻找对应名称的 FilterConfig
+*   找到对应的 FilterConfig 之后添加到 FilterChain中，并且返回 FilterChain
+*   filterChain 中调用 internalDoFilter 遍历获取 chain 中的FilterConfig，然后从 FilterConfig 中获取 Filter，然后调用 Filter 的 doFilter 方法
 
 **关键**  
 这里面存在关键的三个变量：filterMaps、filterConfigs、filterDefs, 它们都从StandardContext中获取  
-[![](assets/1699929571-f06c56f1fd085b6f6a25b2da4dcf2594.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111134946-1ee929e4-8056-1.png)  
+[![](assets/1701606655-f06c56f1fd085b6f6a25b2da4dcf2594.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111134946-1ee929e4-8056-1.png)  
 **filterMaps**  
 在StandardContext中添加filterMap的方法
 
@@ -792,7 +792,7 @@ public boolean filterStart() {
 ```
 
 这个方法在Tomcat启动时会运行，遍历filterDefs，然后根据filterDefs中的值创建filterConfig，然后将filterConfig添加到filterConfigs中  
-[![](assets/1699929571-68a0ed220d514987bd5548f25515e62f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135009-2ca9320e-8056-1.png)  
+[![](assets/1701606655-68a0ed220d514987bd5548f25515e62f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135009-2ca9320e-8056-1.png)  
 **filterDefs**  
 在StandardContext中添加filterDef的方法
 
@@ -920,12 +920,12 @@ try {
 
 访问[http://localhost:8090/Tomcat\_memshell\_Web\_exploded/filterMemshell.jsp](http://localhost:8090/Tomcat_memshell_Web_exploded/filterMemshell.jsp)  
 执行完第一行得到ApplicationContextFacade对象  
-[![](assets/1699929571-7281c2a0b36b2f07cf4f4d7738112520.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135052-45e245da-8056-1.png)  
+[![](assets/1701606655-7281c2a0b36b2f07cf4f4d7738112520.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135052-45e245da-8056-1.png)  
 执行到最后  
-[![](assets/1699929571-497d2cf77716dc118a4b208e299058f4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135127-5b0aadbc-8056-1.png)  
+[![](assets/1701606655-497d2cf77716dc118a4b208e299058f4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135127-5b0aadbc-8056-1.png)  
 成功将自定义的filter添加到filterConfigs、filterMaps、filterDefs中  
 此时内存马成功写入，接下来就是访问相应的url生成filterChain，调用自定义的filter，触发命令执行  
-[![](assets/1699929571-ef0f4f74e3443357d09ce03d73387687.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135156-6c005f18-8056-1.png)
+[![](assets/1701606655-ef0f4f74e3443357d09ce03d73387687.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135156-6c005f18-8056-1.png)
 
 ## 5\. Listener
 
@@ -933,12 +933,12 @@ try {
 
 常用监听器：
 
--   ServletContextListener：用于监听整个 Servlet 上下文（创建、销毁）
--   ServletContextAttributeListener：对 Servlet 上下文属性进行监听（增删改属性）
--   ServletRequestListener：对 Request 请求进行监听（创建、销毁）
--   ServletRequestAttributeListener：对 Request 属性进行监听（增删改属性）
--   javax.servlet.http.HttpSessionListener：对 Session 整体状态的监听
--   javax.servlet.http.HttpSessionAttributeListener：对 Session 属性的监听
+*   ServletContextListener：用于监听整个 Servlet 上下文（创建、销毁）
+*   ServletContextAttributeListener：对 Servlet 上下文属性进行监听（增删改属性）
+*   ServletRequestListener：对 Request 请求进行监听（创建、销毁）
+*   ServletRequestAttributeListener：对 Request 属性进行监听（增删改属性）
+*   javax.servlet.http.HttpSessionListener：对 Session 整体状态的监听
+*   javax.servlet.http.HttpSessionAttributeListener：对 Session 属性的监听
 
 这些类接口都是java.util.EventListener的子接口，以ServletRequestListener为例，它的接口定义如下：
 
@@ -1023,9 +1023,9 @@ run:745, Thread (java.lang)
 ```
 
 在StandardHostValve的invoke方法中  
-[![](assets/1699929571-9a6cc219aceb579c911f734594724d36.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135222-7b7f9756-8056-1.png)  
+[![](assets/1701606655-9a6cc219aceb579c911f734594724d36.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135222-7b7f9756-8056-1.png)  
 进入StandardContext的fireRequestInitEvent方法  
-[![](assets/1699929571-855cd90b14d26eb8dd83cd83e37619fb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135244-890b09fa-8056-1.png)  
+[![](assets/1701606655-855cd90b14d26eb8dd83cd83e37619fb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135244-890b09fa-8056-1.png)  
 在这个方法中调用listener的requestInitialized方法  
 需要考虑两个问题，第一：instances怎么来的？第二：requestInitialized方法中的参数event怎么来的？  
 第一个问题：在fireRequestInitEvent方法中，第一行就是获取instances，如下
@@ -1219,9 +1219,9 @@ run:745, Thread (java.lang)
 
 在StandardContext中，与servlet相关的有这两个属性：  
 children：  
-[![](assets/1699929571-44dd6c4c90e883394a8ebd7fee4d37fb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135323-9ff54676-8056-1.png)  
+[![](assets/1701606655-44dd6c4c90e883394a8ebd7fee4d37fb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135323-9ff54676-8056-1.png)  
 servletMappings:  
-[![](assets/1699929571-9b50b5f0a5711b4a1c2d4b2ebd02e382.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135340-a9e9d656-8056-1.png)
+[![](assets/1701606655-9b50b5f0a5711b4a1c2d4b2ebd02e382.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135340-a9e9d656-8056-1.png)
 
 查看实现类ApplicationContext中的addServlet方法
 
@@ -1447,7 +1447,7 @@ servletMemshell.jsp:
 ### 7.1 简介
 
 Tomcat中定义了两个接口，分别是Pipeline（管道）和Valve（阀）,参考一张图：  
-[![](assets/1699929571-85bab4ea505fb416a31a5902ad36c237.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135446-d175a236-8056-1.png)  
+[![](assets/1701606655-85bab4ea505fb416a31a5902ad36c237.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135446-d175a236-8056-1.png)  
 如上图所示，Tomcat每个层级的容器（）都维持一个管道（Pipeline示例），在ContainerBase中实例化了一个PipeLine对象，而如StandardContext这些类继承ContainerBase类
 
 ```plain
@@ -1459,9 +1459,9 @@ protected final Pipeline pipeline = new StandardPipeline(this);
 ValveBase类继承了Valve接口，这个类实现了生命接口及MBean接口
 
 Pipeline接口：  
-[![](assets/1699929571-5007e895b3bca92945e0861f954e2852.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135550-f7b61bd8-8056-1.png)  
+[![](assets/1701606655-5007e895b3bca92945e0861f954e2852.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135550-f7b61bd8-8056-1.png)  
 Valve接口：  
-[![](assets/1699929571-97ba05b20fdaef8eeff23dc07706f9a4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135617-078f4372-8057-1.png)
+[![](assets/1701606655-97ba05b20fdaef8eeff23dc07706f9a4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231111135617-078f4372-8057-1.png)
 
 ### 7.2 例子
 

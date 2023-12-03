@@ -4,7 +4,7 @@
 
 Agent 内存马的攻防之道
 
-- - -
+* * *
 
 ## 前言
 
@@ -27,8 +27,8 @@ Agent 内存马的攻防之道
 
 正常情况下，java agent 在 JVM 中有两种加载形式，跟进其代码：
 
--   [Agent\_OnLoad](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/instrument/InvocationAdapter.c#L144)：相当于 java 运行时，通过 `-javaagent` 参数加载指定的 `agent`。
--   [Agent\_OnAttach](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/instrument/InvocationAdapter.c#L294)：通过 `VM.attach` 方法，向指定的 java 进程中，注入 `agent`。
+*   [Agent\_OnLoad](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/instrument/InvocationAdapter.c#L144)：相当于 java 运行时，通过 `-javaagent` 参数加载指定的 `agent`。
+*   [Agent\_OnAttach](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/instrument/InvocationAdapter.c#L294)：通过 `VM.attach` 方法，向指定的 java 进程中，注入 `agent`。
 
 分析其代码，可以看到处理逻辑大同小异，主要流程就是创建 [JPLISAgent](https://github.com/openjdk/jdk8u/blob/master/jdk/src/share/instrument/JPLISAgent.h#L96) 以及 `java.lang.instrument.Instrumentation` 实例。然后调用 `agentMain` 或者 `preMain` 进行处理。
 
@@ -40,27 +40,27 @@ Agent 内存马的攻防之道
 
 关于类的加载流程，可以从三个方面去入手：
 
--   正常的类加载流程
--   被 `redefineClasses` 后的类的加载流程
--   被 `retransformClasses` 后的类的加载流程
+*   正常的类加载流程
+*   被 `redefineClasses` 后的类的加载流程
+*   被 `retransformClasses` 后的类的加载流程
 
 这一块的代码详细分析起来比较占用篇幅，这里主要阐述一下相关逻辑，以及关键步骤代码。有兴趣的可以自己跟着分析一下代码。
 
 下面是我整理的 java 类的加载流程图（若图中有不准确的地方，欢迎指正），可结合图下面的文字阐述进行理解。
 
-[![](assets/1701071882-f730d3635d9a4a196094e14dfaf41ddf.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126104326-93322fca-8c05-1.png)
+[![](assets/1701606490-f730d3635d9a4a196094e14dfaf41ddf.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126104326-93322fca-8c05-1.png)
 
--   java 类在内存中是以 [InstanceKlass](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/oops/instanceKlass.hpp#L43) 的形式存在的，这个 `InstanceKlass` 中便包含了类中所定义的变量、方法等信息。需要注意的是，当我们使用 java agent 技术时，虽然我们可以在 `ClassFileTransformer.transform` 中能拿到指定类的字节码，但内存中默认情况下其实是不会保存 java 类的原始字节码的。
--   正常的 java 类加载时，会从指定位置（一般也就是本地的 jar 包中）获取到类字节码，然后会经过 [JvmtiClassFileLoadHookPoster](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/prims/jvmtiExport.cpp#L511) 的转换后，得到最终的字节码。然后编译为对应的 `InstanceKlass`，当然在编译时会进行相应的优化，不过与本主题无关，这里不进行赘述。
-    -   而这个 `JvmtiClassFileLoadHookPoster` 中维护着一个 [JvmtiEnv 链](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/prims/jvmtiExport.cpp#L574C12-L574C20) ，我们所用到的 `java agent` 技术中，当 agent 加载时，其实就是在这个 `JvmtiEnv` 链上添加一个 `JvmtiEnv`节点，从而修改类的字节码，如 [post\_all\_envs()](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/prims/jvmtiExport.cpp#L569) 中所示。
-    -   `JvmtiEnv` 实例中有个关键的变量: [`_env_local_storage`](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/prims/jvmtiEnvBase.hpp#L97)，这个变量所对应的类型是[`_JPLISEnvironment`](https://github.com/openjdk/jdk8u/blob/master/jdk/src/share/instrument/JPLISAgent.h#L90)，从中我们可以看到与之关联的 `JPLISAgent`。而这个 `JPLISAgent` 就是 `InstrumentationImpl` 构造方法中的 `mNativeAgent`。从这个 `_JPLISAgent`中我们也可找到对应的 [instrumentation 实例](https://github.com/openjdk/jdk8u/blob/master/jdk/src/share/instrument/JPLISAgent.h#L100)，以及其要执行的方法: [mTransform](https://github.com/openjdk/jdk8u/blob/master/jdk/src/share/instrument/JPLISAgent.h#L103C1-L103C1)，也就是 `InstrumentationImpl` 类中的 [transform](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/classes/sun/instrument/InstrumentationImpl.java#L415) 方法。
-    -   对于 `JvmtiEnv` 节点来说，具体的转换流程便是通过 [callback](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/prims/jvmtiExport.cpp#L607) 而实现的，具体的 `callback` 方法便是[eventHandlerClassFileLoadHook](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/instrument/InvocationAdapter.c#L476)，从中我们可以看到这个回调函数便是在 [transformClassFile](https://github.com/openjdk/jdk8u/blob/master/jdk/src/share/instrument/JPLISAgent.c#L833) 方法中调用的 `InstrumentationImpl` 对象的 `transform` 方法，这样便回到了我们熟知的 `java` 代码中。
--   `redefineClasses`，顾名思义，重定义一个类，与普通的类加载流程相比，这里主要就是将类的来源更换为指定的字节码。具体的类加载流程并无太大差别。
--   当 java 类要被 `retransformClasses`转换时，会根据 `InstanceKlass` [重新生成一份对应的类字节码](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/prims/jvmtiEnv.cpp#L257)，并存入缓存中[`InstanceKlass._cached_class_file`](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/oops/instanceKlass.hpp#L258)，**下次再被`retransformClasses`时将直接使用缓存中的类字节码**。
-    -   与正常的类加载流程相比，被 `retransformClasses` 所重新加载的类，不会再经过 `no retransformable jvmti` 链的处理。
--   java agent 在被加载时（[onLoad](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/instrument/InvocationAdapter.c#L144) / [onAttach](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/instrument/InvocationAdapter.c#L294)），jvm 将创建一个 `jvmtiEnv` 实例，对应了上图中的 `no retransformable jvmti 链`。
-    -   当第一次添加 `retransformer`（也就是在 `addTransformer` 时指定 `canRetransform` 为 `true`）时，会**通过 [setHasRetransformableTransformers](https://github.com/openjdk/jdk8u/blob/9499e54ebbab17b0f5e48be27c0c7f90806a3c40/jdk/src/share/instrument/JPLISAgent.c#L1061) 方法在 jvmti 链上追加一个新的节点**，也就是上图中的 `retransformable jvmti 链`。
-    -   关于图中的 `no retransformable jvmti` 链 与 `retransformable jvmti` 链，其实都是在一条链表上，只不过在使用时根据 [`env->is_retransformable()`](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/prims/jvmtiExport.cpp#L569) 而分为两批使用。在类加载或是被重定义时，对我们在 `java agent` 中添加的 `transformer` 来说，普通的 `transformer` 永远在 `canRetransform` 为 true 的 `transformer` 之前执行。
+*   java 类在内存中是以 [InstanceKlass](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/oops/instanceKlass.hpp#L43) 的形式存在的，这个 `InstanceKlass` 中便包含了类中所定义的变量、方法等信息。需要注意的是，当我们使用 java agent 技术时，虽然我们可以在 `ClassFileTransformer.transform` 中能拿到指定类的字节码，但内存中默认情况下其实是不会保存 java 类的原始字节码的。
+*   正常的 java 类加载时，会从指定位置（一般也就是本地的 jar 包中）获取到类字节码，然后会经过 [JvmtiClassFileLoadHookPoster](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/prims/jvmtiExport.cpp#L511) 的转换后，得到最终的字节码。然后编译为对应的 `InstanceKlass`，当然在编译时会进行相应的优化，不过与本主题无关，这里不进行赘述。
+    *   而这个 `JvmtiClassFileLoadHookPoster` 中维护着一个 [JvmtiEnv 链](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/prims/jvmtiExport.cpp#L574C12-L574C20) ，我们所用到的 `java agent` 技术中，当 agent 加载时，其实就是在这个 `JvmtiEnv` 链上添加一个 `JvmtiEnv`节点，从而修改类的字节码，如 [post\_all\_envs()](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/prims/jvmtiExport.cpp#L569) 中所示。
+    *   `JvmtiEnv` 实例中有个关键的变量: [`_env_local_storage`](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/prims/jvmtiEnvBase.hpp#L97)，这个变量所对应的类型是[`_JPLISEnvironment`](https://github.com/openjdk/jdk8u/blob/master/jdk/src/share/instrument/JPLISAgent.h#L90)，从中我们可以看到与之关联的 `JPLISAgent`。而这个 `JPLISAgent` 就是 `InstrumentationImpl` 构造方法中的 `mNativeAgent`。从这个 `_JPLISAgent`中我们也可找到对应的 [instrumentation 实例](https://github.com/openjdk/jdk8u/blob/master/jdk/src/share/instrument/JPLISAgent.h#L100)，以及其要执行的方法: [mTransform](https://github.com/openjdk/jdk8u/blob/master/jdk/src/share/instrument/JPLISAgent.h#L103C1-L103C1)，也就是 `InstrumentationImpl` 类中的 [transform](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/classes/sun/instrument/InstrumentationImpl.java#L415) 方法。
+    *   对于 `JvmtiEnv` 节点来说，具体的转换流程便是通过 [callback](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/prims/jvmtiExport.cpp#L607) 而实现的，具体的 `callback` 方法便是[eventHandlerClassFileLoadHook](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/instrument/InvocationAdapter.c#L476)，从中我们可以看到这个回调函数便是在 [transformClassFile](https://github.com/openjdk/jdk8u/blob/master/jdk/src/share/instrument/JPLISAgent.c#L833) 方法中调用的 `InstrumentationImpl` 对象的 `transform` 方法，这样便回到了我们熟知的 `java` 代码中。
+*   `redefineClasses`，顾名思义，重定义一个类，与普通的类加载流程相比，这里主要就是将类的来源更换为指定的字节码。具体的类加载流程并无太大差别。
+*   当 java 类要被 `retransformClasses`转换时，会根据 `InstanceKlass` [重新生成一份对应的类字节码](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/prims/jvmtiEnv.cpp#L257)，并存入缓存中[`InstanceKlass._cached_class_file`](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/oops/instanceKlass.hpp#L258)，**下次再被`retransformClasses`时将直接使用缓存中的类字节码**。
+    *   与正常的类加载流程相比，被 `retransformClasses` 所重新加载的类，不会再经过 `no retransformable jvmti` 链的处理。
+*   java agent 在被加载时（[onLoad](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/instrument/InvocationAdapter.c#L144) / [onAttach](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/instrument/InvocationAdapter.c#L294)），jvm 将创建一个 `jvmtiEnv` 实例，对应了上图中的 `no retransformable jvmti 链`。
+    *   当第一次添加 `retransformer`（也就是在 `addTransformer` 时指定 `canRetransform` 为 `true`）时，会**通过 [setHasRetransformableTransformers](https://github.com/openjdk/jdk8u/blob/9499e54ebbab17b0f5e48be27c0c7f90806a3c40/jdk/src/share/instrument/JPLISAgent.c#L1061) 方法在 jvmti 链上追加一个新的节点**，也就是上图中的 `retransformable jvmti 链`。
+    *   关于图中的 `no retransformable jvmti` 链 与 `retransformable jvmti` 链，其实都是在一条链表上，只不过在使用时根据 [`env->is_retransformable()`](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/prims/jvmtiExport.cpp#L569) 而分为两批使用。在类加载或是被重定义时，对我们在 `java agent` 中添加的 `transformer` 来说，普通的 `transformer` 永远在 `canRetransform` 为 true 的 `transformer` 之前执行。
 
 ## 攻防博弈
 
@@ -70,8 +70,8 @@ Agent 内存马的攻防之道
 
 对于 agent 型内存马来说，其主要目的就是修改一些关键类的字节码。总的来说有两种方式：
 
--   借助 [redefineClasses](https://github.com/openjdk/jdk8u/blob/9499e54ebbab17b0f5e48be27c0c7f90806a3c40/jdk/src/share/classes/sun/instrument/InstrumentationImpl.java#L153) 方法去重定义指定的类。参考类转换流程图中的 `Redefine Class`路线。
--   借助 [retransformClasses](https://github.com/openjdk/jdk8u/blob/9499e54ebbab17b0f5e48be27c0c7f90806a3c40/jdk/src/share/classes/sun/instrument/InstrumentationImpl.java#L139)方法，让指定的类重新转换，当然在执行此方法前，需要先用 `addTransform` 方法添加一个 "reTransformer"，从而在对应类重新转换时，用自己刚才添加的 `transformer` 修改对应的类。参考类转换流程图中的 `RetransformClasses` 路线。
+*   借助 [redefineClasses](https://github.com/openjdk/jdk8u/blob/9499e54ebbab17b0f5e48be27c0c7f90806a3c40/jdk/src/share/classes/sun/instrument/InstrumentationImpl.java#L153) 方法去重定义指定的类。参考类转换流程图中的 `Redefine Class`路线。
+*   借助 [retransformClasses](https://github.com/openjdk/jdk8u/blob/9499e54ebbab17b0f5e48be27c0c7f90806a3c40/jdk/src/share/classes/sun/instrument/InstrumentationImpl.java#L139)方法，让指定的类重新转换，当然在执行此方法前，需要先用 `addTransform` 方法添加一个 "reTransformer"，从而在对应类重新转换时，用自己刚才添加的 `transformer` 修改对应的类。参考类转换流程图中的 `RetransformClasses` 路线。
 
 当然，具体到实现上，有最基础的，上传一个 `agent.jar` 到受害者服务器，然后再 `loadAgent`从而获取 `Instrumentation` 对象。之后便可以通过 `redefineClasses`或者`retransformClasses`修改关键类。
 
@@ -85,13 +85,13 @@ Agent 内存马的攻防之道
 
 对于防守方来说，想要检测某些关键类是否被修改，必须要设法从内存中获取到对应的类。一般来说，能走的也只有两条路：
 
--   直接解析 jvm 内存，从中 dump 出一些关键类，参考 [CLSHDB](https://github.com/openjdk/jdk8u/blob/9499e54ebbab17b0f5e48be27c0c7f90806a3c40/hotspot/agent/src/share/classes/sun/jvm/hotspot/CLHSDB.java)。不过这种方式非常复杂，类字节码并不是原原本本的存在内存中的，而是经过了编译优化，且不同版本的 jdk 实现细节也不一样，内存中相关区域也可能会经常更新，所以很少有人会选择使用这种方式
--   同样的借助 java agent 技术，添加自己的 "reTransformer"，并在关键类加载（或是主动对其`retransformClasses`）时，拿到该类真实的字节码进行检测。
+*   直接解析 jvm 内存，从中 dump 出一些关键类，参考 [CLSHDB](https://github.com/openjdk/jdk8u/blob/9499e54ebbab17b0f5e48be27c0c7f90806a3c40/hotspot/agent/src/share/classes/sun/jvm/hotspot/CLHSDB.java)。不过这种方式非常复杂，类字节码并不是原原本本的存在内存中的，而是经过了编译优化，且不同版本的 jdk 实现细节也不一样，内存中相关区域也可能会经常更新，所以很少有人会选择使用这种方式
+*   同样的借助 java agent 技术，添加自己的 "reTransformer"，并在关键类加载（或是主动对其`retransformClasses`）时，拿到该类真实的字节码进行检测。
 
 而就 `java agent`技术来说，防守方有两种使用方式：
 
--   防护模式：在 java 应用运行时，便加载一个 `java agent`，并添加自己的检测 `reTransformer`，每当关键类加载（或重新加载）时，可以检测该类的字节码是否有异常
--   临时检测模式：对于正常运行的可能被植入内存马的 java 应用，通过如 [VirtualMachine.attach](https://github.com/openjdk/jdk8u/blob/9499e54ebbab17b0f5e48be27c0c7f90806a3c40/jdk/src/share/classes/com/sun/tools/attach/VirtualMachine.java#L195) 的方式，加载自己的 `java agent`，添加一个临时的 `reTransformer`，进而获取到指定类字节码。
+*   防护模式：在 java 应用运行时，便加载一个 `java agent`，并添加自己的检测 `reTransformer`，每当关键类加载（或重新加载）时，可以检测该类的字节码是否有异常
+*   临时检测模式：对于正常运行的可能被植入内存马的 java 应用，通过如 [VirtualMachine.attach](https://github.com/openjdk/jdk8u/blob/9499e54ebbab17b0f5e48be27c0c7f90806a3c40/jdk/src/share/classes/com/sun/tools/attach/VirtualMachine.java#L195) 的方式，加载自己的 `java agent`，添加一个临时的 `reTransformer`，进而获取到指定类字节码。
 
 当然了，在“防护模式”下，防守方占据了先手，可以做到更多，比如监控 `addTransformer` 、监控 `retransformClasses`、监控 `redefineClasses`方法等。
 
@@ -118,11 +118,11 @@ Agent 内存马的攻防之道
 
 当攻击者通过 `redefineClasses` 修改关键类时，如下图中的红色路径所示，**被重新定义的类会经过防守方的“检测模块”，从而被检测到该类被植入恶意代码**。
 
-[![](assets/1701071882-f0d846ab8157d0f96789b060abb41725.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126111140-84c5ee14-8c09-1.png)
+[![](assets/1701606490-f0d846ab8157d0f96789b060abb41725.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126111140-84c5ee14-8c09-1.png)
 
 当攻击者先添加自己的 `reTransfomer`后，再通过 `retransformClasses`修改指定类时，如下图所示，因为攻击者的 `agent` 是在防御者之后注入的，所以其修改类字节码的逻辑（攻击模块）在防御者的“检测模块”之后加载。这种情况下，**虽然防守方可以感知到类被重新加载了，但是却无法拿到被攻击者修改之后的类字节码**。
 
-[![](assets/1701071882-e9b90ebddf7c3701f9399849d764c232.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126111212-97ae6a56-8c09-1.png)
+[![](assets/1701606490-e9b90ebddf7c3701f9399849d764c232.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126111212-97ae6a56-8c09-1.png)
 
 除了这些外，在防护模式下，只要有类被重定义或是重新转换，都可以被防护模式自己的 agent 感知到，正如 [transform](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/classes/java/lang/instrument/ClassFileTransformer.java#L182) 方法中的 `classBeingRedefined` 参数，而在一个正常运行的应用中，几乎不会有这种情况。**所以说，即便防御方事前不知道攻击者将要修改的类，也可以通过这种方式发现某个类被修改了，进而去检测**。
 
@@ -136,7 +136,7 @@ Agent 内存马的攻防之道
 
 回到原来的图，可以看到 `retransformClasses`的转换路线中，有个非常关键的概念：“缓存字节码”，也就是 [`_cached_class_file`](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/oops/instanceKlass.hpp#L258)。这是个东西有什么用呢？
 
-[![](assets/1701071882-2de58658d86b7437df2d203d350008ee.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126111321-c0def846-8c09-1.png)
+[![](assets/1701606490-2de58658d86b7437df2d203d350008ee.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126111321-c0def846-8c09-1.png)
 
 当防御方通过 `retransformClasses` 重新加载类时，JVM 会先判断对应类是否有缓存，若没有缓存，则会根据当前类生成对应的类字节码，而**这个类字节码其实就是攻击者通过 `redefineClasseses` 所传入的恶意类字节码**。也就是，这种情况下，**防御方是可以检测到关键类被攻击者修改了**。
 
@@ -148,17 +148,17 @@ Agent 内存马的攻防之道
 
 准备三部分：
 
--   目标应用 [app](https://github.com/rzte/agentcrack/tree/main/app)：内置一个“关键”类 `T`，循环执行 `T` 中的 `run` 方法。后续的攻防均针对该类。
--   攻击方 [javaagent-hack](https://github.com/rzte/agentcrack/tree/main/javaagent-hack)：借助 `java agent` 技术修改类 `T`
--   防守方 [javaagent-monitor](https://github.com/rzte/agentcrack/tree/main/javaagent-monitor)：在 `transformer` 中直接打印目标类(`T`)的字节码长度，来判断该类是否被恶意修改。
+*   目标应用 [app](https://github.com/rzte/agentcrack/tree/main/app)：内置一个“关键”类 `T`，循环执行 `T` 中的 `run` 方法。后续的攻防均针对该类。
+*   攻击方 [javaagent-hack](https://github.com/rzte/agentcrack/tree/main/javaagent-hack)：借助 `java agent` 技术修改类 `T`
+*   防守方 [javaagent-monitor](https://github.com/rzte/agentcrack/tree/main/javaagent-monitor)：在 `transformer` 中直接打印目标类(`T`)的字节码长度，来判断该类是否被恶意修改。
 
-[![](assets/1701071882-46101c35d4c52304dc4f6704e0f1dae8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126111818-723036fa-8c0a-1.png)
+[![](assets/1701606490-46101c35d4c52304dc4f6704e0f1dae8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126111818-723036fa-8c0a-1.png)
 
 ### 防护模式
 
 可看到“关键类” `T` 的大小为 `654`：
 
-[![](assets/1701071882-8a3d99e671b43dd31520899b8b5e2a4c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126111841-7f78eea6-8c0a-1.png)
+[![](assets/1701606490-8a3d99e671b43dd31520899b8b5e2a4c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126111841-7f78eea6-8c0a-1.png)
 
 当攻击者使用 `redefineClasses` 重定义类 `T`后，T 的大小被检测到变为 `685`。所以，**在防护模式下，可成功检测到攻击者修改后的类**。
 
@@ -166,7 +166,7 @@ Agent 内存马的攻防之道
 java -jar ./javaagent-hack/target/javaagent-hack-1.0-SNAPSHOT-jar-with-dependencies.jar <app_pid> redefine
 ```
 
-[![](assets/1701071882-2e51b9817794ad0b1e127802472b9e28.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126111907-8f56111e-8c0a-1.png)
+[![](assets/1701606490-2e51b9817794ad0b1e127802472b9e28.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126111907-8f56111e-8c0a-1.png)
 
 但是，当攻击者借助 `retransformClasses` 修改类时，可看到，“防护模式”下所看到的“关键类”仍然只是攻击者修改之前的。所以这种情况下，**防守方只能发现“关键类”被重新加载了一次，但无法“看到”这个类被修改后的“真实”的样子**。
 
@@ -174,35 +174,35 @@ java -jar ./javaagent-hack/target/javaagent-hack-1.0-SNAPSHOT-jar-with-dependenc
 java -jar ./javaagent-hack/target/javaagent-hack-1.0-SNAPSHOT-jar-with-dependencies.jar <app_pid> retransform
 ```
 
-[![](assets/1701071882-fa82287607c715d91cc29ab699e731d0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126111945-a58f5d14-8c0a-1.png)
+[![](assets/1701606490-fa82287607c715d91cc29ab699e731d0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126111945-a58f5d14-8c0a-1.png)
 
 ### 临时检测模式
 
 测试路径：
 
--   防守方发起“第一次”检测，此时“敏感类”尚未被修改
--   攻击者实施攻击，修改了“敏感类”
--   防守方“再一次”发起检测
+*   防守方发起“第一次”检测，此时“敏感类”尚未被修改
+*   攻击者实施攻击，修改了“敏感类”
+*   防守方“再一次”发起检测
 
 先来测试一下攻击者使用 `retransformClasses` 修改“敏感类”，由于防守方第二次检测的 Agent 是在攻击者之后加载，所以**这里成功的检测到类 T 被攻击者修改**。
 
-[![](assets/1701071882-f638cd700bb698bc04ace4f647a13203.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112137-e8990f88-8c0a-1.png)
+[![](assets/1701606490-f638cd700bb698bc04ace4f647a13203.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112137-e8990f88-8c0a-1.png)
 
 当攻击者使用 `redefineClasses` 时，同样的，**由于防守方的检测 Agent 在类被重定义之后加载，所以可成功看到被攻击者重定义后的类**。
 
-[![](assets/1701071882-90b66d8315f15af08d22c3baedd1c2c1.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112216-0006d9a2-8c0b-1.png)
+[![](assets/1701606490-90b66d8315f15af08d22c3baedd1c2c1.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112216-0006d9a2-8c0b-1.png)
 
 但是，对于在攻击之前已有缓存的情况，这里我们让“防御者”的 `transformer` 不再返回 `null`，可以看到，**当防御者再一次检测时，未能发现关键类之前被攻击者修改过了，但同时，可以看到，攻击者的修改也被回滚了**，关键类 T 恢复原样，也就是恢复到了一开始缓存的代码：
 
-[![](assets/1701071882-2042220bf04fed5ef68a3ade63758af3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112241-0ebca9cc-8c0b-1.png)
+[![](assets/1701606490-2042220bf04fed5ef68a3ade63758af3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112241-0ebca9cc-8c0b-1.png)
 
-[![](assets/1701071882-1d32678d72f2fb648d53e1cfe769a8ad.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112247-1269ff8e-8c0b-1.png)
+[![](assets/1701606490-1d32678d72f2fb648d53e1cfe769a8ad.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112247-1269ff8e-8c0b-1.png)
 
 ## 借尸还魂
 
 回到第二节 “transform 流程”中，我们可以看到，每当有 `java agent` 被加载时，JVM 都会在 `jvmtiEnv` 链上创建一个实例，而 `java agent` 技术中最关键的 `InstrumentationImpl` 实例，其实就存放在了这 `jvmtiEnv` 中。
 
-[![](assets/1701071882-687587bcc642c9216ffbed5e16781e67.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112342-330cdfc2-8c0b-1.png)
+[![](assets/1701606490-687587bcc642c9216ffbed5e16781e67.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112342-330cdfc2-8c0b-1.png)
 
 如果我们能直接解析内存，从中拿到一个 `jvmtiEnv` 实例后，又进一步拿到 `jvmtiEnv` 上的 `InstrumentationImpl` 对象，是不是就可以在不注入新的 Agent 的情况下，直接修改关键类的字节码了？
 
@@ -214,15 +214,15 @@ java -jar ./javaagent-hack/target/javaagent-hack-1.0-SNAPSHOT-jar-with-dependenc
 
 链的头是什么？跟一下代码不难发现，是一个静态变量：
 
-[![](assets/1701071882-9f13d4323b9facaa975f6b5d89159d63.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112504-63bfaf1e-8c0b-1.png)
+[![](assets/1701606490-9f13d4323b9facaa975f6b5d89159d63.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112504-63bfaf1e-8c0b-1.png)
 
 那么就很简单了，从 `libjvm.so`中可以很方便的找到这个符号的相对地址：
 
-[![](assets/1701071882-ba98874d0df688f4d99f630f5a61ac9d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112517-6be075a2-8c0b-1.png)
+[![](assets/1701606490-ba98874d0df688f4d99f630f5a61ac9d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112517-6be075a2-8c0b-1.png)
 
 在这个 `JvmtiEnvBase` 结构中，我们可以看到 [`._next`](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/prims/jvmtiEnvBase.hpp#L95) 以及 [`._env_local_storage`](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/prims/jvmtiEnvBase.hpp#L97C15-L97C33)。其中 `_env_local_storage` 的实际类型就是 [`_JPLISEnvironment`](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/instrument/JPLISAgent.h#L90)。从中我们便可以找到 `InstrumentationImpl` 实例：
 
-[![](assets/1701071882-3cf4803ed24bd08ff20d2dbe62560f45.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112637-9b2345e2-8c0b-1.png)
+[![](assets/1701606490-3cf4803ed24bd08ff20d2dbe62560f45.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112637-9b2345e2-8c0b-1.png)
 
 ### jobject 转 java 对象
 
@@ -230,11 +230,11 @@ java -jar ./javaagent-hack/target/javaagent-hack-1.0-SNAPSHOT-jar-with-dependenc
 
 我们可以从 [JOL](https://github.com/openjdk/jol/blob/9d62009e97a1756ae91a16ab9e72f294efce17a9/jol-core/src/main/java/org/openjdk/jol/vm/HotspotUnsafe.java#L426) 中获取一些灵感，他这里是要获取 java 对象的地址，将对象放到数组中，在偏移 `arrayBaseOffset` 处，便可以获取到 0 号对象所对应的地址：
 
-[![](assets/1701071882-ec04d921e75dbc4dee7fab37752e5900.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112705-abf82824-8c0b-1.png)
+[![](assets/1701606490-ec04d921e75dbc4dee7fab37752e5900.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112705-abf82824-8c0b-1.png)
 
 他是获取对象的地址，那我们也可以反其道而行之，创建一个对象数组，然后将 `jobject` 地址放在这个对象数组的 0 号偏移处，然后这个对象数组的 0 号元素，不就是我们心心念的对象了么：
 
-[![](assets/1701071882-877ff4ddd757176ebb2add8fc5bd641d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112717-b2f8ef96-8c0b-1.png)
+[![](assets/1701606490-877ff4ddd757176ebb2add8fc5bd641d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126112717-b2f8ef96-8c0b-1.png)
 
 ### 实施攻击
 
@@ -244,7 +244,7 @@ java -jar ./javaagent-hack/target/javaagent-hack-1.0-SNAPSHOT-jar-with-dependenc
 
 下面是攻击展示：
 
-[![](assets/1701071882-5e733b3445905d35df21f43ab5686ad1.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126113212-635580c0-8c0c-1.png)
+[![](assets/1701606490-5e733b3445905d35df21f43ab5686ad1.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126113212-635580c0-8c0c-1.png)
 
 ### 内存马
 
@@ -252,7 +252,7 @@ java -jar ./javaagent-hack/target/javaagent-hack-1.0-SNAPSHOT-jar-with-dependenc
 
 拉一个 `tomcat9` 试试（tomcat10 中 用到的是 `jakarta.servlet` ，有需要可以自己调整）
 
-[![](assets/1701071882-d7a113782581ccb7ec1892293f6cb10a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126113555-e7f773a6-8c0c-1.png)
+[![](assets/1701606490-d7a113782581ccb7ec1892293f6cb10a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126113555-e7f773a6-8c0c-1.png)
 
 ```plain
 # tomcat 容器内
@@ -267,21 +267,21 @@ java -cp ${workdir}/memshell-server/target/memshell-server-1.0-SNAPSHOT-jar-with
 
 看到成功更改类 `HttpServlet`，同时，“防护 Agent” 检测到 `HttpServlet` 被重新加载，将其写在了 `/tmp/T.bb40.class` 内。
 
-[![](assets/1701071882-96f1067d30b79aa166efe77ff8c6be98.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126113652-0a164516-8c0d-1.png)
+[![](assets/1701606490-96f1067d30b79aa166efe77ff8c6be98.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126113652-0a164516-8c0d-1.png)
 
 查看 `/tmp/T.bb40.class`，虽然防守方检测到了 `HttpServlet` 被重新加载了，但是所看到的这个 `HttpServlet` 仍是正常的：
 
-[![](assets/1701071882-a9f1241e83f75a1b35e7839fda283c3d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126113717-1918b4b8-8c0d-1.png)
+[![](assets/1701606490-a9f1241e83f75a1b35e7839fda283c3d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126113717-1918b4b8-8c0d-1.png)
 
 不过，内存马早已经被注入成功：
 
-[![](assets/1701071882-2f95aaf9700f994d90afdba36c14c5f9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126113732-21c9fffe-8c0d-1.png)
+[![](assets/1701606490-2f95aaf9700f994d90afdba36c14c5f9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126113732-21c9fffe-8c0d-1.png)
 
-[![](assets/1701071882-2623f6f283a61d1325bf729c09b8a1bd.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126113739-261fc192-8c0d-1.png)
+[![](assets/1701606490-2623f6f283a61d1325bf729c09b8a1bd.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126113739-261fc192-8c0d-1.png)
 
 未指定 `cmd` 参数时：
 
-[![](assets/1701071882-7db01aa776206f1104587006c92f0f91.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126113751-2d2bb41e-8c0d-1.png)
+[![](assets/1701606490-7db01aa776206f1104587006c92f0f91.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126113751-2d2bb41e-8c0d-1.png)
 
 ## 不一样的 Java Agent
 
@@ -301,7 +301,7 @@ java -cp ${workdir}/memshell-server/target/memshell-server-1.0-SNAPSHOT-jar-with
 
 如 [retransformClasses](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/instrument/JPLISAgent.c#L1076)、 [redefineClasses](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/instrument/JPLISAgent.c#L1161) 等方法，也是需要从这个 `JPLISAgent` 中获取到 `JvmtiEnv`，借助 `JvmtiEnv` 来操作 JVM。
 
-[![](assets/1701071882-db9d00c6ab1d8c2d0d43ba161f5a8a0a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126113927-666b5fa4-8c0d-1.png)
+[![](assets/1701606490-db9d00c6ab1d8c2d0d43ba161f5a8a0a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126113927-666b5fa4-8c0d-1.png)
 
 ### add retransformer
 
@@ -311,11 +311,11 @@ java -cp ${workdir}/memshell-server/target/memshell-server-1.0-SNAPSHOT-jar-with
 
 如下图所示，`addTransform` 之所以可以在 `JvmtiEnv` 链中追加一个新的节点，主要便是依靠这个方法: [setHasRetransformableTransformers](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/instrument/JPLISAgent.c#L1061)。而这个方法，不可避免的会用到 `mNativeAgent` 参数，也就是这个关键的 `JPLISAgent`。
 
-[![](assets/1701071882-15863f949e60ab91965b7e94e8de9670.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126114038-909450b0-8c0d-1.png)
+[![](assets/1701606490-15863f949e60ab91965b7e94e8de9670.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126114038-909450b0-8c0d-1.png)
 
 与 `retransformClasses`、`redefineClasses` 不同的是， 这个方法会**为 `JPLISAgent` 创建一个新的 `JvmtiEnv`: [retransformerEnv](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/instrument/JPLISAgent.c#L982)**。也就是说，我们完全可以借助这个方法，来构造出 `JvmtiEnv` 从而完善我们的 `JPLISAgent`，进而构造出 `InstrumentationImpl` 对象，然后便可以 `retransformClasses` 或是 `redefineClasses`了。
 
-[![](assets/1701071882-a478b0495e6d14915520a7bfefed19ee.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126114147-b9f4e578-8c0d-1.png)
+[![](assets/1701606490-a478b0495e6d14915520a7bfefed19ee.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126114147-b9f4e578-8c0d-1.png)
 
 不过，我们不难发现，它还依赖一个关键的变量便是 `agent->mJVM`，也就是 `JavaVM`对象。
 
@@ -325,11 +325,11 @@ java -cp ${workdir}/memshell-server/target/memshell-server-1.0-SNAPSHOT-jar-with
 
 我们从哪里可以找一个 `JavaVM` 对象呢？我们可以在源码中找到这个一个对象: [main\_vm](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/prims/jni.cpp#L5031)，而其本身是静态符号，也就是说，我们可以直接从 `libjvm.so` 的符号表中找到他:
 
-[![](assets/1701071882-a04368c0ed24fc86f0d684e87fff52fb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126114341-fd9b3da4-8c0d-1.png)
+[![](assets/1701606490-a04368c0ed24fc86f0d684e87fff52fb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126114341-fd9b3da4-8c0d-1.png)
 
 解决这个问题之后，我们便可以借助 `setHasRetransformableTransformers` 创建一个 `JvmtiEnv` 节点了。而有了对应的 `JvmtiEnv` 以及 `JavaVM` 后，我们可以看到，距离 `JPLISAgent`组成，只差 `jobject mInstrumentationImpl` 以及 `jmethodID mTransform`了。
 
-[![](assets/1701071882-8d0d7b380034aab6990706226eabfbbf.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126114404-0b4a43d2-8c0e-1.png)
+[![](assets/1701606490-8d0d7b380034aab6990706226eabfbbf.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126114404-0b4a43d2-8c0e-1.png)
 
 ### jobject 与 jmethod
 
@@ -347,23 +347,23 @@ java -cp ${workdir}/memshell-server/target/memshell-server-1.0-SNAPSHOT-jar-with
 
 java unsafe 所提供的方法中，有一类方法形如: `getLong(Object o, long offset)`，这个方法是啥意思？它会读取 `jobject` 的地址 + 一个指定的偏移处的内存数据。跟一下代码我们就会发现，这里的 `jobject` 类型其实就是 [oop\*](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/runtime/jniHandles.hpp#L175)，而这个方法就是读取的 `oop + offset` 处的数据，可参考 [index\_oop\_from\_field\_offset\_long](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/prims/unsafe.cpp#L121)
 
-[![](assets/1701071882-88bebb1ad536db6effc26c61f1b01739.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126115300-4b2bdb54-8c0f-1.png)
+[![](assets/1701606490-88bebb1ad536db6effc26c61f1b01739.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126115300-4b2bdb54-8c0f-1.png)
 
-[![](assets/1701071882-9b6a2e4c9261cc499d8bbbf842677443.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126115308-4fd7dc0c-8c0f-1.png)
+[![](assets/1701606490-9b6a2e4c9261cc499d8bbbf842677443.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126115308-4fd7dc0c-8c0f-1.png)
 
 而 `oop` 其对应的结构就是 [oopDesc](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/oops/oop.hpp#L59)，从中我们可以看到一个联合体中，有`Klass` 的地址。
 
-[![](assets/1701071882-a44c2d84cc74a690642ac09644b6661e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126115326-5a522b10-8c0f-1.png)
+[![](assets/1701606490-a44c2d84cc74a690642ac09644b6661e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126115326-5a522b10-8c0f-1.png)
 
 可以看到这个联合体中，Klass 的地址又分为 `klass` 与 `compressed_klass`。这便是 jvm 的“压缩类指针”机制，在 64 位的 jvm 中默认开启。不过可以通过 `-XX:-UseCompressedClassPointers` 来禁用。那我们要用哪个变量作为 `klass` 的地址呢？
 
 参考 [oopDesc::klass](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/oops/oop.inline.hpp#L72)，可以看到有一个关键的变量 `UseCompressedClassPointers`，这便对应了 jvm 的启动参数中的 `-XX:-UseCompressedClassPointers`。
 
-[![](assets/1701071882-cd79f7932bfe1176af268074a2547ecb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126115419-79d4caa6-8c0f-1.png)
+[![](assets/1701606490-cd79f7932bfe1176af268074a2547ecb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126115419-79d4caa6-8c0f-1.png)
 
 而这个变量存在于 `libjvm.so` 的符号表中，所以我们可以直接去内存中读取该变量的值，来决定我们需要怎样得到 `klass` 的地址。
 
-[![](assets/1701071882-6cf513acc92ba0c1879fb64b3cf03af3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126115433-822ae1fe-8c0f-1.png)
+[![](assets/1701606490-6cf513acc92ba0c1879fb64b3cf03af3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126115433-822ae1fe-8c0f-1.png)
 
 对于未经压缩的 `klass` 地址好说，直接用即可，对于“压缩”后的 klass 地址，要如何使用呢？
 
@@ -375,7 +375,7 @@ Universe::narrow_klass_base() + (v << Universe::narrow_klass_shift())
 
 `Universe::narrow_klass_shift()` 对应了 `_narrow_klass._shift`、`Universe::narrow_klass_base()` 对应了 `_narrow_klass._base`，而 [`_narrow_klass`](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/memory/universe.cpp#L156C1-L156C49) 被定义为[静态全局变量](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/memory/universe.hpp#L191)，这说明什么？说明我们还是可以从符号表中找到对应的偏移，进而直接解析内存，拿到 `narrow_klass_base` 以及 `narrow_klass_shift`，进而求得真实的 `klass` 地址！
 
-[![](assets/1701071882-96517450d271806e65c4a38441a2d04c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126115503-9411520e-8c0f-1.png)
+[![](assets/1701606490-96517450d271806e65c4a38441a2d04c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126115503-9411520e-8c0f-1.png)
 
 `klass` 终于搞定了，接下来就该获取 `jmethod` 了。
 
@@ -385,7 +385,7 @@ Universe::narrow_klass_base() + (v << Universe::narrow_klass_shift())
 
 而我们的目标是从 `methods` 数组中找到 `transformer` 方法，最直接想到的便是通过方法名来寻找，例如下面，层层解析至对应的方法名：
 
-[![](assets/1701071882-cf5eda80719c83a3486d7fb3377e37bc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126115536-a7a51b0c-8c0f-1.png)
+[![](assets/1701606490-cf5eda80719c83a3486d7fb3377e37bc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126115536-a7a51b0c-8c0f-1.png)
 
 不过从上面的截图中也可以看到，`constMethod` 中并没有直接的方法名“字符串”，有的只是 `name_index`，也就是符号索引，例如截图中的第二个方法，对应的 `name_index` 为 `0x71`。这个索引就在 [ConstantPool](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/oops/constantPool.hpp#L84) 也就是上图中的 `ConstMethod._constants` 之后的第 `0x71` 个 [Symbol](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/hotspot/src/share/vm/oops/symbol.hpp#L116) 处，图中的 `0x58` 便是 `ConstantPool` 结构的大小。
 
@@ -403,13 +403,13 @@ PS: 这里其实还有些坑，大概是涉及到 JVM 的优化机制
 
 我们可以借助一些比较明显“常量”来辅助定位。我们在 `InstanceKlass` 中的目标是定位到 `_methods` ，而这个 `_methods` 字段之上的不远处，存在两个相对“固定”的用来标识当前类版本号的字段：`_minoro_version`以及`_major_version`：
 
-[![](assets/1701071882-346859f34725af0564a2015867c44147.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126120500-f8593f96-8c10-1.png)
+[![](assets/1701606490-346859f34725af0564a2015867c44147.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126120500-f8593f96-8c10-1.png)
 
 jdk1.0.2 的 major\_version 为 45，jdk21 的 major\_version 为 65。而 minor\_version 在jdk 1.2 之后基本上一直是 0。我们可以先假定 `_minor_version` 的位置，然后在其附近寻找符合该规则的 version 字段。从而真正确定 `_minor_version` 的位置。
 
 确定 `_minor_version` 位置后，可以看到 `_methods` 就在他的不远处，根据 `InstanceKlass` 的结构，计算一下 `_methods` 相对于 `_minor_version` 的偏移。
 
-[![](assets/1701071882-4d6ca4d985a2164712e4c44159629b61.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126120527-0843d970-8c11-1.png)
+[![](assets/1701606490-4d6ca4d985a2164712e4c44159629b61.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126120527-0843d970-8c11-1.png)
 
 最终计算得到的偏移为 `0x74`，再考虑字节对齐（当然，如果用户手动编译的 jdk 并且在编译时特地调整对齐方式，这里就会有问题了。不过绝大部分情况下，应该是没问题的）:
 
@@ -424,7 +424,7 @@ if (methodsOffset % 8 != 0){
 
 但是，需要注意，可以看到在 `_methods` 前，还有 `NOT_PRODUCT(int _verify_count)`，而这个字段一般来说在编译为 debug 模式下时才会生效。但我们无法真正的确定是有还是无。不过 `_methods`之后的字段为 `_default_methods`，意为 “从接口继承的方法”，而我们的 `InstrumentImpl` 没有继承，所以，当 `_verify_count`字段不存在时，我们会取到 `0`，此时取上一个地址作为 `_methods`即可。
 
-[![](assets/1701071882-3dc2c04f1ec7e199e20a6d87990484b3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126120644-35e62266-8c11-1.png)
+[![](assets/1701606490-3dc2c04f1ec7e199e20a6d87990484b3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126120644-35e62266-8c11-1.png)
 
 至此，我们便完成了 `_methods` 位置的确定，顺便完成了 `NOT_PRODUCT` 宏定义的确定。用类似的方式，便可以以一个相对稳定的方式，定位到我们需要的变量处。
 
@@ -432,15 +432,15 @@ if (methodsOffset % 8 != 0){
 
 debug 模式下的 jdk8 ：
 
-[![](assets/1701071882-3d74a1901a02b1aa461f05cc573eb9ec.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126120718-4a5ba040-8c11-1.png)
+[![](assets/1701606490-3d74a1901a02b1aa461f05cc573eb9ec.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126120718-4a5ba040-8c11-1.png)
 
 正常的 jdk `1.8.0_181`:
 
-[![](assets/1701071882-b23ca354099f33431bd4a656218c6141.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126120730-51a9c4e4-8c11-1.png)
+[![](assets/1701606490-b23ca354099f33431bd4a656218c6141.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126120730-51a9c4e4-8c11-1.png)
 
 arm64 下的 `jdk 1.8.0_202`:
 
-[![](assets/1701071882-9eb4d3a7da8e7653bc8fba52ab318c09.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126120744-59ac8bf4-8c11-1.png)
+[![](assets/1701606490-9eb4d3a7da8e7653bc8fba52ab318c09.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126120744-59ac8bf4-8c11-1.png)
 
 ## 一定要有 transformer 吗
 
@@ -448,7 +448,7 @@ arm64 下的 `jdk 1.8.0_202`:
 
 我们回过头来继续仔细看 [JPLISAgent](https://github.com/openjdk/jdk8u/blob/jdk8u121-b13/jdk/src/share/instrument/JPLISAgent.h#L100) 的结构，从中我们可以注意到有两个变量: `jobject mInstrumentationImpl` 、`jmethodID mTransform`。
 
-[![](assets/1701071882-efc99445a514ed693b691a3e474cb833.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126120816-6cdd3fc0-8c11-1.png)
+[![](assets/1701606490-efc99445a514ed693b691a3e474cb833.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126120816-6cdd3fc0-8c11-1.png)
 
 从 [transformClassFile](https://github.com/openjdk/jdk8u/blob/master/jdk/src/share/instrument/JPLISAgent.c#L833) 中我们可看到，在类进行转换时，其实是调用的 `mInstrumentationImpl` 中的 `mTransform` 方法。那如果我们把这两个字段替换成我们自己定义的一个类以及方法呢？是不是就可以创建一个“相对”来说，没什么特征的类了。方法名也无需是 `transform` ，我们只需要保证方法可以正常的接收 6 个参数即可。
 
@@ -469,7 +469,7 @@ class Hack{
 
 测试一下: `java -cp ${workdir}/app/target/app-1.0-SNAPSHOT.jar:${workdir}/memshell-demo/ com.rzte.agentcrack.App AgentB`
 
-[![](assets/1701071882-d473cc5b1a6f05f8ce613f9b88b371cb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126120847-7f5fc302-8c11-1.png)
+[![](assets/1701606490-d473cc5b1a6f05f8ce613f9b88b371cb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126120847-7f5fc302-8c11-1.png)
 
 ## 尽可能“隐蔽”的攻击
 
@@ -535,7 +535,7 @@ class Hack{
 }
 ```
 
-[![](assets/1701071882-ca39003cdd4be10bb4865f0e6cb1896e.gif)](https://xzfile.aliyuncs.com/media/upload/picture/20231126121141-e6e1e424-8c11-1.gif)
+[![](assets/1701606490-ca39003cdd4be10bb4865f0e6cb1896e.gif)](https://xzfile.aliyuncs.com/media/upload/picture/20231126121141-e6e1e424-8c11-1.gif)
 
 ### 内存马
 
@@ -555,17 +555,17 @@ java -cp ${workdir}/memshell-server/target/memshell-server-1.0-SNAPSHOT-jar-with
 
 注入成功：
 
-[![](assets/1701071882-a0dd3b734046a28c8fda580925ee66c5.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126121340-2e1d2a6a-8c12-1.png)
+[![](assets/1701606490-a0dd3b734046a28c8fda580925ee66c5.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126121340-2e1d2a6a-8c12-1.png)
 
 此时，进行内存马检测，这里使用 河马 来测试:
 
 可看到无法检测到关键类 `javax.servlet.http.HttpServlet` 被修改，同时检测后，也可以看到在 `javax.servlet.http.HttpServlet` 类中注入的内存马仍然有效：
 
-[![](assets/1701071882-bd74fb0942fc341250ac5c0c8fb35e08.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126121357-386cd6fa-8c12-1.png)
+[![](assets/1701606490-bd74fb0942fc341250ac5c0c8fb35e08.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126121357-386cd6fa-8c12-1.png)
 
 作为对比，可以试试针对之前 `NoAgent.jsp` 的检测效果：
 
-[![](assets/1701071882-1ca3f1b55daaa1f3892af4f15e8e8c88.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126121412-4121f64a-8c12-1.png)
+[![](assets/1701606490-1ca3f1b55daaa1f3892af4f15e8e8c88.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231126121412-4121f64a-8c12-1.png)
 
 ## 结语
 
@@ -575,9 +575,9 @@ java -cp ${workdir}/memshell-server/target/memshell-server-1.0-SNAPSHOT-jar-with
 
 ## 参考
 
--   [openjdk-jdk8u](https://github.com/openjdk/jdk8u/)
--   [Java Object Layout](https://github.com/openjdk/jol/)
--   [基于javaAgent内存马检测查杀指南](https://mp.weixin.qq.com/s/Whta6akjaZamc3nOY1Tvxg#at)
--   [如何优雅的注入 Java Agent 内存马](https://paper.seebug.org/1945/)
--   [Java 内存攻击技术漫谈](https://paper.seebug.org/1678/)
--   [当杀疯了的内存马遇到河马](https://www.wangan.com/p/7fy78ye2870145d7)
+*   [openjdk-jdk8u](https://github.com/openjdk/jdk8u/)
+*   [Java Object Layout](https://github.com/openjdk/jol/)
+*   [基于javaAgent内存马检测查杀指南](https://mp.weixin.qq.com/s/Whta6akjaZamc3nOY1Tvxg#at)
+*   [如何优雅的注入 Java Agent 内存马](https://paper.seebug.org/1945/)
+*   [Java 内存攻击技术漫谈](https://paper.seebug.org/1678/)
+*   [当杀疯了的内存马遇到河马](https://www.wangan.com/p/7fy78ye2870145d7)

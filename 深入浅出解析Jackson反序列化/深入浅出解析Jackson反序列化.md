@@ -1,7 +1,7 @@
 
 深入浅出解析Jackson反序列化
 
-- - -
+* * *
 
 # 深入浅出解析Jackson反序列化
 
@@ -13,9 +13,9 @@ Jackson 是当前用的比较广泛的，用来序列化和反序列化 json 的
 
 Jackson 的核心模块由三部分组成。
 
--   jackson-core，核心包，提供基于"流模式"解析的相关 API，它包括 JsonPaser 和 JsonGenerator。 Jackson 内部实现正是通过高性能的流模式 API 的 JsonGenerator 和 JsonParser 来生成和解析 json。
--   jackson-annotations，注解包，提供标准注解功能；
--   jackson-databind ，数据绑定包， 提供基于"对象绑定" 解析的相关 API （ ObjectMapper ） 和"树模型" 解析的相关 API （JsonNode）；基于"对象绑定" 解析的 API 和"树模型"解析的 API 依赖基于"流模式"解析的 API。
+*   jackson-core，核心包，提供基于"流模式"解析的相关 API，它包括 JsonPaser 和 JsonGenerator。 Jackson 内部实现正是通过高性能的流模式 API 的 JsonGenerator 和 JsonParser 来生成和解析 json。
+*   jackson-annotations，注解包，提供标准注解功能；
+*   jackson-databind ，数据绑定包， 提供基于"对象绑定" 解析的相关 API （ ObjectMapper ） 和"树模型" 解析的相关 API （JsonNode）；基于"对象绑定" 解析的 API 和"树模型"解析的 API 依赖基于"流模式"解析的 API。
 
 ### 依赖
 
@@ -45,9 +45,9 @@ maven依赖项
 
 Jackson 最常用的 API 就是基于"对象绑定" 的 ObjectMapper：
 
--   ObjectMapper可以从字符串，流或文件中解析JSON，并创建表示已解析的JSON的Java对象。 将JSON解析为Java对象也称为从JSON反序列化Java对象。
--   ObjectMapper也可以从Java对象创建JSON。 从Java对象生成JSON也称为将Java对象序列化为JSON。
--   Object映射器可以将JSON解析为自定义的类的对象，也可以解析置JSON树模型的对象。
+*   ObjectMapper可以从字符串，流或文件中解析JSON，并创建表示已解析的JSON的Java对象。 将JSON解析为Java对象也称为从JSON反序列化Java对象。
+*   ObjectMapper也可以从Java对象创建JSON。 从Java对象生成JSON也称为将Java对象序列化为JSON。
+*   Object映射器可以将JSON解析为自定义的类的对象，也可以解析置JSON树模型的对象。
 
 之所以称为ObjectMapper是因为它将JSON映射到Java对象（反序列化），或者将Java对象映射到JSON（序列化）。
 
@@ -108,9 +108,9 @@ class Person {
 
 将对象转化为json
 
--   writeValue()
--   writeValueAsString()
--   writeValueAsBytes()
+*   writeValue()
+*   writeValueAsString()
+*   writeValueAsBytes()
 
 ```plain
 package jackson;
@@ -457,7 +457,7 @@ Java多态就是同一个接口使用不同的实例而执行不同的操作
 
 Jackson提供一个enableDefaultTyping设置 包含四个值
 
-[![](assets/1700010824-9ad6dec8d331401b63270053c46c74f2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110002919-223148dc-7f1d-1.png)
+[![](assets/1701606625-9ad6dec8d331401b63270053c46c74f2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110002919-223148dc-7f1d-1.png)
 
 #### JAVA\_LANG\_OBJECT
 
@@ -974,73 +974,73 @@ Jackson的反序列化的过程分为两步 第一步通过构造函数生成实
 
 对其进行调试
 
-[![](assets/1700010824-74e0738a647eafd80627a25b325ae744.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003002-3b8424b2-7f1d-1.png)
+[![](assets/1701606625-74e0738a647eafd80627a25b325ae744.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003002-3b8424b2-7f1d-1.png)
 
-[![](assets/1700010824-f245acc3502981b5d772b0b5f24abde5.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003009-3f97dfc6-7f1d-1.png)
+[![](assets/1701606625-f245acc3502981b5d772b0b5f24abde5.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003009-3f97dfc6-7f1d-1.png)
 
 调用到BeanDeserializer中的deserialize函数 跟进
 
-[![](assets/1700010824-e0dc5d486bb1cab0cc466e708b6e378d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003015-430e4c8a-7f1d-1.png)
+[![](assets/1701606625-e0dc5d486bb1cab0cc466e708b6e378d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003015-430e4c8a-7f1d-1.png)
 
 调用vanillaDeserialize函数 跟进
 
-[![](assets/1700010824-d8b7b5c862df1fa66877b0455f0d99a6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003021-47275bd6-7f1d-1.png)
+[![](assets/1701606625-d8b7b5c862df1fa66877b0455f0d99a6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003021-47275bd6-7f1d-1.png)
 
-[![](assets/1700010824-370994d28bcbba591af26aa7830bf251.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003026-49c4c4c8-7f1d-1.png)
+[![](assets/1701606625-370994d28bcbba591af26aa7830bf251.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003026-49c4c4c8-7f1d-1.png)
 
 调用createUsingDefault函数 从而调用指定类的无参构造函数来生成类实例 跟进一下createUsingDefault函数
 
-[![](assets/1700010824-347dca4e9d07e1a81059a380e124653b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003031-4ca65e0e-7f1d-1.png)
+[![](assets/1701606625-347dca4e9d07e1a81059a380e124653b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003031-4ca65e0e-7f1d-1.png)
 
 调用到call函数
 
-[![](assets/1700010824-7fa4121fd8758f6f9a28bfa43d92b37d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003037-50ad8298-7f1d-1.png)
+[![](assets/1701606625-7fa4121fd8758f6f9a28bfa43d92b37d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003037-50ad8298-7f1d-1.png)
 
 调用`_constructor.newInstance()` 实现无参的构造函数
 
-[![](assets/1700010824-b707d71c41cdf95ebebe11df3e07e272.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003043-540d0418-7f1d-1.png)
+[![](assets/1701606625-b707d71c41cdf95ebebe11df3e07e272.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003043-540d0418-7f1d-1.png)
 
 成功调用到Person2类中的构造函数 从而先完成了bean的实例化
 
-[![](assets/1700010824-bcb63512bfdd561ca2b2651b6af5cfa5.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003048-571ad3a6-7f1d-1.png)
+[![](assets/1701606625-bcb63512bfdd561ca2b2651b6af5cfa5.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003048-571ad3a6-7f1d-1.png)
 
 在完成了类的实例化之后 就需要对类中的属性进行赋值 以键值对的形式进行匹配
 
-[![](assets/1700010824-44644d3d7cc89e08f6a9359ed7338c97.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003106-61d4bc26-7f1d-1.png)
+[![](assets/1701606625-44644d3d7cc89e08f6a9359ed7338c97.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003106-61d4bc26-7f1d-1.png)
 
 以do while循环的形式对其中的属性进行赋值 跟进一下`deserializeAndSet`函数
 
-[![](assets/1700010824-c6f40214e55f55d2462fcf788ed3a34b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003117-6879c378-7f1d-1.png)
+[![](assets/1701606625-c6f40214e55f55d2462fcf788ed3a34b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003117-6879c378-7f1d-1.png)
 
 检查属性类型随后跟进deserialize函数
 
-[![](assets/1700010824-41c0ebed3bca95cab38f51af343b6d9f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003124-6c265860-7f1d-1.png)
+[![](assets/1701606625-41c0ebed3bca95cab38f51af343b6d9f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003124-6c265860-7f1d-1.png)
 
 先对其进行解析 然后到 set处时 就已经是解析好的内容了 随后进行赋值
 
-[![](assets/1700010824-9812baa36b3d1546bf8d67a0d11c9c1b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003129-6f751678-7f1d-1.png)
+[![](assets/1701606625-9812baa36b3d1546bf8d67a0d11c9c1b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003129-6f751678-7f1d-1.png)
 
 上面对age进行赋值 随后是name 对于字符串型的值会跟进到这里
 
-[![](assets/1700010824-f2b7a7c2886b0a6fd2dabe920d2b5276.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003137-740eba18-7f1d-1.png)  
+[![](assets/1701606625-f2b7a7c2886b0a6fd2dabe920d2b5276.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003137-740eba18-7f1d-1.png)  
 随后进行赋值 然后是sex对象 跟进`deserializeWithType`
 
-[![](assets/1700010824-6ff7eee52c2de415cb587c012c808814.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003149-7b1e9ed6-7f1d-1.png)
+[![](assets/1701606625-6ff7eee52c2de415cb587c012c808814.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003149-7b1e9ed6-7f1d-1.png)
 
 这里返回null 于是继续会跟进到`deserializeTypedFromObject`
 
-[![](assets/1700010824-70782c1fce1d3b30574735d346e0a90d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003155-7ee771e6-7f1d-1.png)
+[![](assets/1701606625-70782c1fce1d3b30574735d346e0a90d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003155-7ee771e6-7f1d-1.png)
 
 随后会对MySex对象的构造函数进行调用
 
 随后会和上面一样对MySex之中的属性进行赋值 会调用到set方法
 
-[![](assets/1700010824-0ffb4e8ef07092c12a15697b5441bd1e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003207-862e3fca-7f1d-1.png)  
+[![](assets/1701606625-0ffb4e8ef07092c12a15697b5441bd1e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003207-862e3fca-7f1d-1.png)  
 赋值成功
 
-[![](assets/1700010824-3cc5f210668bc1801b2357711132ec49.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003211-8871092a-7f1d-1.png)
+[![](assets/1701606625-3cc5f210668bc1801b2357711132ec49.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003211-8871092a-7f1d-1.png)
 
-[![](assets/1700010824-49830b0eee71c8836d710491a97e9d48.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003217-8c15e5fa-7f1d-1.png)
+[![](assets/1701606625-49830b0eee71c8836d710491a97e9d48.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003217-8c15e5fa-7f1d-1.png)
 
 ## Jackson反序列化漏洞
 
@@ -1048,9 +1048,9 @@ Jackson的反序列化的过程分为两步 第一步通过构造函数生成实
 
 满足以下三个条件之一 存在Jackson反序列化漏洞 也就是我们上面提到过的 会触发json中的类解析的注解或者函数
 
--   调用了ObjectMapper.enableDefaultTyping()函数；
--   对要进行反序列化的类的属性使用了值为JsonTypeInfo.Id.CLASS的@JsonTypeInfo注解；
--   对要进行反序列化的类的属性使用了值为JsonTypeInfo.Id.MINIMAL\_CLASS的@JsonTypeInfo注解；
+*   调用了ObjectMapper.enableDefaultTyping()函数；
+*   对要进行反序列化的类的属性使用了值为JsonTypeInfo.Id.CLASS的@JsonTypeInfo注解；
+*   对要进行反序列化的类的属性使用了值为JsonTypeInfo.Id.MINIMAL\_CLASS的@JsonTypeInfo注解；
 
 ### 漏洞原理
 
@@ -1080,7 +1080,7 @@ public void setSex(int sex){
 
 运行即可弹出计算器
 
-[![](assets/1700010824-9d05007c0e6fa23f18d68bae9077d9e8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003252-a0e57aea-7f1d-1.png)
+[![](assets/1701606625-9d05007c0e6fa23f18d68bae9077d9e8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231110003252-a0e57aea-7f1d-1.png)
 
 ### 属性中有Object类时
 
@@ -1216,7 +1216,7 @@ public class PoC {
 }
 ```
 
-[![](assets/1700010824-3815e7237f2d53dfbde1f1604035d256.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114144235-feeb6958-82b8-1.png)
+[![](assets/1701606625-3815e7237f2d53dfbde1f1604035d256.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114144235-feeb6958-82b8-1.png)
 
 Exploit.java
 
@@ -1287,11 +1287,11 @@ public class fakes0u1 {
 
 需要将Exploit.java 编译为class 在Poc中填上其完整路径
 
-[![](assets/1700010824-88103a39aebc21d193c16a1ebfbdda6f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114144702-9dd0db52-82b9-1.png)
+[![](assets/1701606625-88103a39aebc21d193c16a1ebfbdda6f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114144702-9dd0db52-82b9-1.png)
 
 运行可以成功执行命令
 
-[![](assets/1700010824-2d850bdfb0e4cb7ba622b3cc9832c7c6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114144850-de0292b0-82b9-1.png)
+[![](assets/1701606625-2d850bdfb0e4cb7ba622b3cc9832c7c6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114144850-de0292b0-82b9-1.png)
 
 transletBytecodes是base64编码的Exploit恶意类的字节流
 
@@ -1307,27 +1307,27 @@ outputProperties 是为了能成功调用到setOutputProperties()函数 其是ou
 
 通过前面的分析我们可以直接将断点设置在`deserializeAndSet`​处 跟进​`deserializeAndSet`​
 
-[![](assets/1700010824-d0dfc6f3a05de3af08e8a5c516da39ec.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114145034-1c10a790-82ba-1.png)
+[![](assets/1701606625-d0dfc6f3a05de3af08e8a5c516da39ec.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114145034-1c10a790-82ba-1.png)
 
 先进行deserialize
 
 然后从`transletBytecodes`​开始为bean实例赋值
 
-[![](assets/1700010824-6643f9ff65018364c1d313d291cb9a61.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114145118-363e8510-82ba-1.png)
+[![](assets/1701606625-6643f9ff65018364c1d313d291cb9a61.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114145118-363e8510-82ba-1.png)
 
 前两个是调用的`MethodProperty.deserializeAndSet`​​​来实现的
 
-[![](assets/1700010824-bf803105f94270d0850370a2d4d23717.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114145142-44cd3a90-82ba-1.png)
+[![](assets/1701606625-bf803105f94270d0850370a2d4d23717.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114145142-44cd3a90-82ba-1.png)
 
 而到outputProperties时调用的是`SetterlessProperty.deserializeAndSet`​ （可能和赋值的类型有关系？）其调用的是属性的getter方法而并不是setter方法 从而可以触发利用链
 
-[![](assets/1700010824-9746960b2e3472604f7090b77e57c566.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114145248-6c1a05d8-82ba-1.png)
+[![](assets/1701606625-9746960b2e3472604f7090b77e57c566.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114145248-6c1a05d8-82ba-1.png)
 
-[![](assets/1700010824-3b6609a580ec99c335f4b7344cb81e4c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114145314-7bee8dc6-82ba-1.png)
+[![](assets/1701606625-3b6609a580ec99c335f4b7344cb81e4c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114145314-7bee8dc6-82ba-1.png)
 
 调用getter的invoke 通过反射的方式 调用到getOutputProperties
 
-[![](assets/1700010824-cf37cc6723d529956d7a301340dfee24.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114145359-9665500e-82ba-1.png)
+[![](assets/1701606625-cf37cc6723d529956d7a301340dfee24.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114145359-9665500e-82ba-1.png)
 
 ### 高版本jdk不能触发的原因
 
@@ -1339,7 +1339,7 @@ jackson-databind-2.7.9换成jackson-databind-2.7.9.1
 
 添加了黑名单过滤
 
-[![](assets/1700010824-c6ffeb5105eb321dc2682a68040c4050.jpg)](https://xzfile.aliyuncs.com/media/upload/picture/20231114145537-d1011e14-82ba-1.jpg)
+[![](assets/1701606625-c6ffeb5105eb321dc2682a68040c4050.jpg)](https://xzfile.aliyuncs.com/media/upload/picture/20231114145537-d1011e14-82ba-1.jpg)
 
 ## CVE-2017-17485 ClassPathXmlApplicationContext利用链
 
@@ -1477,85 +1477,85 @@ public class PoC {
 
 指定了java.lang.ProcessBuilder类 写入了所需执行的命令
 
-[![](assets/1700010824-5b084554ad28a2e7ffed309693627ba0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114145908-4e6e1302-82bb-1.png)
+[![](assets/1701606625-5b084554ad28a2e7ffed309693627ba0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114145908-4e6e1302-82bb-1.png)
 
 ### 调试分析
 
-[![](assets/1700010824-71c94f083ff595f88fcaa7a00a4b3380.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114145959-6ccbb35e-82bb-1.png)
+[![](assets/1701606625-71c94f083ff595f88fcaa7a00a4b3380.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114145959-6ccbb35e-82bb-1.png)
 
 跟进到`UntypedObjectDeserializer.deserializeWithType`​ Token的name是START\_ARRAY 会调用`AsArrayTypeDeserializer._derialize`​来解析数组
 
-[![](assets/1700010824-541bdedb16e3419de3bb7743ee77c9e3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114150022-7b0b433a-82bb-1.png)
+[![](assets/1701606625-541bdedb16e3419de3bb7743ee77c9e3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114150022-7b0b433a-82bb-1.png)
 
 调用到`BeanDeserializer.deserialize`​​​ 在这里Token变成VALUE\_STRING 并不是一个startToken所以`isExpectedStartObjectToken()`​​​ 返回false 所以随后跳到`_deserializeOther`​​​
 
-[![](assets/1700010824-cb8bc3f61187a8ce21aac65808e5b22d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114150118-9bea12c0-82bb-1.png)
+[![](assets/1701606625-cb8bc3f61187a8ce21aac65808e5b22d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114150118-9bea12c0-82bb-1.png)
 
 `deserializeFromString`​​​ 跟进`createFromString`​​​
 
-[![](assets/1700010824-10e650978ac8cde85f7910e0f3eb6285.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114150159-b48962fe-82bb-1.png)
+[![](assets/1701606625-10e650978ac8cde85f7910e0f3eb6285.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114150159-b48962fe-82bb-1.png)
 
 value值为[http://127.0.0.1/spel.xml](http://127.0.0.1/spel.xml) 调用call 实现远程调用
 
-[![](assets/1700010824-f98df70f6c6a267a1d0b967326b437fe.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114150219-c0c13ab0-82bb-1.png)
+[![](assets/1701606625-f98df70f6c6a267a1d0b967326b437fe.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114150219-c0c13ab0-82bb-1.png)
 
 对`ClassPathXmlApplicationContext`​​​进行实例化 参数为xml文件
 
-[![](assets/1700010824-9616d064397fe1eda127c8de48f4258e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114150333-ecb70f14-82bb-1.png)
+[![](assets/1701606625-9616d064397fe1eda127c8de48f4258e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114150333-ecb70f14-82bb-1.png)
 
 与之前调用的类不同的是 ClassPathXmlApplicationContext中并没有setter方法 但是拥有构造函数 所以在这里要通过其构造函数来实现恶意代码的执行
 
-[![](assets/1700010824-842c5f3b3050fcbc63fd13c2b29bde0d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114150414-04e6ad06-82bc-1.png)
+[![](assets/1701606625-842c5f3b3050fcbc63fd13c2b29bde0d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114150414-04e6ad06-82bc-1.png)
 
-[![](assets/1700010824-a1ac034ea3f438194ba75e019d2e926b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114151419-6da9a2f2-82bd-1.png)
+[![](assets/1701606625-a1ac034ea3f438194ba75e019d2e926b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114151419-6da9a2f2-82bd-1.png)
 
 跟进refresh函数 调用​`invokeBeanFactoryPostProcessors`​
 
-[![](assets/1700010824-9c47633a8060984b36e29b1c4b7f07b3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114151456-8377c96a-82bd-1.png)
+[![](assets/1701606625-9c47633a8060984b36e29b1c4b7f07b3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114151456-8377c96a-82bd-1.png)
 
 其中调用​`getBeanNamesForType`​
 
-[![](assets/1700010824-bc80e833ee387841a0e9eca5d6bb681a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114152843-70a4effa-82bf-1.png)
+[![](assets/1701606625-bc80e833ee387841a0e9eca5d6bb681a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114152843-70a4effa-82bf-1.png)
 
 进一步调用​`doGetBeanNamesForType`​
 
-[![](assets/1700010824-ad241503eb8c630845502b769dafb698.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114152907-7f3756de-82bf-1.png)
+[![](assets/1701606625-ad241503eb8c630845502b769dafb698.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114152907-7f3756de-82bf-1.png)
 
 beanname为pb mbd识别为`java.lang.ProcessBuilder` 跟进`isFactoryBean`
 
-[![](assets/1700010824-5657f915cc804dde83bbe332d40cbf1f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153014-a7071302-82bf-1.png)
+[![](assets/1701606625-5657f915cc804dde83bbe332d40cbf1f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153014-a7071302-82bf-1.png)
 
 其中有`predictBeanType`​ 预测BeanType类型跟进该函数
 
-[![](assets/1700010824-0793d0987db493a2e4cd9fea2b6e6b4d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153046-b9e32dee-82bf-1.png)
+[![](assets/1701606625-0793d0987db493a2e4cd9fea2b6e6b4d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153046-b9e32dee-82bf-1.png)
 
 跟进​`determineTargetType`​
 
-[![](assets/1700010824-f91f4fc2baf86717257b748912580be9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153111-c8f78f3c-82bf-1.png)
+[![](assets/1701606625-f91f4fc2baf86717257b748912580be9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153111-c8f78f3c-82bf-1.png)
 
 FactoryBeanName为null 跟进`resolveBeanClass`​​​
 
-[![](assets/1700010824-dce4326ff6f98837eeda57db2e55f2ca.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153141-da92450c-82bf-1.png)
+[![](assets/1701606625-dce4326ff6f98837eeda57db2e55f2ca.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153141-da92450c-82bf-1.png)
 
 跟进​`doResolveBeanClass`​​​
 
-[![](assets/1700010824-870856c92edde2e25ad9c7db0dfb3dcf.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153221-f2857ee0-82bf-1.png)
+[![](assets/1701606625-870856c92edde2e25ad9c7db0dfb3dcf.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153221-f2857ee0-82bf-1.png)
 
 跟进​`evaluateBeanDefinitionString`​​​
 
-[![](assets/1700010824-20771571d3979765852dce7ee809664c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153245-00bbe698-82c0-1.png)
+[![](assets/1701606625-20771571d3979765852dce7ee809664c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153245-00bbe698-82c0-1.png)
 
 跟进`StandardBeanExpressionResolver.evaluate`​
 
-[![](assets/1700010824-87f4289c3de6c923a899ea2eed4bc341.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153305-0cc7694e-82c0-1.png)
+[![](assets/1701606625-87f4289c3de6c923a899ea2eed4bc341.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153305-0cc7694e-82c0-1.png)
 
 调用了Expression.getValue()方法即SpEL表达式执行的方法 sec参数是我们可以控制的内容即由spel.xml解析得到的SpEL表达式
 
-[![](assets/1700010824-338343483907e7d2e7fbe56380eed4c9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153327-19df32e2-82c0-1.png)
+[![](assets/1701606625-338343483907e7d2e7fbe56380eed4c9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153327-19df32e2-82c0-1.png)
 
 调用栈
 
-[![](assets/1700010824-e109fc792329a5593694cdb3ec8851aa.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153346-2557f97e-82c0-1.png)
+[![](assets/1701606625-e109fc792329a5593694cdb3ec8851aa.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153346-2557f97e-82c0-1.png)
 
 ### 补丁
 
@@ -1567,9 +1567,9 @@ FactoryBeanName为null 跟进`resolveBeanClass`​​​
 
 利用的是Jackson中的PojoNode 他的toString是可以直接触发任意的getter的 触发条件如下
 
--   不需要存在该属性
--   getter方法需要有返回值
--   尽可能的只有一个getter
+*   不需要存在该属性
+*   getter方法需要有返回值
+*   尽可能的只有一个getter
 
 试验一下
 
@@ -1611,7 +1611,7 @@ public class Demo {
 }
 ```
 
-[![](assets/1700010824-3fe9c8e32f8da2abd50edb85b412f7dc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153427-3dd37a28-82c0-1.png)
+[![](assets/1701606625-3fe9c8e32f8da2abd50edb85b412f7dc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153427-3dd37a28-82c0-1.png)
 
 ### 利用链
 
@@ -1627,7 +1627,7 @@ Object writeReplace() {
 
 意味着 我们在反序列化的时候 会经过这个writeReplace方法 这个方法会对我们的序列化过程进行检查 从而阻止我们的序列化进程 我们需要将其重写出来 将这个方法去掉
 
-[![](assets/1700010824-0bb28de18917d5838e9f7be64c6a87bc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153459-50c62996-82c0-1.png)
+[![](assets/1701606625-0bb28de18917d5838e9f7be64c6a87bc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153459-50c62996-82c0-1.png)
 
 这样我们就可以进行序列化进程了
 
@@ -1719,31 +1719,31 @@ public class TemplatesImplChain {
 
 可以成功执行命令
 
-[![](assets/1700010824-e5495a4729f9e253f8f353bbb61513be.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153531-63936dea-82c0-1.png)
+[![](assets/1701606625-e5495a4729f9e253f8f353bbb61513be.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153531-63936dea-82c0-1.png)
 
 #### 调试
 
 通过`BadAttributeValueExpException`​的`toString`​方法进入
 
-[![](assets/1700010824-14c9cb7c8b15506ced7672727dd79789.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153556-72bd52f4-82c0-1.png)
+[![](assets/1701606625-14c9cb7c8b15506ced7672727dd79789.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153556-72bd52f4-82c0-1.png)
 
 进入到`BaseJsonNode`​​​的`toString`​​​ 调用​`InternalNodeMapper.nodeToString`​​​
 
-[![](assets/1700010824-c48268468fbe42c9f45a058667bc326e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153620-80be0a06-82c0-1.png)
+[![](assets/1701606625-c48268468fbe42c9f45a058667bc326e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153620-80be0a06-82c0-1.png)
 
 调用`ObjectWriter.writeValueAsString(Object value)`​​​
 
-[![](assets/1700010824-07bf75803afaa45d90e88530d8cd19bc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153640-8cf90e38-82c0-1.png)
+[![](assets/1701606625-07bf75803afaa45d90e88530d8cd19bc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153640-8cf90e38-82c0-1.png)
 
 最终在`serializeAsField`​中触发invoke 调用到`TemplatesImpl.getOutputProperties`​
 
-[![](assets/1700010824-5f4e329c4373525dea04e10afb5bdada.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153657-974e3354-82c0-1.png)
+[![](assets/1701606625-5f4e329c4373525dea04e10afb5bdada.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153657-974e3354-82c0-1.png)
 
 调用链如下
 
-[![](assets/1700010824-5bbdab475515d7dedf69635f67ee3f42.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153725-a80eac46-82c0-1.png)
+[![](assets/1701606625-5bbdab475515d7dedf69635f67ee3f42.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153725-a80eac46-82c0-1.png)
 
-[![](assets/1700010824-a47cdff5602a1568fed5f643014a5bd0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153743-b287a4f2-82c0-1.png)
+[![](assets/1701606625-a47cdff5602a1568fed5f643014a5bd0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153743-b287a4f2-82c0-1.png)
 
 ### SignObject链
 
@@ -1850,7 +1850,7 @@ public class SignObjectChain {
 
 还是一样的路径 这次是跟进到了
 
-[![](assets/1700010824-e93f954ed98959e2c9368d3793682661.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153805-bf804bfa-82c0-1.png)
+[![](assets/1701606625-e93f954ed98959e2c9368d3793682661.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231114153805-bf804bfa-82c0-1.png)
 
 `SignedObject.getObject`​之中 这里还存在一个readObject()方法 可以将我们传进来的在进行一次反序列化从而达到绕过的目的 然后是又一遍TemplatesImpl链
 

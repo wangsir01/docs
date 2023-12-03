@@ -1,7 +1,7 @@
 
 BinaryFormatter 反序列化利用
 
-- - -
+* * *
 
 ## BinaryFormatter
 
@@ -171,11 +171,11 @@ namespace ConsoleApp4
 
 如上所述，需要使用到序列化的值的话，需要在`GetObjectData`方法中进行`info.AddValue("i", n1);`赋值到键值对中，而在反序列化的需要取对应的值的话需要在自定义携带`SerializationInfo`的构造方法中`info.GetInt32("i");`获取反序列化需要取得的值 。
 
-[![](assets/1699929865-dbfda4b1de577333edbbce9cbec6ad0e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201143-faef85ec-7e2f-1.png)
+[![](assets/1701606711-dbfda4b1de577333edbbce9cbec6ad0e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201143-faef85ec-7e2f-1.png)
 
 上图可以看到在str这个变量并没有在加入到`SerializationInfo`里面所以不会被序列化，反序列化取值肯定也是为空的
 
-[![](assets/1699929865-f4364946fc1fd3d375001f1ff25e6761.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201159-048c8078-7e30-1.png)
+[![](assets/1701606711-f4364946fc1fd3d375001f1ff25e6761.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201159-048c8078-7e30-1.png)
 
 [https://learn.microsoft.com/zh-cn/previous-versions/dotnet/fundamentals/serialization/binary/custom-serialization](https://learn.microsoft.com/zh-cn/previous-versions/dotnet/fundamentals/serialization/binary/custom-serialization)
 
@@ -330,7 +330,7 @@ SurrogateSelector ss = new SurrogateSelector();
 设置代理选择器后，在序列化化和反序列化过程中会执行`ISerializationSurrogate`接口实现的2个方法，分别是`GetObjectData`和`SetObjectData`,而不会执行`MyObject`里面的`GetObjectData`  
 以下是流程图
 
-[![](assets/1699929865-382622cb60b075d7b1eb92dd5a847e83.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201216-0eeb07a6-7e30-1.png)
+[![](assets/1701606711-382622cb60b075d7b1eb92dd5a847e83.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201216-0eeb07a6-7e30-1.png)
 
 ### SerializationBinder
 
@@ -475,7 +475,7 @@ namespace ConsoleApp3
 
 在调试过程中发现obj并不是为空的，而是被赋值了，说明是能正常反序列化的。`SerializationBinder`并没有起作用
 
-[![](assets/1699929865-1454a58f28103459f7b1e48e4ed3625e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201231-1759caa8-7e30-1.png)
+[![](assets/1701606711-1454a58f28103459f7b1e48e4ed3625e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201231-1759caa8-7e30-1.png)
 
 ```plain
 internal object Deserialize(Stream serializationStream, HeaderHandler handler, bool fCheck, bool isCrossAppDomain, IMethodCallMessage methodCallMessage)
@@ -503,7 +503,7 @@ internal object Deserialize(Stream serializationStream, HeaderHandler handler, b
 
 调用`objectReader.Deserialize`进行解析，反序列化的时候会调用 `ObjectReader#GetType`\->`ObjectReader#Bind` 来获取 Type 类型
 
-[![](assets/1699929865-0b971fbfebdddd488948a4fa4d75769e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201240-1d350956-7e30-1.png)
+[![](assets/1701606711-0b971fbfebdddd488948a4fa4d75769e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201240-1d350956-7e30-1.png)
 
 ```plain
 [SecurityCritical]
@@ -526,7 +526,7 @@ internal object Deserialize(Stream serializationStream, HeaderHandler handler, b
 
 以上代码`type = m_binder.BindToType(assemblyString, typeString);`调用我们自定义的binder的BindToType方法获取Type对象，这里如果获取Type为空时，并不是直接抛出异常，而是调用`FastBindToType`方法继续获取Type。
 
-[![](assets/1699929865-04596051d79ab1394396f313333e2ba0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201251-235a2712-7e30-1.png)
+[![](assets/1701606711-04596051d79ab1394396f313333e2ba0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201251-235a2712-7e30-1.png)
 
 ```plain
 [SecurityCritical]
@@ -564,7 +564,7 @@ internal object Deserialize(Stream serializationStream, HeaderHandler handler, b
 
 `ObjectReader.ResolveSimpleAssemblyName(new AssemblyName(assemblyName));`获取Assembly对象，`ObjectReader.GetSimplyNamedTypeFromAssembly(assembly, typeName, ref type);`来获取Assembly里面的type对象
 
-[![](assets/1699929865-db4d81ac73cfb9dcb5e1fd8553681827.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201304-2b2a7ce4-7e30-1.png)
+[![](assets/1701606711-db4d81ac73cfb9dcb5e1fd8553681827.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201304-2b2a7ce4-7e30-1.png)
 
 所以以上`SerializationBinder#BindToType`返回null其实是无效的，正确的做法是抛出异常
 
@@ -587,7 +587,7 @@ List<String> blackTypeName = new List<string> { };
            return Type.GetType(typeName);
 ```
 
-[![](assets/1699929865-e570aef393a5df94d285a685952dece6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201315-31fd14b4-7e30-1.png)
+[![](assets/1701606711-e570aef393a5df94d285a685952dece6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201315-31fd14b4-7e30-1.png)
 
 ### SerializationBinder绕过
 
@@ -669,11 +669,11 @@ List<String> blackTypeName = new List<string> { };
 
 再来细看一下`FastBindToType`的代码
 
-[![](assets/1699929865-829ba1ea7615ccd7f1e5274b31ea0722.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201328-397bec06-7e30-1.png)
+[![](assets/1701606711-829ba1ea7615ccd7f1e5274b31ea0722.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201328-397bec06-7e30-1.png)
 
 先使用`typeName`从缓存里面获取`TypeNAssembly`对象
 
-[![](assets/1699929865-d8ed83771a888a7c5873d203c3edea58.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201335-3d98f61c-7e30-1.png)
+[![](assets/1701606711-d8ed83771a888a7c5873d203c3edea58.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201335-3d98f61c-7e30-1.png)
 
 该对象存储`Type`和`assemblyName`程序集名
 
@@ -705,27 +705,27 @@ public void GetObjectData(SerializationInfo info, StreamingContext context)
         }
 ```
 
-[![](assets/1699929865-b6fee82c744f49fbeb23d7ce25f00f4d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201347-45057560-7e30-1.png)
+[![](assets/1701606711-b6fee82c744f49fbeb23d7ce25f00f4d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201347-45057560-7e30-1.png)
 
 原生POC
 
-[![](assets/1699929865-49408bec501e71b64fe6de8037c5ccc9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201355-49840c8c-7e30-1.png)
+[![](assets/1701606711-49408bec501e71b64fe6de8037c5ccc9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201355-49840c8c-7e30-1.png)
 
 修改 后的poc
 
-[![](assets/1699929865-4d08dbc59176d7b50c1c78b0338e1d9c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201400-4cd512fa-7e30-1.png)
+[![](assets/1701606711-4d08dbc59176d7b50c1c78b0338e1d9c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201400-4cd512fa-7e30-1.png)
 
 对比下来typeName 一个是`System.Data.DataSet`，一个是`System.Data.DataSet, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089`
 
 但是传递`FullName` 去获取Type，其实都是为null。因为用的是`Type.GetType();`该方法需要`AssemblyQualifiedName`去获取这是判断逻辑的错误
 
-[![](assets/1699929865-7c52f820ede66ce0f5680233454f7000.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201408-516a16ee-7e30-1.png)
+[![](assets/1701606711-7c52f820ede66ce0f5680233454f7000.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201408-516a16ee-7e30-1.png)
 
 以上的判断是因为判断不够严谨导致的绕过
 
-[![](assets/1699929865-43fd6552dcc7b7e4d730266afe55293e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201416-564511aa-7e30-1.png)
+[![](assets/1701606711-43fd6552dcc7b7e4d730266afe55293e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201416-564511aa-7e30-1.png)
 
-[![](assets/1699929865-67224f126b9aa0bbfd7e7ceebe2f42be.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201422-59c74e42-7e30-1.png)
+[![](assets/1701606711-67224f126b9aa0bbfd7e7ceebe2f42be.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201422-59c74e42-7e30-1.png)
 
 ### 字符绕过方式1
 
@@ -740,7 +740,7 @@ string typeName = "\n\n\n\n\n\n\nSystem.Data.DataSet,\n\n\n\n\n\n\n System.Data,
             Console.ReadLine();
 ```
 
-[![](assets/1699929865-d4b41913b26e0daa096c353012678dfd.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201428-5d967836-7e30-1.png)
+[![](assets/1701606711-d4b41913b26e0daa096c353012678dfd.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231108201428-5d967836-7e30-1.png)
 
 ### 字符绕过方式2
 
@@ -777,23 +777,23 @@ string typeName = "System.Data.DataSet, \"system.data\", version=4.0.0.0, cultur
 
 然而，另一方面，类型名称解析并不是那么简单，.NET 的内部类型解析器/绑定器允许一些意外的怪癖：
 
--   标记之间的空白字符（即 U+0009、U+000A、U+000D、U+0020）通常会被忽略，在某些情况下甚至会忽略更多字符
--   类型名称可以“ .”（句点）开头，例如，.System.Data.DataSet
--   程序集名称不区分大小写并且可以用引号引起来，例如MsCoRlIb和"mscorlib"
--   程序集属性值可以被引用，即使是不正确的，例如，PublicKeyToken="b77a5c561934e089"和PublicKeyToken='b77a5c561934e089
--   .NET Framework 程序集通常只需要PublicKey/PublicKeyToken属性，例如，System.Data.DataSet, System.Data, PublicKey=00000000000000000400000000000000或System.Data.DataSet, System.Data, PublicKeyToken=b77a5c561934e089
--   程序集属性可以是任意顺序，例如，System.Data, PublicKeyToken=b77a5c561934e089, Culture=neutral, Version=4.0.0.0
--   允许任意附加的程序集属性，例如，System.Data, Foo=bar, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, Baz=quux
--   程序集属性可以包含几乎任意数据（支持的转义序列：\\"、\\'、\\,、\\/、\\=、\\、\\n、\\r和\\t）
+*   标记之间的空白字符（即 U+0009、U+000A、U+000D、U+0020）通常会被忽略，在某些情况下甚至会忽略更多字符
+*   类型名称可以“ .”（句点）开头，例如，.System.Data.DataSet
+*   程序集名称不区分大小写并且可以用引号引起来，例如MsCoRlIb和"mscorlib"
+*   程序集属性值可以被引用，即使是不正确的，例如，PublicKeyToken="b77a5c561934e089"和PublicKeyToken='b77a5c561934e089
+*   .NET Framework 程序集通常只需要PublicKey/PublicKeyToken属性，例如，System.Data.DataSet, System.Data, PublicKey=00000000000000000400000000000000或System.Data.DataSet, System.Data, PublicKeyToken=b77a5c561934e089
+*   程序集属性可以是任意顺序，例如，System.Data, PublicKeyToken=b77a5c561934e089, Culture=neutral, Version=4.0.0.0
+*   允许任意附加的程序集属性，例如，System.Data, Foo=bar, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, Baz=quux
+*   程序集属性可以包含几乎任意数据（支持的转义序列：\\"、\\'、\\,、\\/、\\=、\\、\\n、\\r和\\t）
 
 ## 危险的替代方法
 
 避免使用以下序列化程序：
 
--   [SoapFormatter](https://learn.microsoft.com/zh-cn/dotnet/api/system.runtime.serialization.formatters.soap.soapformatter)
--   [LosFormatter](https://learn.microsoft.com/zh-cn/dotnet/api/system.web.ui.losformatter)
--   [NetDataContractSerializer](https://learn.microsoft.com/zh-cn/dotnet/api/system.runtime.serialization.netdatacontractserializer)
--   [ObjectStateFormatter](https://learn.microsoft.com/zh-cn/dotnet/api/system.web.ui.objectstateformatter)
+*   [SoapFormatter](https://learn.microsoft.com/zh-cn/dotnet/api/system.runtime.serialization.formatters.soap.soapformatter)
+*   [LosFormatter](https://learn.microsoft.com/zh-cn/dotnet/api/system.web.ui.losformatter)
+*   [NetDataContractSerializer](https://learn.microsoft.com/zh-cn/dotnet/api/system.runtime.serialization.netdatacontractserializer)
+*   [ObjectStateFormatter](https://learn.microsoft.com/zh-cn/dotnet/api/system.web.ui.objectstateformatter)
 
 上述序列化程序都执行不受限制的多态反序列化，并且会带来风险，就像 BinaryFormatter 一样。
 

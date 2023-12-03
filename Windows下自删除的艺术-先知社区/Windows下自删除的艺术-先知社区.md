@@ -4,7 +4,7 @@
 
 Windows下自删除的艺术
 
-- - -
+* * *
 
 通常来说，在windows程序不可能在运行的时候实现删除自己，微软设计之初为了保证程序的安全性，当一个可执行程序运行的时候会处于一种被占用的状态，如果尝试删除程序，会显示程序被占用，一般需要结束掉程序后才能删掉，而自删除利用了NTFS文件特性达到的程序运行时解除文件锁定，最终删除自身的效果，本篇文章是对此项技术的总结，这项技术已经出现很多年了，互联网上最早的消息来自2021年，于jonasLy在推特公开了这项技术
 
@@ -34,7 +34,7 @@ dir /r
 
 这是我创建的内容：
 
-[![](assets/1700186937-f0f91bcb3a08ce02486e8f2c9499be50.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116151341-abda79fa-844f-1.png)
+[![](assets/1701606606-f0f91bcb3a08ce02486e8f2c9499be50.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116151341-abda79fa-844f-1.png)
 
 ### 核心原理
 
@@ -116,15 +116,15 @@ typedef struct _FILE_RENAME_INFO {
 } FILE_RENAME_INFO, *PFILE_RENAME_INFO;
 ```
 
-[![](assets/1700186937-5a37fff8cd6145b42fc956ccab139719.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116151410-bd262a56-844f-1.png)
+[![](assets/1701606606-5a37fff8cd6145b42fc956ccab139719.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116151410-bd262a56-844f-1.png)
 
 进一步查询文档翻阅：
 
 一个以NUL结尾的宽字符字符串，包含文件的新路径。该值可以是以下之一：
 
--   绝对路径（驱动器、目录和文件名）。
--   相对于进程当前目录的路径。
--   NTFS文件流的新名称，以冒号`:`开头。
+*   绝对路径（驱动器、目录和文件名）。
+*   相对于进程当前目录的路径。
+*   NTFS文件流的新名称，以冒号`:`开头。
 
 新的文件流NTFS应该要用 : 开始
 
@@ -324,7 +324,7 @@ int main() {
 
 执行效果：
 
-[![](assets/1700186937-a7bfb450480d82dd29e5cdac3bc4f8d6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116151443-d0e0db18-844f-1.png)
+[![](assets/1701606606-a7bfb450480d82dd29e5cdac3bc4f8d6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116151443-d0e0db18-844f-1.png)
 
 ## 一些现实场景下的利用方法
 

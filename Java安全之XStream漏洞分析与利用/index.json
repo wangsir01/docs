@@ -1,0 +1,27 @@
+{
+  "version": "2.0",
+  "clipId": "1701612148",
+  "format": "md",
+  "title": "Java安全之XStream漏洞分析与利用",
+  "link": "http://xz.aliyun.com/t/12784",
+  "category": "default",
+  "tags": [],
+  "created_at": "2023-12-03 22:02:28",
+  "mainPath": "Java安全之XStream漏洞分析与利用.md",
+  "paths": [
+    "index.json",
+    "assets/1701612148-c59d78a38cac3ad5ad4253997fb9250d.png",
+    "assets/1701612148-14e7c0792b536be9414bf976aae14cb5.png",
+    "assets/1701612148-376286ee07bd527c30319a4b40e2f0cd.png",
+    "assets/1701612148-b5e8ea56a1a0369d780735d727b28ffc.png",
+    "assets/1701612148-bd3e5fa8e995a542649074ddcc7840a7.png",
+    "assets/1701612148-b0740f4b8b4b79e72c874a88dd6b2416.png",
+    "assets/1701612148-52fb2e798aa8f391a5941970d42ce49d.png",
+    "assets/1701612148-cb706814214f215bbac1d0f31df49d13.png",
+    "assets/1701612148-453fbfcd499b60edb3ddaf780dfcebe6.png",
+    "assets/1701612148-707c4cc25b64691b82d66fa164425f62.png",
+    "assets/1701612148-0fd6defa3b82cfca16266dcb7aae4807.png",
+    "assets/1701612148-aded8bc32e4922bd98cdde2d350d542e.png",
+    "Java安全之XStream漏洞分析与利用.md"
+  ]
+}

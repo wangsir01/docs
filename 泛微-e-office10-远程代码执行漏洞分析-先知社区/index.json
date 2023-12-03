@@ -1,0 +1,32 @@
+{
+  "version": "2.0",
+  "clipId": "1701606421",
+  "format": "md",
+  "title": "泛微 e-office10 远程代码执行漏洞分析 - 先知社区",
+  "link": "http://xz.aliyun.com/t/13137",
+  "category": "default",
+  "tags": [],
+  "created_at": "2023-12-03 20:27:01",
+  "mainPath": "泛微-e-office10-远程代码执行漏洞分析-先知社区.md",
+  "paths": [
+    "index.json",
+    "assets/1701606421-0f518ff6588e2e68f43c1d326db97f2b.png",
+    "assets/1701606421-6d326128f9ad8637d0722051a06ea575.png",
+    "assets/1701606421-fbf02069a388dd929891da90aa859f66.png",
+    "assets/1701606421-cc4ab89f40c4c8e1bfdd0f48cda2fbd9.png",
+    "assets/1701606421-b68e5234dbb3a9a366f13e0422bf4c50.png",
+    "assets/1701606421-78b9aca7bec32a1d23a26bb2371e82f6.png",
+    "assets/1701606421-29f88253dc37e998bf56327d1d3cc3ed.png",
+    "assets/1701606421-b1fc96526343b84884f0d88a39e72a9e.png",
+    "assets/1701606421-97852c6435d7fc08fe9c5c6da13a04d0.png",
+    "assets/1701606421-4bded688de7f94162f1d1819bc7fac5c.png",
+    "assets/1701606421-30d2fbbf4eac531163ebca637c03e594.png",
+    "assets/1701606421-508fcdca2babeabe1827713381086411.png",
+    "assets/1701606421-bb1cd475d0e11fd2fd965f24955c0401.png",
+    "assets/1701606421-fa08e1ac750ff89280bc99a368ca880c.png",
+    "assets/1701606421-545895358f33d5566bfa087dc5d1e0b9.png",
+    "assets/1701606421-9a8b88f4d07cdfcb26997943d9e43942.png",
+    "assets/1701606421-1d386186b50073a279ff59ac761674f3.png",
+    "泛微-e-office10-远程代码执行漏洞分析-先知社区.md"
+  ]
+}

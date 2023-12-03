@@ -1,7 +1,7 @@
 
 新型 IO 利用方法学习——House of apple2
 
-- - -
+* * *
 
 # 新型 IO 利用方法学习——House of apple2
 
@@ -201,9 +201,9 @@ $4 = {
 
 roderick01 师傅在文章里一共给出了三条可行的能执行到 `_IO_Wxxxxx` 函数的利用,包括了：
 
--   \_IO\_wfile\_overflow
--   \_IO\_wfile\_underflow\_mmap
--   \_IO\_wdefault\_xsgetn
+*   \_IO\_wfile\_overflow
+*   \_IO\_wfile\_underflow\_mmap
+*   \_IO\_wdefault\_xsgetn
 
 ## 源码分析
 
@@ -566,7 +566,7 @@ delete(0)
 show(0)
 ```
 
-[![](assets/1700701212-b7b106092113cdda671af9af43507a1e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121159-480c98fc-88ed-1.png)
+[![](assets/1701606552-b7b106092113cdda671af9af43507a1e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121159-480c98fc-88ed-1.png)
 
 然后由于apple需要利用largebin attack，所以还要泄露heap\_base（选 2.31不用考虑safe-linking的12异或，图个方便）
 
@@ -590,7 +590,7 @@ delete(4)
 show(4)
 ```
 
-[![](assets/1700701212-9727b015002c25fdaa6999e65dd537c9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121209-4e61f198-88ed-1.png)
+[![](assets/1701606552-9727b015002c25fdaa6999e65dd537c9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121209-4e61f198-88ed-1.png)
 
 ```plain
 edit(0,'\x00'*0x420+p64(0)+p64(0x431))
@@ -609,7 +609,7 @@ add(9,0x500,'bbbb')#chunk5 --> largebin
 delete(7)#chunk7-->unsortedbin
 ```
 
-[![](assets/1700701212-6d09ca9d377dbcdbb51f309fe9cbaafc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121219-5449e4e4-88ed-1.png)
+[![](assets/1701606552-6d09ca9d377dbcdbb51f309fe9cbaafc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121219-5449e4e4-88ed-1.png)
 
 下一步就是构造好orw链和fake io
 
@@ -695,7 +695,7 @@ orw+=p64(puts_addr)
 edit(9,orw)
 ```
 
-[![](assets/1700701212-0a9191535ca16210089b4e9a766d7a1f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121232-5c2648a6-88ed-1.png)
+[![](assets/1701606552-0a9191535ca16210089b4e9a766d7a1f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121232-5c2648a6-88ed-1.png)
 
 ```plain
 magic_gadget = libc_base + 0x154dd0 +26
@@ -714,19 +714,19 @@ add(8,0x500,'bbbb')
 
 edit 5改写bk\_nextsize后add触发largebin attack将fake io挂到io\_list\_all上
 
-[![](assets/1700701212-52dc7bf6dd34a11f8004d5c0c1af7e74.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121244-6315f274-88ed-1.png)
+[![](assets/1701606552-52dc7bf6dd34a11f8004d5c0c1af7e74.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121244-6315f274-88ed-1.png)
 
-[![](assets/1700701212-ca428b1e10495ee7346a7f4ee933698a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121249-65d7fd68-88ed-1.png)
+[![](assets/1701606552-ca428b1e10495ee7346a7f4ee933698a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121249-65d7fd68-88ed-1.png)
 
-[![](assets/1700701212-25f28c0b7872a208417d02ddd83f222f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121256-6a5e5be8-88ed-1.png)
+[![](assets/1701606552-25f28c0b7872a208417d02ddd83f222f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121256-6a5e5be8-88ed-1.png)
 
 接着把前一个chunk抽走让io\_list\_all 链上我们构造的fake io（不然链接的就是偏移为0x17e0位置的chunk了）
 
-[![](assets/1700701212-156aa6d99eb4c2840a32092dd5163bb2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121304-6f074060-88ed-1.png)
+[![](assets/1701606552-156aa6d99eb4c2840a32092dd5163bb2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121304-6f074060-88ed-1.png)
 
-[![](assets/1700701212-55c235d328f577761bfcb66106152cc0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121311-730beddc-88ed-1.png)
+[![](assets/1701606552-55c235d328f577761bfcb66106152cc0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121311-730beddc-88ed-1.png)
 
-[![](assets/1700701212-b41dec760f62456d74710ed15bdfd4ca.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121316-75cc9436-88ed-1.png)
+[![](assets/1701606552-b41dec760f62456d74710ed15bdfd4ca.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121316-75cc9436-88ed-1.png)
 
 再exit触发io即可执行orw链拿到flag
 
@@ -741,25 +741,25 @@ sla('How much?\n',str(20))
 
 ##### \_IO\_wfile\_overflow
 
-[![](assets/1700701212-1ef1d125565559aeeac651a3cd1600d3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121330-7e7c2506-88ed-1.png)
+[![](assets/1701606552-1ef1d125565559aeeac651a3cd1600d3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121330-7e7c2506-88ed-1.png)
 
 ##### \_IO\_wdoallocbuf
 
-[![](assets/1700701212-142dad7e2d2087b0accb4d531c0581b0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121339-83ba8e90-88ed-1.png)
+[![](assets/1701606552-142dad7e2d2087b0accb4d531c0581b0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121339-83ba8e90-88ed-1.png)
 
 ##### \_IO\_WDOALLOCATE（伪造成magic\_gadget）
 
-[![](assets/1700701212-12e7d55537b48328a23c5686aaf1ff98.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121349-89964e3a-88ed-1.png)
+[![](assets/1701606552-12e7d55537b48328a23c5686aaf1ff98.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121349-89964e3a-88ed-1.png)
 
 ##### orw链的执行
 
-[![](assets/1700701212-56264cfc751afd7de9cdaf525ab37c2f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121357-8e48e7e4-88ed-1.png)
+[![](assets/1701606552-56264cfc751afd7de9cdaf525ab37c2f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121357-8e48e7e4-88ed-1.png)
 
-[![](assets/1700701212-3fc48b1796c4b748bceb6e1aebebf56a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121401-90aba864-88ed-1.png)
+[![](assets/1701606552-3fc48b1796c4b748bceb6e1aebebf56a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121401-90aba864-88ed-1.png)
 
-[![](assets/1700701212-8521c59554b54c6072b7a3b4d6fd7ef9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121404-92ee0c02-88ed-1.png)
+[![](assets/1701606552-8521c59554b54c6072b7a3b4d6fd7ef9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121404-92ee0c02-88ed-1.png)
 
-[![](assets/1700701212-5352dca68b70fc604ef84608c808c811.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121408-954948ea-88ed-1.png)
+[![](assets/1701606552-5352dca68b70fc604ef84608c808c811.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231122121408-954948ea-88ed-1.png)
 
 完整exp：
 

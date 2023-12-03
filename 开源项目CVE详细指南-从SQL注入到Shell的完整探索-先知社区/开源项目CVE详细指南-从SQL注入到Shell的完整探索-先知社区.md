@@ -4,7 +4,7 @@
 
 开源项目CVE详细指南: 从SQL注入到Shell的完整探索
 
-- - -
+* * *
 
 ## 本文背景
 
@@ -30,15 +30,15 @@
 
 比如`admin/ajax_link.php` 直接判断 `$islogin` 是否存在，否则`exit`程序退出。
 
-[![](assets/1701222538-88a926fe390a402507589944e177d2ab.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134429-0881e5da-8ce8-1.png)
+[![](assets/1701606448-88a926fe390a402507589944e177d2ab.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134429-0881e5da-8ce8-1.png)
 
 分析其他的文件，如`admin/index.php`,发现并没有代码直接判断`$islogin`,但是引进了`head.php`文件，跟进去看看实现。
 
-[![](assets/1701222538-cb302422af81629afc54c8d792f2c99e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127141012-9ffc884a-8ceb-1.png)
+[![](assets/1701606448-cb302422af81629afc54c8d792f2c99e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127141012-9ffc884a-8ceb-1.png)
 
 可以看到在第2行同样地对 `$islogin` 这个关键变量进行判断，不通过则直接`exit`中断程序向下继续执行。
 
-[![](assets/1701222538-84ca46fdf11d9eb462c035ca0ed5c6f9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127141026-a822d5ce-8ceb-1.png)
+[![](assets/1701606448-84ca46fdf11d9eb462c035ca0ed5c6f9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127141026-a822d5ce-8ceb-1.png)
 
 ## 绕过鉴权受阻
 
@@ -54,7 +54,7 @@ grep -v --include "*php*"  -rl 'isset($islogin)' ./admin
 grep --include "*php*"  -rL 'isset($islogin)' ./admin|xargs -I {} grep -n -L 'head.php' {}
 ```
 
-[![](assets/1701222538-a8e57392512b38c4e64f6747211c3efb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134527-2b25a55e-8ce8-1.png)
+[![](assets/1701606448-a8e57392512b38c4e64f6747211c3efb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134527-2b25a55e-8ce8-1.png)
 
 分别审计这两个文件，一眼看下去，果断放弃第一种思路，快速转向第二种思路。
 
@@ -63,15 +63,15 @@ grep --include "*php*"  -rL 'isset($islogin)' ./admin|xargs -I {} grep -n -L 'he
 ./admin/footer.php
 ```
 
-[![](assets/1701222538-1400119db824caf1377696e20d667169.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134542-3413d99c-8ce8-1.png)
+[![](assets/1701606448-1400119db824caf1377696e20d667169.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134542-3413d99c-8ce8-1.png)
 
 第二种思路指的是尝试绕过验证的逻辑，常见的经典技巧主要有 **变量覆盖**、**敏感文件泄漏** 和 **代码逻辑漏洞**等，不过很可惜，我仔细研读整个鉴权逻辑，只能感概越简单的东西越少攻击面，首先全局搜索`$islogin`,只找到一处赋值，位于`include/member.php`。
 
-[![](assets/1701222538-6a9680ff39b5d959edfa49d79a085222.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134601-3f16adec-8ce8-1.png)
+[![](assets/1701606448-6a9680ff39b5d959edfa49d79a085222.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134601-3f16adec-8ce8-1.png)
 
 其中 `member.php` 被 `include/common.php`加载，`common.php`作为基础文件会被所有文件包含，核心鉴权逻辑就是位于`member.php`
 
-[![](assets/1701222538-2479f89b7616375cfe74e9bebf02d7d2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134623-4c32c2c2-8ce8-1.png)
+[![](assets/1701606448-2479f89b7616375cfe74e9bebf02d7d2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134623-4c32c2c2-8ce8-1.png)
 
 鉴权的代码比较简单，并不复杂，分析看看。
 
@@ -101,7 +101,7 @@ if(isset($_COOKIE["admin_token"]))
 
 漏洞点所在位置: `apply/index.php`
 
-[![](assets/1701222538-21da8a06013a12718f78cef28798c8e2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134646-59d0f412-8ce8-1.png)
+[![](assets/1701606448-21da8a06013a12718f78cef28798c8e2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134646-59d0f412-8ce8-1.png)
 
 很明显可以看到，整段代码的执行流都是可以由前端进行控制的——程序走正常流程必须支持的功能，所以重点关注这一段函数调用。
 
@@ -111,7 +111,7 @@ apply($_POST['name'], $_POST['url'], $_POST['icon'], $_POST['group_id'], $status
 
 跟进`apply`函数，一开始我还是聚焦在`$_POST`这个可控数组，所以第一眼看过去前面的处理流程，基本XSS和SQL注入凉了一半。
 
-[![](assets/1701222538-b03539dea856db8ee940bd9307e24dbb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134708-66ff935a-8ce8-1.png)
+[![](assets/1701606448-b03539dea856db8ee940bd9307e24dbb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134708-66ff935a-8ce8-1.png)
 
 当然，此时我的内心是在祈祷的，万一参数没用单引号括起来，还是可以试试的。
 
@@ -164,11 +164,11 @@ url=http%3A%2F%2Fqq.com1213&name=test&group_id=1&icon=&authcode=1206
 
 加上单引号报错
 
-[![](assets/1701222538-1b6e12444ab34002ef28a834e9371368.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134734-7665cf9e-8ce8-1.png)
+[![](assets/1701606448-1b6e12444ab34002ef28a834e9371368.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134734-7665cf9e-8ce8-1.png)
 
 两个单引号正常
 
-[![](assets/1701222538-73dcdfa5e5cd18ff639ad90e20228a94.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134746-7df3845e-8ce8-1.png)
+[![](assets/1701606448-73dcdfa5e5cd18ff639ad90e20228a94.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134746-7df3845e-8ce8-1.png)
 
 ## 坎坷的注入点
 
@@ -176,25 +176,25 @@ url=http%3A%2F%2Fqq.com1213&name=test&group_id=1&icon=&authcode=1206
 
 跟进 `$DB->query($sql)`
 
-[![](assets/1701222538-ef675d2a5115edc6627cb89a302e41f2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134804-88a0b688-8ce8-1.png)
+[![](assets/1701606448-ef675d2a5115edc6627cb89a302e41f2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127134804-88a0b688-8ce8-1.png)
 
 数据库操作主要通过`mysqli_query`函数执行SQL语句，可以看到函数的返回值是布尔类型的。
 
-[![](assets/1701222538-309b4dde9bddef5f6add24d7174e37de.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135123-ff40a406-8ce8-1.png)
+[![](assets/1701606448-309b4dde9bddef5f6add24d7174e37de.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135123-ff40a406-8ce8-1.png)
 
 因为没有用到 `multi_query` 支持多语句查询和使用 `mysqli_error($this->link)` 获取SQL错误内容，基于此类情况，堆叠和报错的这两种利用方式就可以放弃了。
 
 下面主要考虑布尔注入和时间盲注这两种类型的可利用性如何
 
-[![](assets/1701222538-50206f13382afbd57696f9b223375f1e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135139-08d2191e-8ce9-1.png)
+[![](assets/1701606448-50206f13382afbd57696f9b223375f1e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135139-08d2191e-8ce9-1.png)
 
 如果我们考虑布尔注入，就需要根据代码构造出条件，其中`$status`变量读取配置文件中是否开启允许申请收录(默认允许即该值默认为1)
 
 所以这样子来看，`insert`执行的结果只有两种，第一种是插入成功，第二种SQL语句执行失败,返回"未知错误"。
 
-[![](assets/1701222538-957a1acc93520f566c5946e81fcb9d0d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135153-110f377e-8ce9-1.png)
+[![](assets/1701606448-957a1acc93520f566c5946e81fcb9d0d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135153-110f377e-8ce9-1.png)
 
-[![](assets/1701222538-37cfcfa239241fa6c7b5fefc8eb77279.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135202-1648674c-8ce9-1.png)
+[![](assets/1701606448-37cfcfa239241fa6c7b5fefc8eb77279.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135202-1648674c-8ce9-1.png)
 
 乍看，想直接通过SQLMAP一把梭哈的话（如果这样都行，扫描器都能扫出来了），此处漏洞利用有二个比较明显的问题
 
@@ -202,7 +202,7 @@ url=http%3A%2F%2Fqq.com1213&name=test&group_id=1&icon=&authcode=1206
 
 在进入SQL查询之前，针对每次提交都会将验证码`$_REQUEST['authcode']`与`$_SESSION['authcode']`进行校验，但是通过全局搜索`$_SESSION['authcode']`你会发现这个值只有在`validatecode.php`执行的时候才会被刷新，换句话来说，只要你不去刷新加载验证码，那么你只需要输入一次验证码即可，后续可以**验证码复用**，第一个问题并不算什么问题
 
-[![](assets/1701222538-2965e26b1440e95dbdff7043614e5d3a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135224-23405e82-8ce9-1.png)
+[![](assets/1701606448-2965e26b1440e95dbdff7043614e5d3a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135224-23405e82-8ce9-1.png)
 
 其二:
 
@@ -212,15 +212,15 @@ url=http%3A%2F%2Fqq.com1213&name=test&group_id=1&icon=&authcode=1206
 > 
 > 故做值比较的时候务必将弱类型特点考虑进去，从而使两边的比较的值类型一致，比如 '0a' > sleep(1), 而 'a'>sleep(1) 是不行的，
 
-[![](assets/1701222538-5fc26b993eb4adbe41997becd5f53655.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135244-2f708984-8ce9-1.png)
+[![](assets/1701606448-5fc26b993eb4adbe41997becd5f53655.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135244-2f708984-8ce9-1.png)
 
 如下图所示，延时成功，但是每次尝试的时候，都需要`url`保持唯一性，虽然说可以写个脚本控制`url`每次都不同,但是这样做的弊端非常明显，无论成功与否你都会在数据库插入大量的数据，甚至跑完一圈下来，可能直接把申请页面都撑爆，作为一个"0day"漏洞，这样子也太狼狈了。
 
-[![](assets/1701222538-ce000d343bd5811efc5cc113bf7f3f26.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135258-376f323e-8ce9-1.png)
+[![](assets/1701606448-ce000d343bd5811efc5cc113bf7f3f26.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135258-376f323e-8ce9-1.png)
 
 如图所示，不延时，说明`user()`不等于113，但这样去操作虽然可以，但每次都要修改`url`还会插入一条待审核数据。
 
-[![](assets/1701222538-7a35c96817332fd73012fd7b691f63e3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135311-3fbf0446-8ce9-1.png)
+[![](assets/1701606448-7a35c96817332fd73012fd7b691f63e3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135311-3fbf0446-8ce9-1.png)
 
 ## 巧妙利用报错特性
 
@@ -237,7 +237,7 @@ url=http%3A%2F%2Fqq.com1213&name=test&group_id=1&icon=&authcode=1206
 INSERT INTO `lylme_apply` (`apply_id`, `apply_name`, `apply_url`, `apply_group`, `apply_icon`, `apply_mail`, `apply_time`, `apply_status`) VALUES (NULL, 'test', 'http://qq.com1213111111a1', '1', '', '0'>if(1,sleep(5),exp(999))>'', '2023-10-07 22:14:25', '0');
 ```
 
-[![](assets/1701222538-a60d7d1a3c3130b1a37b504406bcc48e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135329-4a795364-8ce9-1.png)
+[![](assets/1701606448-a60d7d1a3c3130b1a37b504406bcc48e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135329-4a795364-8ce9-1.png)
 
 但是这样我还是觉得不够的，因为当`if`判断正确的时候，语句延时之后还是会执行成功，然后又回到之前的问题，此时注入的效率就跟注入的目标数据成正相关的关系，实际解决这个问题办法很简单，只需要再sleep(5)执行之后再拼接一个`exp`即可
 
@@ -249,11 +249,11 @@ Client-Ip:0'>if(ord(substring(user(),1,1))=114,sleep(5)&exp(999),exp(999))>'
 
 系统的全局设置内容是从数据库的`lylme_config`表读出来的，里面包括后台账号密码且都是明文的形式
 
-[![](assets/1701222538-aba170454a024bb6a4d9233fbf2be348.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135353-583becd2-8ce9-1.png)
+[![](assets/1701606448-aba170454a024bb6a4d9233fbf2be348.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135353-583becd2-8ce9-1.png)
 
 如下所示
 
-[![](assets/1701222538-1c66d379e19102290dc1ba8fa1353135.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135429-6db16c72-8ce9-1.png)
+[![](assets/1701606448-1c66d379e19102290dc1ba8fa1353135.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135429-6db16c72-8ce9-1.png)
 
 由于是SQL时间盲注，写一个快速利用脚本是有必要的。
 
@@ -297,19 +297,19 @@ def exploit(target, cookie, authcode, timeout=5):
 
 网络情况好的话，可以在两分钟内拿到后台的账号和密码
 
-[![](assets/1701222538-a1bfbfe2c9c6887f1843534647c85b21.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135414-6540710a-8ce9-1.png)
+[![](assets/1701606448-a1bfbfe2c9c6887f1843534647c85b21.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135414-6540710a-8ce9-1.png)
 
 ## 解压无文件 GetShell
 
   浏览后台目录的文件时，有一个解压zip的操作成功吸引我的注意，漏洞文件位于: `admin/ajax_link.php`
 
-[![](assets/1701222538-aaede3130d4529f91767a9c8e4bf610a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135451-7b50f668-8ce9-1.png)
+[![](assets/1701606448-aaede3130d4529f91767a9c8e4bf610a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135451-7b50f668-8ce9-1.png)
 
 其中`$RemoteFile` 可以由 `$_POST['file']`完全控制，然后通过`copy`复制并重命名，接着直接解压至根目录，简单地来讲，只要我们上传一个压缩的zip文件到服务器的任意位置，那么就可以GetShell，找一个上传点并不难，但是我们当前可是在PHP环境下耶？ PHP是世界上最好的语言，怎么可能 GetShell 需要那么麻烦是吧？
 
 如果你了解php支持的[支持的协议和封装协议](https://www.php.net/manual/zh/wrappers.php#wrappers)，即我们常说的伪协议，那么这个问题迎刃而解。
 
-[![](assets/1701222538-fbaee9c906c5d06c4f36ccced75b7d9c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135504-8286cfde-8ce9-1.png)
+[![](assets/1701606448-fbaee9c906c5d06c4f36ccced75b7d9c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135504-8286cfde-8ce9-1.png)
 
 利用该漏洞的步骤如下:
 
@@ -349,9 +349,9 @@ file=data://text/plain;base64,UEsDBBQAAAAIALMUSFdQg8x9EgAAABIAAAAFAAAAMS5waHCzsS
 
 4) 解压成功之后会返回"success", 之后直接访问生成的Shell即可。
 
-[![](assets/1701222538-54c3bc28ee429e88b5ce9028787972ff.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135519-8be6c002-8ce9-1.png)
+[![](assets/1701606448-54c3bc28ee429e88b5ce9028787972ff.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135519-8be6c002-8ce9-1.png)
 
-[![](assets/1701222538-055a89bae988987f21ac4493be91ae6c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135529-91f5f936-8ce9-1.png)
+[![](assets/1701606448-055a89bae988987f21ac4493be91ae6c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135529-91f5f936-8ce9-1.png)
 
 上面的利用步骤稍显繁琐，压缩包payload的构造直接使用Python来实现，做到在减少环境依赖的同时也能开箱即用。
 
@@ -381,25 +381,25 @@ def get_shell_payload(shell_name="1.php", shell_content="<?php phpinfo();?>"):
 
 让我们仔细看一下负责验证码的代码
 
-[![](assets/1701222538-2045ab58d9ae61e3ad69fcef6d3e44ce.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231128203413-6fe8bc46-8dea-1.png)
+[![](assets/1701606448-2045ab58d9ae61e3ad69fcef6d3e44ce.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231128203413-6fe8bc46-8dea-1.png)
 
 `$_SESSION` 这个变量跟`Cookie:PHPSESSID`有关，所以思路很简单，同时去掉`authcode`和`session`，让他们的值都为`NULL`就可以绕过验证码了
 
-[![](assets/1701222538-81f2df1ccfb2cdb6eb5143e9343a5418.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231128203418-730a69d8-8dea-1.png)
+[![](assets/1701606448-81f2df1ccfb2cdb6eb5143e9343a5418.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231128203418-730a69d8-8dea-1.png)
 
 这个思路，一开始确实没有想到，因为当时觉得获取一次验证码并不算太复杂，但是后来想Py搞定验证码识别，觉得有点复杂，所以回头想一下，Bingo， 一试就出来。
 
 完整的攻击EXP:
 
-[![](assets/1701222538-ecd5711579ba56fd47c0984d4ddb3334.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142008-035ce0dc-8ced-1.png)
+[![](assets/1701606448-ecd5711579ba56fd47c0984d4ddb3334.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142008-035ce0dc-8ced-1.png)
 
 从 FOFA 随机选一个没有WAF的目标对脚本进行测试，0day，一打一个准，基本都是秒的。
 
-[![](assets/1701222538-56235118444af97eb8a3e87de186187b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135619-af52b596-8ce9-1.png)
+[![](assets/1701606448-56235118444af97eb8a3e87de186187b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135619-af52b596-8ce9-1.png)
 
 脚本运行效果如图所示。
 
-[![](assets/1701222538-9cf0543a1a67e90dc10da49ecd7e49d2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135655-c4d27852-8ce9-1.png)
+[![](assets/1701606448-9cf0543a1a67e90dc10da49ecd7e49d2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135655-c4d27852-8ce9-1.png)
 
 ## 赋予漏洞 CVE 编号
 
@@ -409,7 +409,7 @@ def get_shell_payload(shell_name="1.php", shell_content="<?php phpinfo();?>"):
 > 
 > CVE 是通用漏洞披露（Common Vulnerabilities and Exposures）的英文缩写，列出了已公开披露的各种计算机安全缺陷。CVE 识别号由 CVE 编号管理机构（CNA）分配。全球目前[约有 100 个 CNA](https://blog.xiaohack.org/go/aHR0cHM6Ly9jdmUubWl0cmUub3JnL2N2ZS9yZXF1ZXN0X2lkLmh0bWw)，包括各大 IT 供应商以及安全公司和研究组织。
 > 
-> [![](assets/1701222538-8f0285845713a69367b893f323c174b9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142110-2878b832-8ced-1.png)
+> [![](assets/1701606448-8f0285845713a69367b893f323c174b9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127142110-2878b832-8ced-1.png)
 
 因为挖掘项目本身是开源在Github的: [https://github.com/LyLme/lylme\_spage](https://github.com/LyLme/lylme_spage) 后续CVE申请所需要填写的漏洞详情链接 ISSUE 可以在Github 上提交。
 
@@ -436,7 +436,7 @@ CVE的报告说明需要用英语写，翻译推荐: [https://www.deepl.com/](ht
 2.  **Enter your e-mail address**: 填写你接收CVE审核信息的邮箱
     
 
-[![](assets/1701222538-5fbd53755930b46710e64cae9adace0e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135717-d2132098-8ce9-1.png)
+[![](assets/1701606448-5fbd53755930b46710e64cae9adace0e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135717-d2132098-8ce9-1.png)
 
 1.  **Number of vulnerabilities reported or IDs requested (1-10)**: 我是组合漏洞，有两个故选择 2
     
@@ -447,7 +447,7 @@ CVE的报告说明需要用英语写，翻译推荐: [https://www.deepl.com/](ht
 4.  **Affected product(s)/code base**:受影响的软件产品或者代码库，填写产品和版本
     
 
-[![](assets/1701222538-66376312b962ddc7ac253cccc195615f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135730-d9bba6c6-8ce9-1.png)
+[![](assets/1701606448-66376312b962ddc7ac253cccc195615f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135730-d9bba6c6-8ce9-1.png)
 
 1.  **Attack type**: 攻击类型，一般勾选 Remote 远程攻击，非本地
     
@@ -470,7 +470,7 @@ CVE的报告说明需要用英语写，翻译推荐: [https://www.deepl.com/](ht
     ```
     
 
-[![](assets/1701222538-a0d6e136ce0ff3435f534f44cb2e6b0e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135746-e37606e8-8ce9-1.png)
+[![](assets/1701606448-a0d6e136ce0ff3435f534f44cb2e6b0e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135746-e37606e8-8ce9-1.png)
 
 1.  **Suggested description of the vulnerability for use in the CVE**:
     
@@ -485,41 +485,41 @@ CVE的报告说明需要用英语写，翻译推荐: [https://www.deepl.com/](ht
 
 填完第一个CVE的申请要求之后，如图所示
 
-[![](assets/1701222538-bd5a9839b2c2b90e9eca2e3d159c0a0e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135924-1dd7b336-8cea-1.png)
+[![](assets/1701606448-bd5a9839b2c2b90e9eca2e3d159c0a0e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135924-1dd7b336-8cea-1.png)
 
 继续向下拉，即可填写第二个CVE的申请表，流程和SQL注入大差不差，限于篇幅就省略具体内容了。
 
-[![](assets/1701222538-17ad3343c01774cc7facff9d7567e882.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135937-253d8b28-8cea-1.png)
+[![](assets/1701606448-17ad3343c01774cc7facff9d7567e882.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135937-253d8b28-8cea-1.png)
 
 最后输入验证码提交之前，记得回头检查下自己写的内容，没有问题就直接进行提交即可
 
-[![](assets/1701222538-ea135306acaeb3e12f7a779551cb0e3d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135958-324eb512-8cea-1.png)
+[![](assets/1701606448-ea135306acaeb3e12f7a779551cb0e3d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127135958-324eb512-8cea-1.png)
 
 提交完会显示一个提交成功的公告页面，并且你的邮箱会收到一封CVE团队发给你的邮件。
 
-[![](assets/1701222538-24291da3fa2f9488cce8879b9041fa91.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140010-396d18e8-8cea-1.png)
+[![](assets/1701606448-24291da3fa2f9488cce8879b9041fa91.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140010-396d18e8-8cea-1.png)
 
 邮件里面提到，如果你想更改CVE的报告内容，后续可以通过邮件与他们沟通进行修改。
 
-[![](assets/1701222538-6999c01e1279cc4f49832673f9795c2a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140023-40e4f28a-8cea-1.png)
+[![](assets/1701606448-6999c01e1279cc4f49832673f9795c2a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140023-40e4f28a-8cea-1.png)
 
 大概过了8天，CVE官方会给邮箱发来标题为 **your CVE ID requests** 的邮件，里面说明给你分配的漏洞CVE编号: CVE-2023-45951、CVE-2023-45952
 
-[![](assets/1701222538-5ed4f735fdaa59d0e87331b59f2af91f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140130-68bf2398-8cea-1.png)
+[![](assets/1701606448-5ed4f735fdaa59d0e87331b59f2af91f.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140130-68bf2398-8cea-1.png)
 
 [https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-45951、https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-45952](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-45951%E3%80%81https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-45952)
 
 > CVE 审核很负责的，可能我的Description写的不是很好，他会给你改成非常官方直接的描述，这个值得参考学习。
 
-[![](assets/1701222538-36a570ace5e34de930ad9e35e17314a6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140140-6f1baec8-8cea-1.png)
+[![](assets/1701606448-36a570ace5e34de930ad9e35e17314a6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140140-6f1baec8-8cea-1.png)
 
 然后你去google搜索相关CVE编号，可以看到很多网站都已经进行收录，查找相关资料时发现看到别人的一些漏洞是处于"保留状态的"
 
 这个原因的话如下图所示，如果漏洞真实有效的话，可以去CVE申请公开。
 
-[![](assets/1701222538-cdc3eb2717c29a33b296f65e7e386cc6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140203-7ca1ce06-8cea-1.png)
+[![](assets/1701606448-cdc3eb2717c29a33b296f65e7e386cc6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140203-7ca1ce06-8cea-1.png)
 
-[![](assets/1701222538-3f2d0535c1a45004681b00504078f6f3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140223-88ae142a-8cea-1.png)
+[![](assets/1701606448-3f2d0535c1a45004681b00504078f6f3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140223-88ae142a-8cea-1.png)
 
 后续漏洞的CVSS评分会由NVD团队完成，如下图可以看到当前漏洞还在等待CVSS评分中
 
@@ -527,10 +527,10 @@ CVE的报告说明需要用英语写，翻译推荐: [https://www.deepl.com/](ht
 
 [https://nvd.nist.gov/vuln/detail/CVE-2023-45952](https://nvd.nist.gov/vuln/detail/CVE-2023-45952)
 
-[![](assets/1701222538-8b1841bb9a77c1ed7c377cac91505018.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140248-9732dd0a-8cea-1.png)
+[![](assets/1701606448-8b1841bb9a77c1ed7c377cac91505018.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140248-9732dd0a-8cea-1.png)
 
 大概过了数天，就会有评分了，最终两个漏洞都获得了9.8的高分。  
-[![](assets/1701222538-f0776997fe0931222e3f1a22c3fb7784.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140258-9d5e4cfa-8cea-1.png)
+[![](assets/1701606448-f0776997fe0931222e3f1a22c3fb7784.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140258-9d5e4cfa-8cea-1.png)
 
 ## 开源传承 PR 提交修复补丁
 
@@ -542,11 +542,11 @@ GitHub 上一般通过提交 PR（Pull Request）的方式，向开源项目合�
 
 1) fork目标仓库到自己的Github账号的仓库。
 
-[![](assets/1701222538-8c1a9381d0c39263fdf864d96cfdcc2c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140321-ab0862a0-8cea-1.png)
+[![](assets/1701606448-8c1a9381d0c39263fdf864d96cfdcc2c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140321-ab0862a0-8cea-1.png)
 
 2) `git clone git@github.com:mstxq17/lylme_spage.git` 复制代码仓库到本地。
 
-[![](assets/1701222538-4e1c251e2eaa3f393c15d5f510292da0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140332-b19e9774-8cea-1.png)
+[![](assets/1701606448-4e1c251e2eaa3f393c15d5f510292da0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140332-b19e9774-8cea-1.png)
 
 3) 同步拉取远程最新的代码，创建新分支bugfix，修复漏洞文件后commit提交到本地，并同步pull到远程仓库。
 
@@ -584,23 +584,23 @@ function get_real_ip() {
 }
 ```
 
-[![](assets/1701222538-aa849104c23bb57e85cce80601d50e84.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140353-bde89d18-8cea-1.png)
+[![](assets/1701606448-aa849104c23bb57e85cce80601d50e84.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140353-bde89d18-8cea-1.png)
 
 4) 提交PR
 
 回到Github的仓库会提示你进行PR，点击 Compare & pull request 比较文件变动并做提交。
 
-[![](assets/1701222538-e49e11a2f9e1c133171131ba199ae616.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140404-c48fb566-8cea-1.png)
+[![](assets/1701606448-e49e11a2f9e1c133171131ba199ae616.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140404-c48fb566-8cea-1.png)
 
 填写你的提交comment， 然后向下拉查看文件变动，左边是源代码，右边是你自己做的修改，仔细对比下改动。
 
-[![](assets/1701222538-81d73f264d4a9bdda0d7b27c375c6318.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140521-f2b120b0-8cea-1.png)
+[![](assets/1701606448-81d73f264d4a9bdda0d7b27c375c6318.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140521-f2b120b0-8cea-1.png)
 
-[![](assets/1701222538-0fe048845bfc0bf509019b606d0926a4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140535-fb0c96e0-8cea-1.png)
+[![](assets/1701606448-0fe048845bfc0bf509019b606d0926a4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140535-fb0c96e0-8cea-1.png)
 
 没问题，点击 **Create pull request** 完成提交，之后就可以在目标仓库的 **pull request** 看到自己的提交。
 
-[![](assets/1701222538-6b1835d5127fef080a0584e368ad0b26.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140559-08f02b5a-8ceb-1.png)
+[![](assets/1701606448-6b1835d5127fef080a0584e368ad0b26.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231127140559-08f02b5a-8ceb-1.png)
 
 ## 予一个有想法的总结
 

