@@ -1,7 +1,7 @@
 
 栈溢出与ROP攻击技术的进阶之路
 
-* * *
+- - -
 
 # 栈溢出与ROP攻击技术的进阶之路
 
@@ -11,8 +11,8 @@ ROP(Return Oriented Programming)，这是一种高级的内存攻击技术可以
 
 ROP攻击一般满足如下条件：
 
-*   程序存在溢出，并且可以控制返回地址
-*   可以找到满足条件的gadgets以及相应的gadgets
+-   程序存在溢出，并且可以控制返回地址
+-   可以找到满足条件的gadgets以及相应的gadgets
 
 如果gadgets每次的地址不是固定的，需要想办法动态的获取地址
 
@@ -26,7 +26,7 @@ ret to syscall，就是调用系统函数达到目的
 
 2、用户态、内核态与系统调用
 
-[![](assets/1701606411-b81a085e02985a4407912277c6f4db7a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231129203145-41fef57e-8eb3-1.png)
+[![](assets/1701678439-b81a085e02985a4407912277c6f4db7a.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231129203145-41fef57e-8eb3-1.png)
 
 3、系统调用的基本过程
 
@@ -125,10 +125,10 @@ mov edx, envp
 int 0x80                    ; 触发系统调用
 ```
 
-*   系统调用号，即 eax 应该为 0xb
-*   第一个参数，即 ebx 应该指向 /bin/sh 的地址，其实执行 sh 的地址也可以。
-*   第二个参数，即 ecx 应该为 0
-*   第三个参数，即 edx 应该为 0
+-   系统调用号，即 eax 应该为 0xb
+-   第一个参数，即 ebx 应该指向 /bin/sh 的地址，其实执行 sh 的地址也可以。
+-   第二个参数，即 ecx 应该为 0
+-   第三个参数，即 edx 应该为 0
 
 因此我们需要将这些值放在寄存器中，故需要寻找如下类似程序：
 
@@ -141,7 +141,7 @@ ret
 
 如图：
 
-[![](assets/1701606411-6a9673c7b88b54e89cd2accd5e0d4e69.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231129203253-6af3d422-8eb3-1.png)
+[![](assets/1701678439-6a9673c7b88b54e89cd2accd5e0d4e69.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231129203253-6af3d422-8eb3-1.png)
 
 过程：溢出后此时返回的地址是pop eax的地址，程序进而转型向该地址执行，此时栈顶的元素为0xb，执行pop eax后eax的值成功地赋值为0xb，接着执行pop eax后一句指令ret，返回下一条指令的地址，需要出栈，正好将程序的执行位置转向了pop ebx所在的位置，重复上述过程，到最后将程序指向了int 0x80处，进行系统调用
 
@@ -219,7 +219,7 @@ int 0x80的地址在0x08049421
 
 具体执行过程如下：
 
-[![](assets/1701606411-65f1a2b5c4b33616fb2ca44a7cfc240b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231129203340-86b99264-8eb3-1.png)
+[![](assets/1701678439-65f1a2b5c4b33616fb2ca44a7cfc240b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231129203340-86b99264-8eb3-1.png)
 
 4、构造脚本
 
@@ -246,9 +246,9 @@ p.interactive()
 
 1、分3种情况：
 
-*   程序中能够找到system函数和'/bin/sh'字符串
-*   程序中只存在一个
-*   程序中两者都不存在(准确来说，这种才是真正的ret2libc)
+-   程序中能够找到system函数和'/bin/sh'字符串
+-   程序中只存在一个
+-   程序中两者都不存在(准确来说，这种才是真正的ret2libc)
 
 ### 利用
 
@@ -529,11 +529,11 @@ $ ls
 
 这里我们泄露 \_\_libc\_start\_main 的地址，这是因为它是程序最初被执行的地方。基本利用思路如下
 
-*   泄露 \_\_libc\_start\_main 地址
-*   获取 libc 版本
-*   获取 system 地址与 /bin/sh 的地址
-*   再次执行源程序
-*   触发栈溢出执行 system(‘/bin/sh’)
+-   泄露 \_\_libc\_start\_main 地址
+-   获取 libc 版本
+-   获取 system 地址与 /bin/sh 的地址
+-   再次执行源程序
+-   触发栈溢出执行 system(‘/bin/sh’)
 
 ## ret2csu
 
@@ -585,9 +585,9 @@ $ ls
   40062d:   00 00 00
 ```
 
-*   从 0x000000000040061A 一直到结尾，我们可以利用栈溢出构造栈上数据来控制 rbx,rbp,r12,r13,r14,r15 寄存器的数据。
-*   从 0x0000000000400600 到 0x0000000000400609，我们可以将 r13 赋给 rdx, 将 r14 赋给 rsi，将 r15d 赋给 edi（需要注意的是，虽然这里赋给的是 edi，**但其实此时 rdi 的高 32 位寄存器值为 0（自行调试）**，所以其实我们可以控制 rdi 寄存器的值，只不过只能控制低 32 位），而这三个寄存器，也是 x64 函数调用中传递的前三个寄存器。此外，如果我们可以合理地控制 r12 与 rbx，那么我们就可以调用我们想要调用的函数。比如说我们可以控制 rbx 为 0，r12 为存储我们想要调用的函数的地址。
-*   从 0x000000000040060D 到 0x0000000000400614，我们可以控制 rbx 与 rbp 的之间的关系为 rbx+1 = rbp，这样我们就不会执行 loc\_400600，进而可以继续执行下面的汇编程序。这里我们可以简单的设置 rbx=0，rbp=1。
+-   从 0x000000000040061A 一直到结尾，我们可以利用栈溢出构造栈上数据来控制 rbx,rbp,r12,r13,r14,r15 寄存器的数据。
+-   从 0x0000000000400600 到 0x0000000000400609，我们可以将 r13 赋给 rdx, 将 r14 赋给 rsi，将 r15d 赋给 edi（需要注意的是，虽然这里赋给的是 edi，**但其实此时 rdi 的高 32 位寄存器值为 0（自行调试）**，所以其实我们可以控制 rdi 寄存器的值，只不过只能控制低 32 位），而这三个寄存器，也是 x64 函数调用中传递的前三个寄存器。此外，如果我们可以合理地控制 r12 与 rbx，那么我们就可以调用我们想要调用的函数。比如说我们可以控制 rbx 为 0，r12 为存储我们想要调用的函数的地址。
+-   从 0x000000000040060D 到 0x0000000000400614，我们可以控制 rbx 与 rbp 的之间的关系为 rbx+1 = rbp，这样我们就不会执行 loc\_400600，进而可以继续执行下面的汇编程序。这里我们可以简单的设置 rbx=0，rbp=1。
 
 如果这段没看懂，请看下面利用理解：
 
@@ -649,19 +649,19 @@ ssize_t vulnerable_function()
 
 过程：main——>gatget1——>gatget2——>gatget1——>main重复3次
 
-*   利用栈溢出执行 libc\_csu\_gadgets 获取 write 函数地址，并使得程序重新执行 main 函数
+-   利用栈溢出执行 libc\_csu\_gadgets 获取 write 函数地址，并使得程序重新执行 main 函数
     
-    [![](assets/1701606411-54ce4e5b315f3aec9259c1c58508f43f.jpg)](https://xzfile.aliyuncs.com/media/upload/picture/20231129203813-299af270-8eb4-1.jpg)
-    
-
-*   再次利用栈溢出执行 libc\_csu\_gadgets 向 bss 段写入 execve 地址以及 '/bin/sh’ 地址，并使得程序重新执行 main 函数。
-    
-    [![](assets/1701606411-49a06ad401e2d7daa8d8087dcd2516d9.jpg)](https://xzfile.aliyuncs.com/media/upload/picture/20231129203941-5deb0b64-8eb4-1.jpg)
+    [![](assets/1701678439-54ce4e5b315f3aec9259c1c58508f43f.jpg)](https://xzfile.aliyuncs.com/media/upload/picture/20231129203813-299af270-8eb4-1.jpg)
     
 
-*   再次利用栈溢出执行 libc\_csu\_gadgets 执行 execve('/bin/sh') 获取 shell。
+-   再次利用栈溢出执行 libc\_csu\_gadgets 向 bss 段写入 execve 地址以及 '/bin/sh’ 地址，并使得程序重新执行 main 函数。
     
-    [![](assets/1701606411-fbc23d546ebbb9c7569bd2f47ce623dc.jpg)](https://xzfile.aliyuncs.com/media/upload/picture/20231129204004-6bdb416c-8eb4-1.jpg)
+    [![](assets/1701678439-49a06ad401e2d7daa8d8087dcd2516d9.jpg)](https://xzfile.aliyuncs.com/media/upload/picture/20231129203941-5deb0b64-8eb4-1.jpg)
+    
+
+-   再次利用栈溢出执行 libc\_csu\_gadgets 执行 execve('/bin/sh') 获取 shell。
+    
+    [![](assets/1701678439-fbc23d546ebbb9c7569bd2f47ce623dc.jpg)](https://xzfile.aliyuncs.com/media/upload/picture/20231129204004-6bdb416c-8eb4-1.jpg)
     
 
 脚本：
@@ -714,18 +714,18 @@ p.interactive()
 
 ### 思路
 
-*   利用栈溢出执行 libc\_csu\_gadgets 获取 write 函数地址，并使得程序重新执行 main 函数
-*   根据 libcsearcher 获取对应 libc 版本以及 execve 函数地址
-*   再次利用栈溢出执行 libc\_csu\_gadgets 向 bss 段写入 execve 地址以及 '/bin/sh’ 地址，并使得程序重新执行 main 函数。
-*   再次利用栈溢出执行 libc\_csu\_gadgets 执行 execve('/bin/sh') 获取 shell。
+-   利用栈溢出执行 libc\_csu\_gadgets 获取 write 函数地址，并使得程序重新执行 main 函数
+-   根据 libcsearcher 获取对应 libc 版本以及 execve 函数地址
+-   再次利用栈溢出执行 libc\_csu\_gadgets 向 bss 段写入 execve 地址以及 '/bin/sh’ 地址，并使得程序重新执行 main 函数。
+-   再次利用栈溢出执行 libc\_csu\_gadgets 执行 execve('/bin/sh') 获取 shell。
 
 ### 疑问
 
-*   上述思路中，能不能省去第三步，直接通过版本找到字符串/bin/sh的地址，然后利用栈溢出传入地址直接执行？
+-   上述思路中，能不能省去第三步，直接通过版本找到字符串/bin/sh的地址，然后利用栈溢出传入地址直接执行？
     
     答：不可以，因为这条指令的原因mov edi, r15d，它只能将r15低32位赋给edi,而bss段地址本身比较低，高32位为0不影响赋值后rdi的结果
     
-*   如果system函数不行可以尝试使用execve
+-   如果system函数不行可以尝试使用execve
     
 
 ## ret2reg
@@ -1375,16 +1375,16 @@ link\_map的地址是0xf7ffd918
 
 > struct link\_map  
 > {  
-> / _These first few members are part of the protocol with the debugger.  
-> This is the same format used in SVR4._ /  
+> / *These first few members are part of the protocol with the debugger.  
+> This is the same format used in SVR4.* /  
 > //共享文件加载基地址  
-> ElfW(Addr) l\_addr; / _Base address shared object is loaded at._ /libary基地址  
+> ElfW(Addr) l\_addr; / *Base address shared object is loaded at.* /libary基地址  
 > //绝对文件名  
-> char _l\_name; /_ Absolute file name object was found in. _/libary名字  
+> char *l\_name; /* Absolute file name object was found in. */libary名字  
 > //动态段加载地址  
-> ElfW(Dyn)_ l\_ld; / _Dynamic section of the shared object._ /libary下的.dynamic地址  
+> ElfW(Dyn)* l\_ld; / *Dynamic section of the shared object.* /libary下的.dynamic地址  
 > //加载项链表  
-> struct link\_map _l\_next,_ l\_prev; / _Chain of loaded objects._ /  
+> struct link\_map *l\_next,* l\_prev; / *Chain of loaded objects.* /  
 > ......
 > 
 > };
@@ -1414,9 +1414,9 @@ gdb-peda$ x /40xw 0x08049754
 0x80497e4:  0x00000012  0x00000018  0x00000013  0x00000008
 ```
 
-*   .dynstr 的地址是 .dynamic + 0x44 -> 0x08048258
-*   .dynsym 的地址是 .dynamic + 0x4c -> 0x080481b8
-*   .rel.plt 的地址是 .dynamic + 0x84 -> 0x08048310
+-   .dynstr 的地址是 .dynamic + 0x44 -> 0x08048258
+-   .dynsym 的地址是 .dynamic + 0x4c -> 0x080481b8
+-   .rel.plt 的地址是 .dynamic + 0x84 -> 0x08048310
 
 ```plain
 gdb-peda$ x/x 0x08049754+0x84
@@ -1431,9 +1431,9 @@ gdb-peda$ x/x 0x08049754+0x84
 > 
 > {
 > 
-> Elf32\_Addr r\_offset; / _Address_ /
+> Elf32\_Addr r\_offset; / *Address* /
 > 
-> Elf32\_Word r\_info; / _Relocation type and symbol index_ /
+> Elf32\_Word r\_info; / *Relocation type and symbol index* /
 > 
 > } Elf32\_Rel;
 
@@ -1509,13 +1509,13 @@ gdb-peda$ x /s 0x08048258+0x20
 
 signal 机制是类 unix 系统中进程之间相互传递信息的一种方法。一般，我们也称其为软中断信号，或者软中断。比如说，进程之间可以通过系统调用 kill 来发送软中断信号。一般来说，信号机制常见的步骤如下图所示（参考网图）：
 
-[![](assets/1701606411-1d63f9d17c7f2b8cf44d6fed7863de9e.jpg)](https://xzfile.aliyuncs.com/media/upload/picture/20231129204736-791d158e-8eb5-1.jpg)
+[![](assets/1701678439-1d63f9d17c7f2b8cf44d6fed7863de9e.jpg)](https://xzfile.aliyuncs.com/media/upload/picture/20231129204736-791d158e-8eb5-1.jpg)
 
 1.  内核向某个进程发送 signal 机制，该进程会被暂时挂起，进入内核态。
     
 2.  内核会为该进程保存相应的上下文，**主要是将所有寄存器压入栈中，以及压入 signal 信息，以及指向 sigreturn 的系统调用地址**。此时栈的结构如下图所示，我们称 ucontext 以及 siginfo 这一段为 Signal Frame。**需要注意的是，这一部分是在用户进程的地址空间的。**之后会跳转到注册过的 signal handler 中处理相应的 signal。因此，当 signal handler 执行完之后，就会执行 sigreturn 代码。
     
-    [![](assets/1701606411-dd5521e109407c9cf2eaae236679d619.jpg)](https://xzfile.aliyuncs.com/media/upload/picture/20231129204801-881e9f94-8eb5-1.jpg)
+    [![](assets/1701678439-dd5521e109407c9cf2eaae236679d619.jpg)](https://xzfile.aliyuncs.com/media/upload/picture/20231129204801-881e9f94-8eb5-1.jpg)
     
     对于 signal Frame 来说，会因为架构的不同而有所区别，这里给出分别给出 x86 以及 x64 的 sigcontext（看不懂忽略即可）
     
@@ -1647,12 +1647,12 @@ qufeng@qufeng-virtual-machine:~/Desktop/CTF/pwn/stack$ checksec smallest
 
 **利用思路**
 
-*   通过控制 read 读取的字符数来设置 RAX 寄存器的值，从而执行 sigreturn
-*   通过 syscall 执行 execve("/bin/sh",0,0) 来获取 shell。
+-   通过控制 read 读取的字符数来设置 RAX 寄存器的值，从而执行 sigreturn
+-   通过 syscall 执行 execve("/bin/sh",0,0) 来获取 shell。
 
 **步骤**
 
-*   泄露栈地址
+-   泄露栈地址
     
     先向栈中写入三个首地址(main\_addr)，执行完syscall调用的read函数后，栈中的情况如图<1>：
     
@@ -1666,7 +1666,7 @@ qufeng@qufeng-virtual-machine:~/Desktop/CTF/pwn/stack$ checksec smallest
     
     接着执行ret，此时程序返回的是main\_addr,而esp指向的地址就是我们得到的栈地址
     
-    [![](assets/1701606411-78ce3f83445b9e960eb2120d32b94b33.jpg)](https://xzfile.aliyuncs.com/media/upload/picture/20231129204919-b6799d94-8eb5-1.jpg)
+    [![](assets/1701678439-78ce3f83445b9e960eb2120d32b94b33.jpg)](https://xzfile.aliyuncs.com/media/upload/picture/20231129204919-b6799d94-8eb5-1.jpg)
     
     对应的exp：
     
@@ -1695,7 +1695,7 @@ qufeng@qufeng-virtual-machine:~/Desktop/CTF/pwn/stack$ checksec smallest
     
     成功得到栈地址
     
-*   使用pwntools的SigreturnFrame构造read(0,stack\_addr,0x400)
+-   使用pwntools的SigreturnFrame构造read(0,stack\_addr,0x400)
     
     ```plain
     #构造frame,表示read(0,stack_addr,0x400)
@@ -1724,7 +1724,7 @@ qufeng@qufeng-virtual-machine:~/Desktop/CTF/pwn/stack$ checksec smallest
     
     esp指向我们写入的syscall\_addr地址，由于我们成功写入了15个字符，故此时的eax为15，程序ret返回到syscall\_addr处进行系统调用，此时的系统调用号存储在eax正好是15，调用sigreturn，根据frame设定的结构，程序接下来会执行read(0,stack\_addr,0x400)
     
-*   使用pwntools的SigreturnFrame构造shell
+-   使用pwntools的SigreturnFrame构造shell
     
     此时函数执行的是read(0,stack\_addr,0x400)，需要等待我们的输入，我们继续构造frame(execve)
     
@@ -1754,9 +1754,9 @@ qufeng@qufeng-virtual-machine:~/Desktop/CTF/pwn/stack$ checksec smallest
     
     esp指向我们写入的syscall\_addr地址，由于我们成功写入了15个字符，故此时的eax为15，程序ret返回到syscall\_addr处进行系统调用，此时的系统调用号存储在eax正好是15，调用sigreturn，根据frame设定的结构，程序接下来会执行system(execve)
     
-    [![](assets/1701606411-7fe291ad1049dec00eac371ee4ba46d9.jpg)](https://xzfile.aliyuncs.com/media/upload/picture/20231129205213-1e4c11d6-8eb6-1.jpg)
+    [![](assets/1701678439-7fe291ad1049dec00eac371ee4ba46d9.jpg)](https://xzfile.aliyuncs.com/media/upload/picture/20231129205213-1e4c11d6-8eb6-1.jpg)
     
-*   完整exp
+-   完整exp
     
     ```plain
     # -*- coding: utf-8 -*-
@@ -1828,15 +1828,15 @@ qufeng@qufeng-virtual-machine:~/Desktop/CTF/pwn/stack$ checksec smallest
 
 ### 使用场景
 
-*   可以控制的栈溢出的字节数较少，难以构造较长的 ROP 链
-*   开启了 PIE 保护，栈地址未知，我们可以将栈劫持到已知的区域。
-*   其它漏洞难以利用，我们需要进行转换，比如说将栈劫持到堆空间，从而在堆上写 rop 及进行堆漏洞利用
+-   可以控制的栈溢出的字节数较少，难以构造较长的 ROP 链
+-   开启了 PIE 保护，栈地址未知，我们可以将栈劫持到已知的区域。
+-   其它漏洞难以利用，我们需要进行转换，比如说将栈劫持到堆空间，从而在堆上写 rop 及进行堆漏洞利用
 
 ### 使用要求
 
-*   可以控制程序执行流。
+-   可以控制程序执行流。
     
-*   可以控制 sp 指针。一般来说，控制栈指针会使用 ROP，常见的控制栈指针的 gadgets 一般是
+-   可以控制 sp 指针。一般来说，控制栈指针会使用 ROP，常见的控制栈指针的 gadgets 一般是
     
     ```plain
     pop rsp/esp
@@ -1844,11 +1844,11 @@ qufeng@qufeng-virtual-machine:~/Desktop/CTF/pwn/stack$ checksec smallest
     
     还可以使用libc\_csu\_init 中的 gadgets
     
-*   存在可以控制内容的内存，一般有如下:
+-   存在可以控制内容的内存，一般有如下:
     
-    *   bss 段。由于进程按页分配内存，分配给 bss 段的内存大小至少一个页 (4k，0x1000) 大小。然而一般 bss 段的内容用不了这么多的空间，并且 bss 段分配的内存页拥有读写权限。
+    -   bss 段。由于进程按页分配内存，分配给 bss 段的内存大小至少一个页 (4k，0x1000) 大小。然而一般 bss 段的内容用不了这么多的空间，并且 bss 段分配的内存页拥有读写权限。
         
-    *   heap。但是这个需要我们能够泄露堆地址
+    -   heap。但是这个需要我们能够泄露堆地址
         
 
 ## 总结

@@ -4,7 +4,7 @@
 
 无文件落地注入Agent内存马实操
 
-* * *
+- - -
 
 ## 前言
 
@@ -40,7 +40,7 @@ ClassPool pool = ClassPool.getDefault();
 ```
 
 在此目录找到生成的新class文件  
-[![](assets/1701606328-49e505ef7340a5cbfcde55ccf4ff5d36.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231130224320-ce545114-8f8e-1.png)
+[![](assets/1701678277-49e505ef7340a5cbfcde55ccf4ff5d36.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231130224320-ce545114-8f8e-1.png)
 
 和工具放到同一目录，使用工具生成最终要让目标加载的类文件（用于将目标类的**旧字节码替换为新字节码**）
 
@@ -48,7 +48,7 @@ ClassPool pool = ClassPool.getDefault();
 java -jar .\FilelessAgentMemshellGenerator.jar -b 64 -c "org.apache.tomcat.websocket.server.WsFilter" -i false -o "Windows" -p .\WsFilter.class -t false
 ```
 
-弹出警告，但还是成功生成了所需的类文件[![](assets/1701606328-2b5791e9a5503cc9c6fcda7f8f780e65.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231130224345-dd51c44e-8f8e-1.png)
+弹出警告，但还是成功生成了所需的类文件[![](assets/1701678277-2b5791e9a5503cc9c6fcda7f8f780e65.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231130224345-dd51c44e-8f8e-1.png)
 
 在工具同目录的out文件夹下可找到`AgentMemShell.class`
 
@@ -103,7 +103,7 @@ public class JNDIServer {
 
 `http://localhost:8080/memShell/jndi?b=cm1pOi8vbG9jYWxob3N0OjExNDUxL3JlbW90ZU9iag==`
 
-随便访问一个不存在的目录，成功弹出了计算器[![](assets/1701606328-d491c44f360f6ae00099c29332c9e9bb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231130224600-2da4f024-8f8f-1.png)
+随便访问一个不存在的目录，成功弹出了计算器[![](assets/1701678277-d491c44f360f6ae00099c29332c9e9bb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231130224600-2da4f024-8f8f-1.png)
 
 ## lambda表达式报错
 
@@ -113,7 +113,7 @@ public class JNDIServer {
 
 其他步骤不变，只是在Javassit修改类以及用工具生成最终类的时候改变参数，从而生成能够替换`org.apache.catalina.core.ApplicationFilterChain`类的EXP
 
-再次利用JNDI注入打入内存马，你会发现没有生效，查看Spring控制台应该能看到以下报错：[![](assets/1701606328-ef92e432662fa09dabc0d2432fb3d1aa.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231130224625-3c7a5350-8f8f-1.png)
+再次利用JNDI注入打入内存马，你会发现没有生效，查看Spring控制台应该能看到以下报错：[![](assets/1701678277-ef92e432662fa09dabc0d2432fb3d1aa.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231130224625-3c7a5350-8f8f-1.png)
 
 **为什么呢？**
 
@@ -135,11 +135,11 @@ public class JNDIServer {
 
 **（粗体为推荐使用的类）**
 
-*   **org.apache.tomcat.websocket.server.WsFilter**
-*   org.springframework.web.servlet.DispatcherServlet
-*   org.apache.catalina.core.ApplicationFilterChain
-*   **org.apache.catalina.core.StandardContextValve**
-*   javax.servlet.http.HttpServlet（Tomcat 10之后，javax变成jarkara；Weblogic环境下是weblogic）
+-   **org.apache.tomcat.websocket.server.WsFilter**
+-   org.springframework.web.servlet.DispatcherServlet
+-   org.apache.catalina.core.ApplicationFilterChain
+-   **org.apache.catalina.core.StandardContextValve**
+-   javax.servlet.http.HttpServlet（Tomcat 10之后，javax变成jarkara；Weblogic环境下是weblogic）
 
 其中**`org.apache.tomcat.websocket.server.WsFilter` 、`org.apache.catalina.core.StandardContextValve`** 是**既没有lambda表达式**，又长度**较短**的类
 
@@ -237,7 +237,7 @@ public class ModifyCalcMethod {
 
 接着替换修改后的字节码，**然而却遇到了新报错：**
 
-[![](assets/1701606328-df73db0dee3cff14a25395569f6aaf7e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231130224448-02c30ac6-8f8f-1.png)
+[![](assets/1701678277-df73db0dee3cff14a25395569f6aaf7e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231130224448-02c30ac6-8f8f-1.png)
 
 JavaAgent技术的确是不允许增删方法、增删属性值的，但我们只是删除了源码中的lambda表达式部分，为什么会引起这个报错呢？
 
@@ -272,7 +272,7 @@ java.security.AccessController.doPrivileged(
 
 仍然报错........
 
-[![](assets/1701606328-2e8a5e7e106eaa082a8311b45af7ac86.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231130224643-4770666e-8f8f-1.png)
+[![](assets/1701678277-2e8a5e7e106eaa082a8311b45af7ac86.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231130224643-4770666e-8f8f-1.png)
 
 看来Instrument API并不认同这种等效代替方案，那简直有点无计可施了，只剩下**最后的方法**
 
@@ -330,9 +330,9 @@ JDK8下，Java默认会对Unsafe的调用进行警告，并提示将在未来版
 
 JDK11下，执行完动态替换类操作后，目标的控制台会出现警报
 
-[![](assets/1701606328-1b846407f6de990c48c30cf1b9805b73.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231130224427-f66bacba-8f8e-1.png)
+[![](assets/1701678277-1b846407f6de990c48c30cf1b9805b73.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231130224427-f66bacba-8f8e-1.png)
 
-[![](assets/1701606328-2d5332284886e078fb80797ad3b4476b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231130224658-50705ba2-8f8f-1.png)
+[![](assets/1701678277-2d5332284886e078fb80797ad3b4476b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231130224658-50705ba2-8f8f-1.png)
 
 具体在**JDK17**之后，**完全禁止**了不安全的反射调用
 
