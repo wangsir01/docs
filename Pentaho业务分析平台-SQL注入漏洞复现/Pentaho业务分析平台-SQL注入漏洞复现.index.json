@@ -1,0 +1,18 @@
+{
+  "version": "2.0",
+  "clipId": "1701745998",
+  "format": "md",
+  "title": "Pentaho业务分析平台 SQL注入漏洞复现",
+  "link": "https://blog.csdn.net/qq_41904294/article/details/134786832",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-12-05 11:13:18",
+  "mainPath": "Pentaho业务分析平台-SQL注入漏洞复现.md",
+  "paths": [
+    "Pentaho业务分析平台-SQL注入漏洞复现.index.json",
+    "assets/1701745998-904eb0d81f6ef1ee21533bfdac6c99fc.png",
+    "Pentaho业务分析平台-SQL注入漏洞复现.md"
+  ]
+}

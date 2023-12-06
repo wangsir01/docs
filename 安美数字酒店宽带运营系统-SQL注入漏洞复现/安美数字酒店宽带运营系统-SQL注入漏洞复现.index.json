@@ -1,0 +1,18 @@
+{
+  "version": "2.0",
+  "clipId": "1701746621",
+  "format": "md",
+  "title": "安美数字酒店宽带运营系统 SQL注入漏洞复现",
+  "link": "https://blog.csdn.net/qq_41904294/article/details/134788224",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-12-05 11:23:41",
+  "mainPath": "安美数字酒店宽带运营系统-SQL注入漏洞复现.md",
+  "paths": [
+    "安美数字酒店宽带运营系统-SQL注入漏洞复现.index.json",
+    "assets/1701746621-db4a9f7884414ec471a0ecde89c6b946.png",
+    "安美数字酒店宽带运营系统-SQL注入漏洞复现.md"
+  ]
+}

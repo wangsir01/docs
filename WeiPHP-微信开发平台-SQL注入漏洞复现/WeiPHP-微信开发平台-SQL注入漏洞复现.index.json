@@ -1,0 +1,18 @@
+{
+  "version": "2.0",
+  "clipId": "1701826206",
+  "format": "md",
+  "title": "WeiPHP 微信开发平台 SQL注入漏洞复现",
+  "link": "https://blog.csdn.net/qq_41904294/article/details/134813433",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-12-06 09:30:06",
+  "mainPath": "WeiPHP-微信开发平台-SQL注入漏洞复现.md",
+  "paths": [
+    "WeiPHP-微信开发平台-SQL注入漏洞复现.index.json",
+    "assets/1701826206-2dc6d5c94b01727de0c834d3b333ff44.png",
+    "WeiPHP-微信开发平台-SQL注入漏洞复现.md"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "version": "2.0",
+  "clipId": "1701747001",
+  "format": "md",
+  "title": "从一道题分析Invoke-PSImage隐藏webshell到图片",
+  "link": "https://xz.aliyun.com/t/13159",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2023-12-05 11:30:01",
+  "mainPath": "从一道题分析Invoke-PSImage隐藏webshell到图片.md",
+  "paths": [
+    "从一道题分析Invoke-PSImage隐藏webshell到图片.index.json",
+    "assets/1701747001-385646a54baf50f9e381325878440f5e.png",
+    "assets/1701747001-f8fd20147dd6281e2a959024aad925ae.png",
+    "assets/1701747001-6397d93d1a0f27cfa3bd6acdbdcd9385.png",
+    "assets/1701747001-9e8d09e28aae92e43d7d0bec392abc1b.png",
+    "assets/1701747001-831a40998e47858ba69e3abe3f3e3aca.png",
+    "assets/1701747001-b9a450ecf22824ba7cac0d9a98555b2b.png",
+    "从一道题分析Invoke-PSImage隐藏webshell到图片.md"
+  ]
+}

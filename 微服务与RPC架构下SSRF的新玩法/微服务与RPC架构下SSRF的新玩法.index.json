@@ -1,0 +1,23 @@
+{
+  "version": "2.0",
+  "clipId": "1701747137",
+  "format": "md",
+  "title": "微服务与RPC架构下SSRF的新玩法",
+  "link": "https://xz.aliyun.com/t/13158",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2023-12-05 11:32:17",
+  "mainPath": "微服务与RPC架构下SSRF的新玩法.md",
+  "paths": [
+    "微服务与RPC架构下SSRF的新玩法.index.json",
+    "assets/1701747137-aa662da5261281dbdac26d1e89c066e7.png",
+    "assets/1701747137-e0e23847b6b6caec5a1d98bf29325df3.png",
+    "assets/1701747137-e5463b418d97147f9c653d4aef8daa15.webp",
+    "assets/1701747137-dd7979f4db1c40bbcf8b33143e43dbad.png",
+    "assets/1701747137-620f63fb7f29e47bf69bfbe52e1a48fd.png",
+    "assets/1701747137-63be6edb4484d9be519d9a3bd081c702.jpg",
+    "微服务与RPC架构下SSRF的新玩法.md"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "version": "2.0",
+  "clipId": "1701746394",
+  "format": "md",
+  "title": "用友NC FileUploadServlet 反序列化RCE漏洞复现",
+  "link": "https://blog.csdn.net/qq_41904294/article/details/134793482",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-12-05 11:19:54",
+  "mainPath": "用友NC-FileUploadServlet-反序列化RCE漏洞复现.md",
+  "paths": [
+    "用友NC-FileUploadServlet-反序列化RCE漏洞复现.index.json",
+    "assets/1701746394-d4c1eebb0d893707673ebb2c121f98b9.png",
+    "用友NC-FileUploadServlet-反序列化RCE漏洞复现.md"
+  ]
+}
