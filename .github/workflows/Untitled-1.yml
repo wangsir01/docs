@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Compress Images
         uses: calibreapp/image-actions@main
@@ -36,7 +36,7 @@ jobs:
           git commit -m "Compress images" -a || exit 0  # If no changes, exit without error
 
       - name: Push changes
-        uses: ad-m/github-push-action@master
+        uses: ad-m/github-push-action@v0.8.0
         with:
-          github_token: ${{ secrets.GDOCS_PUSH_TOKENN }}
+          github_token: ${{ secrets.DOCS_PUSH_TOKENN }}
           branch: ${{ github.ref }}
