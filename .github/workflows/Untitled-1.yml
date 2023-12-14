@@ -1,6 +1,7 @@
 name: Compress Images and Push
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
