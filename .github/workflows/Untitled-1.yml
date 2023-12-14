@@ -38,5 +38,5 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@v0.8.0
         with:
-          github_token: ${{ secrets.DOCS_PUSH_TOKENN }}
+          github_token: ${{ secrets.DOCS_PUSH_TOKEN }}
           branch: ${{ github.ref }}
