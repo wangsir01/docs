@@ -1,0 +1,39 @@
+{
+  "version": "2.0",
+  "clipId": "1702520978",
+  "format": "md",
+  "title": "用友NC-CLOUD 任意文件上传和SQL注入漏洞分析 - 先知社区",
+  "link": "https://xz.aliyun.com/t/13173",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2023-12-14 10:29:38",
+  "mainPath": "用友NC-CLOUD-任意文件上传和SQL注入漏洞分析-先知社区.md",
+  "paths": [
+    "用友NC-CLOUD-任意文件上传和SQL注入漏洞分析-先知社区.index.json",
+    "assets/1702520978-62d728487e711f3b368989c72fd5116e.png",
+    "assets/1702520978-18ae171c2a8a0efbfaed766582d7f534.png",
+    "assets/1702520978-a1555b87952c9f6ac79d6a5ee257c747.png",
+    "assets/1702520978-4f30a1fa3f01c571dd5b2ce5b62c28b6.png",
+    "assets/1702520978-74a35894e8b545e5d8b0e80e255d46b3.png",
+    "assets/1702520978-fcca2018ca60e9ed93a5afab04b5abdf.png",
+    "assets/1702520978-b9e2ed0b163ff244df4e8360b242188e.png",
+    "assets/1702520978-7543cdc9a2d85947b7fc0f90ae920704.png",
+    "assets/1702520978-72e3d91f562677d10259b8cbcae3ef25.png",
+    "assets/1702520978-baeeae6283e1d16b8d9f4f0224f7e7b6.png",
+    "assets/1702520978-9acf191fff7e9e9ab9201942a911cfbc.png",
+    "assets/1702520978-3ae414f260e49ae05a06881cb4ea4b8a.png",
+    "assets/1702520978-0da756170b67f3e80a64167d686888f3.png",
+    "assets/1702520978-43c8d5f1c580f8bbee07a630127f5fd6.png",
+    "assets/1702520978-e4fb17ca3b430d72631ad7f76dfa13ed.png",
+    "assets/1702520978-136bdf48a544f4c36943b8bf1fd5f484.png",
+    "assets/1702520978-90b32656d413a9a7aa55aa04a456b9f9.png",
+    "assets/1702520978-b66ef0b9226233ae44b659aeac1dacc1.png",
+    "assets/1702520978-78ec36002124fef108a030e246648231.png",
+    "assets/1702520978-b0e0f3977bba507bbb9028a5e90ffec2.png",
+    "assets/1702520978-640898be5c81be7694b0f8318473811c.png",
+    "assets/1702520978-a241f14d52db6babf602808da9ba5ed4.png",
+    "用友NC-CLOUD-任意文件上传和SQL注入漏洞分析-先知社区.md"
+  ]
+}

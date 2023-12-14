@@ -1,0 +1,18 @@
+{
+  "version": "2.0",
+  "clipId": "1702521001",
+  "format": "md",
+  "title": "用友NC mp模块文件上传漏洞分析 - 先知社区",
+  "link": "https://xz.aliyun.com/t/13171",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2023-12-14 10:30:01",
+  "mainPath": "用友NC-mp模块文件上传漏洞分析-先知社区.md",
+  "paths": [
+    "用友NC-mp模块文件上传漏洞分析-先知社区.index.json",
+    "assets/1702521001-aace206d5732a41c9fea71b5b57ea9c2.png",
+    "用友NC-mp模块文件上传漏洞分析-先知社区.md"
+  ]
+}
