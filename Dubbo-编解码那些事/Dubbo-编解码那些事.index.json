@@ -1,0 +1,20 @@
+{
+  "version": "2.0",
+  "clipId": "1703059132",
+  "format": "md",
+  "title": "Dubbo 编解码那些事",
+  "link": "https://blog.csdn.net/vivo_tech/article/details/115633937",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-12-20 15:58:52",
+  "mainPath": "Dubbo-编解码那些事.md",
+  "paths": [
+    "Dubbo-编解码那些事.index.json",
+    "assets/1703059132-65f9f2f476c2355f5bd523d046a461d3.png",
+    "assets/1703059132-92bb0bc4fcda7452178c56790322a6e2.png",
+    "assets/1703059132-2c8b5475df67c4e479a0e2b11bdb1087.png",
+    "Dubbo-编解码那些事.md"
+  ]
+}
