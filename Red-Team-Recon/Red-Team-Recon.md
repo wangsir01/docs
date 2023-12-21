@@ -10,6 +10,8 @@ Micropoor 前辈留下的经验，渗透是将目标透漏的信息进行搜集�
 > 渗透的本质是信息搜集，而信息搜集整理为后续的情报跟进提供了强大的保证。
 > 
 > ——Micropoor
+> 
+> [https://micro8.gitbook.io/micro8/contents-1/51-60/52-shen-tou-de-ben-zhi-shi-xin-xi-sou-ji#ci-tan-deng-ji-1](https://micro8.gitbook.io/micro8/contents-1/51-60/52-shen-tou-de-ben-zhi-shi-xin-xi-sou-ji#ci-tan-deng-ji-1)
 
 一个目标必须要知道它哪里最薄弱，挑出来，撕开口子拿下它，不管用什么手段，而信息收集是你能够拿下目标最重要的一部分，所有利用的前提都是收集信息，分析信息。
 
@@ -188,7 +190,7 @@ Micropoor 前辈留下的经验，渗透是将目标透漏的信息进行搜集�
 
 域名收集分为垂直和水平两种，水平是顶级域名（Top-level Domain, TLD），收集范围会关注到自家集团、子公司、分公司、收购公司这几种，垂直就是子域名（Subdomain）。
 
-> ![域名收集两种分别.png](assets/1698895301-fe695a6753cc31bd53540d01a3686952.png)  
+> ![域名收集两种分别.png](assets/1703152866-fe695a6753cc31bd53540d01a3686952.png)  
 > ImageSource: [https://0xpatrik.com/asset-discovery](https://0xpatrik.com/asset-discovery)
 
 ### 2.1 ICP 备案
@@ -197,13 +199,13 @@ Micropoor 前辈留下的经验，渗透是将目标透漏的信息进行搜集�
 
 [https://beian.miit.gov.cn](https://beian.miit.gov.cn/)
 
-![ICP备案官方查询.png](assets/1698895301-98baaae4314b34a3a16fdfe418a054f2.png)
+![ICP备案官方查询.png](assets/1703152866-98baaae4314b34a3a16fdfe418a054f2.png)
 
 **站长工具备案查询**
 
 [http://icp.chinaz.com](http://icp.chinaz.com/)
 
-![站长之家-域名资产查询.png](assets/1698895301-9cb9b08eecd42bc8a958ce9501f81e8b.png)
+![站长之家-域名资产查询.png](assets/1703152866-9cb9b08eecd42bc8a958ce9501f81e8b.png)
 
 可以通过查询它的 API 实现自动化。
 
@@ -219,11 +221,11 @@ Micropoor 前辈留下的经验，渗透是将目标透漏的信息进行搜集�
 
 天眼查 --> 知识产权 -> 网站备案
 
-![天眼查-域名资产查询.png](assets/1698895301-efbe7bfaee3cbb99a3b50f422c6175a5.png)
+![天眼查-域名资产查询.png](assets/1703152866-efbe7bfaee3cbb99a3b50f422c6175a5.png)
 
 ### 2.2 CSP
 
-![CSP-Header.png](assets/1698895301-596aa4e408953e9641bdc4bc786571ec.png)
+![CSP-Header.png](assets/1703152866-596aa4e408953e9641bdc4bc786571ec.png)
 
 [https://github.com/0xbharath/domains-from-csp](https://github.com/0xbharath/domains-from-csp)
 
@@ -275,7 +277,7 @@ Linux 默认自带此工具，名称就叫 whois。
 -   [https://developers.facebook.com/tools/ct，被墙](https://developers.facebook.com/tools/ct%EF%BC%8C%E8%A2%AB%E5%A2%99)
 -   [https://google.com/transparencyreport/https/ct，被墙](https://google.com/transparencyreport/https/ct%EF%BC%8C%E8%A2%AB%E5%A2%99)
 
-![CT日志查询.png](assets/1698895301-c5cf83caf5a3e80b55d6cfb6951027fc.png)
+![CT日志查询.png](assets/1703152866-c5cf83caf5a3e80b55d6cfb6951027fc.png)
 
 通过证书透明度搜索 Organization Name 组织域名，使用 grep 排除 IP 数据（没错，居然搜索结果有 IP），接着 [unfurl](https://github.com/tomnomnom/unfurl) 筛出顶级域并去重写入文件。
 
@@ -356,7 +358,7 @@ SAN 作用是说指定哪些域名受证书保护。
 
 在 Chrome 中 SSL 证书，SAN 使用者可选名称（Subject Alternate Name）有域名存在。
 
-![使用者可选名称.png](assets/1698895301-706ca30ccf1d4a6bf6add50a2110bb7e.png)
+![使用者可选名称.png](assets/1703152866-706ca30ccf1d4a6bf6add50a2110bb7e.png)
 
 Firefox 中叫主题替代名称 。
 
@@ -400,23 +402,23 @@ Usage: `nslookup domain`
 
 这里我们查新浪域名，server 显示我们本地使用的 DNS 地址，www.sina.com 第一查询就已经出结果了。看到www.sina.com.cn 被 cname 到 us.sina.com.cn 而 us.sina.com.cn 又被 cname 到 wwwus.sina.com，最终的wwwus.sina.com 是 66.102.251.33 与第一次查询是一致的。
 
-![nslookup.png](assets/1698895301-e82712e336e043cb2715d093d1ea30f9.png)
+![nslookup.png](assets/1703152866-e82712e336e043cb2715d093d1ea30f9.png)
 
 我们还可以设置查询的类型（这里 type 可以用 q 代替），这里设置了 MX 就会查询邮件交换记录，还有其他选项 any 是查询所有记录、a 是主机记录、NS 域名服务器地址、PTR 反向域名查询。
 
 当中交换记录中的名称值越小优先级越高，邮箱发邮件时优先选择值最小的，当无法发送会向后选择。
 
-![nslookupSetType.png](assets/1698895301-4aa7d6da6e5b0787a7a7e18a7b1a9b7a.png)
+![nslookupSetType.png](assets/1703152866-4aa7d6da6e5b0787a7a7e18a7b1a9b7a.png)
 
 上图中 Server 是我们本地 DNS 服务器地址，也可使用其他 DNS 服务器查这个 domain。
 
-![server.PNG](assets/1698895301-af2297b374b53c5e759f903a74ba2c08.png)
+![server.PNG](assets/1703152866-af2297b374b53c5e759f903a74ba2c08.png)
 
 前面是 set type 来指定查询记录，还有一种使用方法，nslookup 后面 -q 跟选项，后面是域名，server 是指定那台 DNS 来解析，不填就默认本地 DNS。
 
 Usage：`nslookup [-option] [name | -] [server]`
 
-![nslookup02.PNG](assets/1698895301-a7cb21fca2645a015be034ddceae318b.png)
+![nslookup02.PNG](assets/1703152866-a7cb21fca2645a015be034ddceae318b.png)
 
 **dig**
 
@@ -426,7 +428,7 @@ Usage：`nslookup [-option] [name | -] [server]`
 
 我们查这个域名可以用多个服务器来进行查询，114.114.114.114 是 google 的服务器，不同地区服务器结果可能不一样(智能 DNS)。
 
-![dig01.PNG](assets/1698895301-2d754b55daa9aba04b601a84c23f6cad.png)
+![dig01.PNG](assets/1703152866-2d754b55daa9aba04b601a84c23f6cad.png)
 
 dig 还有一些选项：
 
@@ -436,11 +438,11 @@ dig 还有一些选项：
 -   +noall，不显示所有信息
 -   +answer，直接显示最终的结果
 
-![digOption.PNG](assets/1698895301-a5e393f11d28b75dc35514bb717c3bfb.png)
+![digOption.PNG](assets/1703152866-a5e393f11d28b75dc35514bb717c3bfb.png)
 
 dig 也可以做反向解析
 
-![digOption02.PNG](assets/1698895301-93e2e72a7c8dd88d4b88fae55bec2cb3.png)
+![digOption02.PNG](assets/1703152866-93e2e72a7c8dd88d4b88fae55bec2cb3.png)
 
 dig 可以查询 DNS 服务器 bind 软件版本(有漏洞就可能机会利用)，如果能拿下 DNS 服务器的数据库那我们就能知道某个域名的所有记录，我们用 dig 或 nslookup 都只是针对这个域名来进行查询而不是域下的主机记录，baidu.com（域名）与 www.baidu.com（www 是主机记录或叫主机名）是不一样的。下面来查询 bind 版本信息
 
@@ -471,7 +473,7 @@ dig +trace www.baidu.com
 
 +trace 是直接跳过本地 DNS 服务器，向顶级域直接请求（迭代查询）。
 
-![trace.jpg](assets/1698895301-445ceb63d42d28b14835171f2816318a.jpg)
+![trace.jpg](assets/1703152866-445ceb63d42d28b14835171f2816318a.jpg)
 
 ```bash
 root@kali:~# cat /etc/resolv.conf
@@ -484,24 +486,24 @@ nameserver 192.168.66.1
 
 这是本地配置的 DNS 服务。接下来抓包验证。
 
-![request.png](assets/1698895301-ef7a280ac2337e379b2bcb846fe944ed.png)  
-![request01-1.png](assets/1698895301-87bd00a8e83788ed644c9c79ff6d6b69.png)  
-![request02.png](assets/1698895301-eabd82e94b5025f72de7cd5f196423d3.png)
+![request.png](assets/1703152866-ef7a280ac2337e379b2bcb846fe944ed.png)  
+![request01-1.png](assets/1703152866-87bd00a8e83788ed644c9c79ff6d6b69.png)  
+![request02.png](assets/1703152866-eabd82e94b5025f72de7cd5f196423d3.png)
 
 1 首先请求 8.8.8.8 根域的 NS 记录，8.8.8.8 返回了根域的域名。2 向 8.8.8.8 请求的根域的 A（IPV4）记录与 AAAA（IPV6）记录，根据响应返回相应的地址，会依次相应 13 个根域名服务器的记录。
 
-![request03.png](assets/1698895301-70ef667fe7e54935d93846a2a62b636c.png)  
-![request03-1.png](assets/1698895301-7ec5a9860ea9e88c6fd77b0460926574.png)
+![request03.png](assets/1703152866-70ef667fe7e54935d93846a2a62b636c.png)  
+![request03-1.png](assets/1703152866-7ec5a9860ea9e88c6fd77b0460926574.png)
 
 获取完 13 个根域名服务器地址后，主机直接向第 13 个根域中随机选择一个进行查询，这里选的是 h.root-servers.net 的 A 记录。根域中并没找到 www.baidu.com 记录，但根域返回了 13 个 com 顶级域，主机没有直接向根域查询 com 域的 IP 而转向本地 DNS 去查，结果一样返回 A 与 AAAA 地址。
 
-![request04.png](assets/1698895301-9c51c7dbeeb9dd30c2ea5ea5f50ffafc.png)  
-![request04-1.png](assets/1698895301-9b18285e81d8b18ed09993c61cdda315.png)
+![request04.png](assets/1703152866-9c51c7dbeeb9dd30c2ea5ea5f50ffafc.png)  
+![request04-1.png](assets/1703152866-9b18285e81d8b18ed09993c61cdda315.png)
 
 随机选了一个 c.gtld-servers.net 的 A 记录来查，com 域给主机返回了 baidu.com 的 ns 记录。接着返回他们的 A 与AAAA 记录
 
-![request05.png](assets/1698895301-5524811738c8006836d2cb7353739df2.png)  
-![request05-1.png](assets/1698895301-3da91178b4b429037c16ba32ab23f758.png)
+![request05.png](assets/1703152866-5524811738c8006836d2cb7353739df2.png)  
+![request05-1.png](assets/1703152866-3da91178b4b429037c16ba32ab23f758.png)
 
 第 131 个包主机 NS 记录中随机选择了 dns.baidu.com 询问，132 个包响应并返回查询结果 www.baidu.com 它被 cname 到www.a.shifen.com 域名上，最终并没有解析到 www.a.shifen.com 这个域名，只看到 www.a.shifen.com 对应的 NS 记录返回了他们的 A 记录，至于为什么不向下面的 NS 记录查询，这个问题暂时还不知道。
 
@@ -656,17 +658,17 @@ Received 50 bytes from 8.8.8.8#53 in 135 ms
 
 [http://site.ip138.com](http://site.ip138.com/)
 
-![ip138在线子域名查询.png](assets/1698895301-2792cb9c358a05428a459498c464faff.png)
+![ip138在线子域名查询.png](assets/1703152866-2792cb9c358a05428a459498c464faff.png)
 
 [https://www.virustotal.com/](https://www.virustotal.com/)
 
-![virustotal在线搜索子域名.png](assets/1698895301-1dd9505b60107427e73ed10121e658a5.png)
+![virustotal在线搜索子域名.png](assets/1703152866-1dd9505b60107427e73ed10121e658a5.png)
 
 [https://www.cloudflare.com，注册账户添加站点就能分析出子域](https://www.cloudflare.xn--com,-ey8fwwtc87do70ayliwocwy2aumqbur6yd78n7l7bsdxzg5c/)。
 
 [https://myssl.com](https://myssl.com/)
 
-![myssl安全评估.png](assets/1698895301-6a0e9f315d89abbe716483d78b3f1cb2.png)
+![myssl安全评估.png](assets/1703152866-6a0e9f315d89abbe716483d78b3f1cb2.png)
 
 更多枚举 A 记录的工具查看[域名搜集常用工具](#%E5%9F%9F%E5%90%8D%E6%90%9C%E9%9B%86%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7)小节。
 
@@ -1042,7 +1044,7 @@ Address:  81.4.108.41
 
 这里 nslookup 并没有说使用哪种方式进行传输，通过 WireShark 发现是 AXFR。
 
-![nslookup 使用 AXFR 进行区域传输.png](assets/1698895301-d345423b21b891b5cd88544427e3b109.png)
+![nslookup 使用 AXFR 进行区域传输.png](assets/1703152866-d345423b21b891b5cd88544427e3b109.png)
 
 #### 2.7.6 泛解析
 
@@ -1072,7 +1074,7 @@ fi
 
 crossdomain.xml，一个跨域资源限制配置文件，用于限制 Flash 跨域请求资源。不过 Flash 在 2020 年 12 月 31 日官方停止支持，后续此配置文件应该越来越少。
 
-![crossdomain-xml.png](assets/1698895301-1cc895ba0c068dcbf3f3befdbb6d7204.png)
+![crossdomain-xml.png](assets/1703152866-1cc895ba0c068dcbf3f3befdbb6d7204.png)
 
 说到跨域，不得不提到 CORS，它的 ACAO 头（Access-Control-Allow-Origin）也有可能存在未公开的域名。
 
@@ -1340,13 +1342,13 @@ wget https://opendata.rapid7.com/sonar.fdns_v2/2021-01-30-1611965078-fdns_a.json
     
     ipip.net 也能显示 ASN 和 CIDR 数据。
     
-    ![ipipdotnet查ASN.png](assets/1698895301-06677d1e505165a26716cd5aa2232095.png)
+    ![ipipdotnet查ASN.png](assets/1703152866-06677d1e505165a26716cd5aa2232095.png)
     
 3.  Team Cymru
     
     [https://asn.cymru.com](https://asn.cymru.com/)
     
-    ![cymru查询ASN.png](assets/1698895301-32877ac9352406d53ad56781da63872b.png)
+    ![cymru查询ASN.png](assets/1703152866-32877ac9352406d53ad56781da63872b.png)
     
     这两个地址是同一家公司。
     
@@ -1364,7 +1366,7 @@ wget https://opendata.rapid7.com/sonar.fdns_v2/2021-01-30-1611965078-fdns_a.json
      whois -h whois.radb.net  -- '-i origin AS37963' | grep -Eo "([0-9.]+){4}/[0-9]+" | uniq
     ```
     
-    ![whois查询ASN号地址范围.png](assets/1698895301-d4965c177e84342dbea73a963bd3d6f8.png)
+    ![whois查询ASN号地址范围.png](assets/1703152866-d4965c177e84342dbea73a963bd3d6f8.png)
     
 5.  Nmap Script
     
@@ -1374,7 +1376,7 @@ wget https://opendata.rapid7.com/sonar.fdns_v2/2021-01-30-1611965078-fdns_a.json
      nmap --script targets-asn --script-args targets-asn.asn=37963
     ```
     
-    ![Nmap-ASN查询结果.png](assets/1698895301-8cf1064f16952f4f53ebd98b9a14a801.png)
+    ![Nmap-ASN查询结果.png](assets/1703152866-8cf1064f16952f4f53ebd98b9a14a801.png)
     
 6.  Hurricane Electric
     
@@ -1382,7 +1384,7 @@ wget https://opendata.rapid7.com/sonar.fdns_v2/2021-01-30-1611965078-fdns_a.json
     
     优点是可以通过企业注册名称搜索。
     
-    ![he.netASN.png](assets/1698895301-4751d9f7ba3a9e5ba8fbe2b056ec2242.png)
+    ![he.netASN.png](assets/1703152866-4751d9f7ba3a9e5ba8fbe2b056ec2242.png)
     
 7.  搜索引擎查对应注册名
     
@@ -1391,9 +1393,9 @@ wget https://opendata.rapid7.com/sonar.fdns_v2/2021-01-30-1611965078-fdns_a.json
 
 通过 ASN 查到了这些网段，如何玩儿？这么多网段主动去扫描端口很费时，这时就可以用上网络空间搜索引擎来辅助找到存活主机。
 
-![ASN-fofa.png](assets/1698895301-e18ae788a0a08657a77a4a076dc6ec15.png)  
-![ASN-quake.png](assets/1698895301-c0a789197e9bab44c0993cee2ccd5932.png)  
-![ASN-shodan.png](assets/1698895301-ceec5c213d70098698a078e2b3ddf145.png)
+![ASN-fofa.png](assets/1703152866-e18ae788a0a08657a77a4a076dc6ec15.png)  
+![ASN-quake.png](assets/1703152866-c0a789197e9bab44c0993cee2ccd5932.png)  
+![ASN-shodan.png](assets/1703152866-ceec5c213d70098698a078e2b3ddf145.png)
 
 其次是用 [tlsx](https://github.com/projectdiscovery/tlsx) 通过 CIDR 获取存活主机，并提取证书 SAN、Commmon Name 内域名。
 
@@ -1401,7 +1403,7 @@ wget https://opendata.rapid7.com/sonar.fdns_v2/2021-01-30-1611965078-fdns_a.json
 > 
 > TLS certificate contains DNS names under **subject alternative name** and **common name** field that can be extracted using , flag.`-san``-cn`
 > 
-> ```makefile
+> ```bash
 > $ echo 173.0.84.0/24 | tlsx -san -cn -silent
 > 
 > 173.0.84.104:443 [uptycspay.paypal.com]
@@ -1424,7 +1426,7 @@ wget https://opendata.rapid7.com/sonar.fdns_v2/2021-01-30-1611965078-fdns_a.json
 > 
 > For ease of automation, optionally flag can be used to list only dns names in CLI output.`-resp-only`
 > 
-> ```shell
+> ```bash
 > $ echo 173.0.84.0/24 | tlsx -san -cn -silent -resp-only
 > 
 > api-aa-3t.paypal.com
@@ -1453,7 +1455,7 @@ wget https://opendata.rapid7.com/sonar.fdns_v2/2021-01-30-1611965078-fdns_a.json
 > 
 > **subdomains** obtained from TLS certificates can be further piped to other PD tools for further inspection, here is an example piping tls subdomains to **[dnsx](https://github.com/projectdiscovery/dnsx)** to filter passive subdomains and passing to **[httpx](https://github.com/projectdiscovery/httpx)** to list hosts running active web services.
 > 
-> ```typescript
+> ```javascript
 > $ echo 173.0.84.0/24 | tlsx -san -cn -silent -resp-only | dnsx -silent | httpx
 > 
 >     __    __  __       _  __
@@ -1519,7 +1521,7 @@ DNSSEC: unsigned
 
 查出域名服务器 dns8.hichina.com，使用在线工具查到很多都在使用此公共服务器：
 
-![NS记录反查.jpg](assets/1698895301-2762d2f40131d62e51e60c213eb002c5.jpg)
+![NS记录反查.jpg](assets/1703152866-2762d2f40131d62e51e60c213eb002c5.jpg)
 
 ## 4 服务器对外开放服务发现
 
@@ -1769,16 +1771,16 @@ shodan 它是互联网搜索引擎用于抓取互联网设备，如果设备接�
 
 net 用于搜索 IP/Netmask，下图我们搜索了一下 61.136.24.0 这个网段的所有设备。shodan 不仅可以搜索网段还能搜索域名，下面来组合上面的语法来使用。
 
-![shodan-net.png](assets/1698895301-61fd08a88bb254da86e4ff03a9212682.png)
+![shodan-net.png](assets/1703152866-61fd08a88bb254da86e4ff03a9212682.png)
 
 查找 Windows 系统有开放 3389 端口并且是中国北京。以上是综合了上面一部分语法来筛选过后的结果(内容过多不便截图)，IP 地址右侧一堆信息就是 Banner。挑选其中一条连接点进去，这些主机的位置、经纬度都有显示，其实大可以结合一些有漏洞设备的 Banner 来进行过滤大大提高效率。
 
-![integrated .png](assets/1698895301-bdba21afff24336a8389bfb892484142.png)  
-![x-y.png](assets/1698895301-253141fb8dc11be78a20d810a1c74716.png)
+![integrated .png](assets/1703152866-bdba21afff24336a8389bfb892484142.png)  
+![x-y.png](assets/1703152866-253141fb8dc11be78a20d810a1c74716.png)
 
 shodan 社区有一些伙伴进行了他们的语法组合的共享，一些资料放在下面啦，按需取。
 
-![share.png](assets/1698895301-2ae6ace0184a3ee18579d740a0331479.png)
+![share.png](assets/1703152866-2ae6ace0184a3ee18579d740a0331479.png)
 
 另外不光有国外的 shodan、Censys，国内也有 FOFA 和 ZoomEye 产品。
 
@@ -1838,7 +1840,7 @@ naabu -p - -slient -host domain.txt -scan-all-ips -o open_port_result.txt
 
 针对少资产的目标可以一个个来确认有没 CDN，找真实 IP，扫端口这么做，一旦涉及几百台机器如何扫描？这里提供我个人思路。
 
-首先用 while 循环读取解析后的 IP 文件内容，每个 IP 运行一次扫描并输出对应端口（端口以逗号分隔，方便 Nmap 用，比如 80,443,8080）到 IP 为名称的文件中，最后用 Nmap 扫描服务。
+简单的做法是直接把 IP 导到网络空间搜索引擎，把结果下载下来即可。如果硬要扫，首先用 while 循环读取解析后的 IP 文件内容，每个 IP 运行一次扫描并输出对应端口（端口以逗号分隔，方便 Nmap 用，比如 80,443,8080）到 IP 为名称的文件中，最后用 Nmap 扫描服务。
 
 这就要求扫端口时不能 1-65535 全部扫，最好时扫一些大家常用的如 80、8080 等等。Nmap 在 [nmap-services](https://svn.nmap.org/nmap-releases/nmap-7.93/nmap-services) 文件中定义了端口和其使用频率，数字越大使用频率越高。通过此文件再配合网络空间搜索引擎来交叉扫端口，降低误报。
 
@@ -1931,7 +1933,7 @@ gowitness report list
 
 截图还会有一个问题，中文或其他文字显示为方块，是因为本地没有可用字体渲染。
 
-![gowitness 截图乱码.png](assets/1698895301-bfb970bd78dbfdfe59b5fc540d889c5f.png)
+![gowitness 截图乱码.png](assets/1703152866-bfb970bd78dbfdfe59b5fc540d889c5f.png)
 
 去下载[字体](https://www.google.com/get/noto/#serif-hans)按照文档上安装方法进行安装可以解决。
 
@@ -2275,7 +2277,9 @@ Area: sz
 jQuery3600_1684913070036({"code":0,"ts":1684915775688,"start_ts":1684915775599,"traceid":"4a8334daed2eb856","HG":{......},"DB":{......},"A":{......},"B":{......},"C":{"code":0,"data":{"userip":"223.104.41.51","name":"rasla","face":"https://thirdwx.qlogo.cn/mmopen/vi_32/123123123/132","encrypt_uin":"oK6kowEAoK4z7eEs7ecFoK4P7z**","subcode":0,"errortip":"","feedbackurl":"","last_login_time":1684915773,"fPersonality":0,"is_show_mlive_tab":0,"is_show_record_entry":0,"guide_user":0,"live_tab_at_bottom":1,"abtid_live_tab_at_bottom":"","needshow_podcast_tab":1,"isUseNewKey":0,"removeWtloginSDK":0,"musicKey":"","expiresIn":0,"refreshKey":"","feedbackURL":""}}})
 ```
 
-内网蜜罐，目前还没经验，只能对比目标环境真实应用找不同。听说 Moan 内网蜜罐有些部署后 systeminfo 机器上就写着 Honeypot，蛮搞笑。
+另一点是有些高仿真蜜罐是会有数据在系统上的，拿到 WebShell 后可以去上传目录有没正常业务文件，数据库有没正常用户数据。
+
+内网蜜罐，目前还没经验，只能对比目标环境真实应用找不同，比如系统安装时间、启动时间、网络链接。听说 Moan 内网蜜罐有些部署后 systeminfo 机器上就写着 Honeypot，蛮搞笑。
 
 ### 5.2 WAF 识别
 
@@ -2327,7 +2331,7 @@ SearchSploit - [https://www.exploit-db.com/searchsploit](https://www.exploit-db.
 
 如 SpringBoot 错误页面会显示 Whitelabel Error Page。
 
-![SpringBoot Default Error Page.png](assets/1698895301-12344f1c405d2b8d37c11f9d606f19cd.png)
+![SpringBoot Default Error Page.png](assets/1703152866-12344f1c405d2b8d37c11f9d606f19cd.png)
 
 ### 5.6 应用结构地图
 
@@ -2348,7 +2352,7 @@ sitemap 用于 SEO 优化，告诉爬虫我站点有哪些内容，一般放在�
 -   sitemapindex.xml
 -   sitemapindex.xml
 
-![sitemap.png](assets/1698895301-4e974d9f2209b5d8cc6bb1934c131bd6.png)
+![sitemap.png](assets/1703152866-4e974d9f2209b5d8cc6bb1934c131bd6.png)
 
 ##### 爬虫常用工具
 
@@ -2491,11 +2495,11 @@ BurpSuite 插件辅助导入：
 
 Chrome 开发者工具默认开启解析 SourceMap 功能，在小齿轮里开启 Enable JavaScript source maps 就能将 SourceMap 内 JS 映射出来。
 
-![souceMap.png](assets/1698895301-644a16e14d81e81d38a66df8a29e93dc.png)
+![souceMap.png](assets/1703152866-644a16e14d81e81d38a66df8a29e93dc.png)
 
 如果有没映射文件显示，在开启解析功能的情况下，需要复制 sourceMap 名称手动添加，添加后就能在下面资源中显示出。
 
-![AddSourceMap.jpg](assets/1698895301-b380a644de5d0c702e3b9840c8017685.jpg)
+![AddSourceMap.jpg](assets/1703152866-b380a644de5d0c702e3b9840c8017685.jpg)
 
 这些文件可以右键保存到本地进行审计，但不能批量保存比较麻烦。
 
@@ -2997,7 +3001,7 @@ WebServer 配置启用索引功能，当 index.html 或其他首页文件不存�
 
 下图是 Apache 出现的问题。
 
-![APache Directory listing.png](assets/1698895301-6c9c1d117f3d99be63c2661a8db87841.png)
+![APache Directory listing.png](assets/1703152866-6c9c1d117f3d99be63c2661a8db87841.png)
 
 实际利用可以通过关键词搜索对应域名看 Google 有没收录。
 
@@ -3016,7 +3020,7 @@ intitle:"Directory Listing For" "Filename" intext:Tomcat/5.0.28
 
 基于本文提到的信息收集方式，可以总结流程，让脚本帮我们执行工具并处理数据，提高效率。自动化信息收集一定是必须的，能够自动化的内容后面都会用工具替代。人会累毕竟是个体力活，如果不能自动化可以找一些别人写好的现成工具使用（比如 [reconftw](https://github.com/six2dez/reconftw)），只会手动收集的人会被工具替代。
 
-![recon workflow.png](assets/1698895301-3b0fad7d83ca653819be92c95088d59a.png)
+![recon workflow.png](assets/1703152866-3b0fad7d83ca653819be92c95088d59a.png)
 
 ### 6.1 监控
 
@@ -3070,15 +3074,15 @@ comm aaa.txt bbb.txt -2 -3
 
 从后台获取 corpid
 
-![企业微信-企业ID.png](assets/1698895301-2b1950a2ca4091fce2885cc0e159c9ea.png)
+![企业微信-企业ID.png](assets/1703152866-2b1950a2ca4091fce2885cc0e159c9ea.png)
 
 corpsecret 在应用管理 -> 创建应用
 
-![企业微信-程序Secret1.png](assets/1698895301-cbdf4fb0770ff81d5e94eb01c0af0dc3.png)
+![企业微信-程序Secret1.png](assets/1703152866-cbdf4fb0770ff81d5e94eb01c0af0dc3.png)
 
 创建完成直接查看
 
-![企业微信-程序Secret2.png](assets/1698895301-aa077a75eef49b52cacb381de0f6fe64.png)
+![企业微信-程序Secret2.png](assets/1703152866-aa077a75eef49b52cacb381de0f6fe64.png)
 
 收集到两条数据发送请求获得 Token。
 
@@ -3666,7 +3670,7 @@ rm -f $HOME/opt/nmap-services
 
 @harshbothra\_ 做了一个针对不同应用的侦察清单，可以结合本文一起使用。
 
-![Scope Based Recon.png](assets/1698895301-2e50e24df2b9568a894164948c424d41.png)
+![Scope Based Recon.png](assets/1703152866-2e50e24df2b9568a894164948c424d41.png)
 
 ## 参考资料
 
@@ -3683,6 +3687,13 @@ rm -f $HOME/opt/nmap-services
     [Certificate Transparency Part 3— The dark side](https://blog.appsecco.com/certificate-transparency-part-3-the-dark-side-9d401809b025)，
 -   [Static Analysis of Client-Side JavaScript for pen testers and bug bounty hunters](https://blog.appsecco.com/static-analysis-of-client-side-javascript-for-pen-testers-and-bug-bounty-hunters-f1cb1a5d5288)，JS 静态分析
 
-最近更新：2023年10月30日 11:48:52
+最近更新：2023年11月30日 08:54:12
 
 发布时间：2018年03月25日 18:35:00
+
+### 摆哈儿龙门阵
+
+提交评论
+
+-   上一篇: [Linux - 硬盘分区](https://www.raingray.com/archives/584.html "Linux - 硬盘分区")
+-   下一篇: [Linux - 软件包管理之 RPM](https://www.raingray.com/archives/723.html "Linux - 软件包管理之 RPM")

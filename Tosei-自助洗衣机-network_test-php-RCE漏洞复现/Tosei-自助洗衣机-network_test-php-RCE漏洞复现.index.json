@@ -1,0 +1,19 @@
+{
+  "version": "2.0",
+  "clipId": "1703152960",
+  "format": "md",
+  "title": "Tosei 自助洗衣机 network_test.php RCE漏洞复现",
+  "link": "https://blog.csdn.net/qq_41904294/article/details/135074794",
+  "category": "default",
+  "tags": [
+    "blog.csdn.net"
+  ],
+  "created_at": "2023-12-21 18:02:40",
+  "mainPath": "Tosei-自助洗衣机-network_test-php-RCE漏洞复现.md",
+  "paths": [
+    "Tosei-自助洗衣机-network_test-php-RCE漏洞复现.index.json",
+    "assets/1703152960-c28c94df6797bfb2886286011b2740fb.png",
+    "assets/1703152960-1f70d1ae8a5518ff340f4f8920ef0eaf.png",
+    "Tosei-自助洗衣机-network_test-php-RCE漏洞复现.md"
+  ]
+}
