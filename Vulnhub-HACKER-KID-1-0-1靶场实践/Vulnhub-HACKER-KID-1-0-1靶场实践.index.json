@@ -1,0 +1,37 @@
+{
+  "version": "2.0",
+  "clipId": "1703210041",
+  "format": "md",
+  "title": "Vulnhub-HACKER KID: 1.0.1靶场实践",
+  "link": "https://xz.aliyun.com/t/13182",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2023-12-22 09:54:01",
+  "mainPath": "Vulnhub-HACKER-KID-1-0-1靶场实践.md",
+  "paths": [
+    "Vulnhub-HACKER-KID-1-0-1靶场实践.index.json",
+    "assets/1703210041-659c812975ff1cd351a67a378ab3dba3.png",
+    "assets/1703210041-1db335a19ee029f08262e16ea40ebbef.png",
+    "assets/1703210041-13080aa6f4cf0a14a6bfabba54ba41b7.png",
+    "assets/1703210041-27cc9dd81209452f1f2df2a889f517d8.png",
+    "assets/1703210041-a2a60a6c24f1d22663b2ebf73213ffe5.png",
+    "assets/1703210041-03dd424eddf8f99013fed6e0ff4afcee.png",
+    "assets/1703210041-4bfe2456634e094c33a85edf46133819.png",
+    "assets/1703210041-54e383e6f46504d1298c4293c8499d0e.png",
+    "assets/1703210041-367d330815d25ee6a2fb3daaba511d58.png",
+    "assets/1703210041-3c76160c0b4f7d219f6bb23b029c4eaf.png",
+    "assets/1703210041-d8b6c38b612d13941431191f0df98627.png",
+    "assets/1703210041-6ecfbbdd47a98524a77b17d696ce6794.png",
+    "assets/1703210041-4f6abe9b16e51b185c8dc33233292a21.png",
+    "assets/1703210041-8c1188cffc65a48c7bcbe7c337ac6b2a.png",
+    "assets/1703210041-09080f4c421d9531367f28b4ead33df5.png",
+    "assets/1703210041-dbc2905e4306ea75430d1c9b20dacc4e.png",
+    "assets/1703210041-9668ba7d0afe5fec0c719912eef3c471.png",
+    "assets/1703210041-ea039411485e471aa60672a0ea3c5edb.png",
+    "assets/1703210041-5ca95ee037a914a12fa93e615702fad6.png",
+    "assets/1703210041-ee15101fb62eb38f97da1878d55e4c32.png",
+    "Vulnhub-HACKER-KID-1-0-1靶场实践.md"
+  ]
+}

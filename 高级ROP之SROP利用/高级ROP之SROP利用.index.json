@@ -1,0 +1,31 @@
+{
+  "version": "2.0",
+  "clipId": "1703485159",
+  "format": "md",
+  "title": "高级ROP之SROP利用",
+  "link": "https://xz.aliyun.com/t/13198",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2023-12-25 14:19:19",
+  "mainPath": "高级ROP之SROP利用.md",
+  "paths": [
+    "高级ROP之SROP利用.index.json",
+    "assets/1703485159-f76805cd2e391789c6e32f05dceb83f1.png",
+    "assets/1703485159-ab9ddecc80a005373e9f83822c9f1208.png",
+    "assets/1703485159-cf7d5c27f9361d729eaa7f222d69efa3.png",
+    "assets/1703485159-26489e282d20a2af2c0a80c32cf8b4d1.png",
+    "assets/1703485159-bbc858ba1c75bc4fbf56614d70fc9bcc.png",
+    "assets/1703485159-330af3dba345f58500616d9f61356695.png",
+    "assets/1703485159-ae340ac30b6a0d0872a82f0df087d417.png",
+    "assets/1703485159-4c5c3bcbe2430cfa5edcdcb7973d405c.png",
+    "assets/1703485159-b7b119c32123ee6c7dc2268984ce0fbd.png",
+    "assets/1703485159-9261bcdda49e1721f8b4c274117ac086.png",
+    "assets/1703485159-ff734c0f1f045aa0246c3e55efeb8769.png",
+    "assets/1703485159-f33997a3e6a311a5b4295fed86b36eba.png",
+    "assets/1703485159-d0f687fe7a88885c09a31433acb60d0a.png",
+    "assets/1703485159-181709b700d8fc3f917d5a38826b50e2.png",
+    "高级ROP之SROP利用.md"
+  ]
+}

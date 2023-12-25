@@ -1,0 +1,17 @@
+{
+  "version": "2.0",
+  "clipId": "1703487332",
+  "format": "md",
+  "title": "Sandbox Escape in vm2@3.9.16",
+  "link": "https://gist.github.com/leesh3288/381b230b04936dd4d74aaf90cc8bb244",
+  "category": "default",
+  "tags": [
+    "gist.github.com"
+  ],
+  "created_at": "2023-12-25 14:55:32",
+  "mainPath": "Sandbox-Escape-in-vm2-3-9-16.md",
+  "paths": [
+    "Sandbox-Escape-in-vm2-3-9-16.index.json",
+    "Sandbox-Escape-in-vm2-3-9-16.md"
+  ]
+}

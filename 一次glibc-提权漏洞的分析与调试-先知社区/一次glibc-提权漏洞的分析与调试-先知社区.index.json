@@ -1,0 +1,25 @@
+{
+  "version": "2.0",
+  "clipId": "1703485170",
+  "format": "md",
+  "title": "一次glibc 提权漏洞的分析与调试 - 先知社区",
+  "link": "https://xz.aliyun.com/t/13197",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2023-12-25 14:19:30",
+  "mainPath": "一次glibc-提权漏洞的分析与调试-先知社区.md",
+  "paths": [
+    "一次glibc-提权漏洞的分析与调试-先知社区.index.json",
+    "assets/1703485170-cc5ae19f693552010292c0bf722bd67b.png",
+    "assets/1703485170-ee0f094a9349d832c6279e3acdb89ede.png",
+    "assets/1703485170-617fdeec1ce1e13ff5ad96960464c595.png",
+    "assets/1703485170-07e11a88d4431ff4e46f5e1245614b10.png",
+    "assets/1703485170-de62d337de7e9b690cdfa5caf4e259bf.png",
+    "assets/1703485170-8ea086e1699ebbea017474ac7addb3ff.png",
+    "assets/1703485170-fe8a700b136aecae00b99461355af192.png",
+    "assets/1703485170-43d2a95b6cddb8c72454fa4f451b8788.png",
+    "一次glibc-提权漏洞的分析与调试-先知社区.md"
+  ]
+}

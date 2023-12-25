@@ -1,0 +1,17 @@
+{
+  "version": "2.0",
+  "clipId": "1703487027",
+  "format": "md",
+  "title": "SSD Advisory - QNAP QTS5 - /usr/lib/libqcloud.so JSON parsing leads to RCE - SSD Secure Disclosure",
+  "link": "https://ssd-disclosure.com/ssd-advisory-qnap-qts5-usr-lib-libqcloud-so-json-parsing-leads-to-rce/",
+  "category": "default",
+  "tags": [
+    "ssd-disclosure.com"
+  ],
+  "created_at": "2023-12-25 14:50:27",
+  "mainPath": "SSD-Advisory-QNAP-QTS5-usr-lib-libqcloud-so-JSON-parsing-leads-to-RCE-SSD-Secure-Disclosure.md",
+  "paths": [
+    "SSD-Advisory-QNAP-QTS5-usr-lib-libqcloud-so-JSON-parsing-leads-to-RCE-SSD-Secure-Disclosure.index.json",
+    "SSD-Advisory-QNAP-QTS5-usr-lib-libqcloud-so-JSON-parsing-leads-to-RCE-SSD-Secure-Disclosure.md"
+  ]
+}

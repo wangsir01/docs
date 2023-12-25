@@ -1,0 +1,22 @@
+{
+  "version": "2.0",
+  "clipId": "1703485218",
+  "format": "md",
+  "title": "奇安信攻防社区-ERC2771 Multicall任意地址欺骗攻击分析",
+  "link": "https://forum.butian.net/share/2633",
+  "category": "default",
+  "tags": [
+    "forum.butian.net"
+  ],
+  "created_at": "2023-12-25 14:20:18",
+  "mainPath": "奇安信攻防社区-ERC2771-Multicall任意地址欺骗攻击分析.md",
+  "paths": [
+    "奇安信攻防社区-ERC2771-Multicall任意地址欺骗攻击分析.index.json",
+    "assets/1703485218-589a289eea55a5fd4803cd0bb7057886.png",
+    "assets/1703485218-3480736a281dd0f814c7e1e1080e9c9f.png",
+    "assets/1703485218-ad773814423a2ea48df39f386e5a304f.png",
+    "assets/1703485218-85ab5e4d88c64285abad21ea62840679.png",
+    "assets/1703485218-2ba8b2b955d5fd82404fe710ea943e38.png",
+    "奇安信攻防社区-ERC2771-Multicall任意地址欺骗攻击分析.md"
+  ]
+}
