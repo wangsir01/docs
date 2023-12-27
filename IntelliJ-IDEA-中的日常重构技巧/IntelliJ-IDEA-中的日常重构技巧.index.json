@@ -1,0 +1,36 @@
+{
+  "version": "2.0",
+  "clipId": "1703642482",
+  "format": "md",
+  "title": "IntelliJ IDEA 中的日常重构技巧",
+  "link": "https://blog.jetbrains.com/zh-hans/idea/2020/09/intellij-idea/#%E9%87%8D%E5%91%BD%E5%90%8D%E5%85%83%E7%B4%A0",
+  "category": "default",
+  "tags": [
+    "blog.jetbrains.com"
+  ],
+  "created_at": "2023-12-27 10:01:22",
+  "mainPath": "IntelliJ-IDEA-中的日常重构技巧.md",
+  "paths": [
+    "IntelliJ-IDEA-中的日常重构技巧.index.json",
+    "assets/1703642482-ca6c7f6f265971f4a677fdcc1405cec6.jpeg",
+    "assets/1703642482-937249124842b82824f8a091adb1d756.jpg",
+    "assets/1703642482-3af5838b51718426288d557de06a7a5f.png",
+    "assets/1703642482-5edf70a4050a5bf66725d3b56cf690c9.png",
+    "assets/1703642482-47712f95f7bb7f9602f864d7a28abd71.png",
+    "assets/1703642482-ba6c8f672d84fcd5a26775f4732e088a.png",
+    "assets/1703642482-0b4a3442a6e8e86681fd4fec30ec9840.png",
+    "assets/1703642482-aed7d9777977182fe704e7a68474f96f.png",
+    "assets/1703642482-876e12e66fa668f1f7ab706644becd3d.png",
+    "assets/1703642482-dac875e5d684802bb90b9afe86dea8a0.png",
+    "assets/1703642482-690183e239f5148ae2bbc8f92803586f.png",
+    "assets/1703642482-a690132dc777b99585770c01bd5d0ef3.png",
+    "assets/1703642482-1cc72b8acf39505b56fdf38148351a67.png",
+    "assets/1703642482-b311e294548f6840ceb6b744bfaebe10.png",
+    "assets/1703642482-02b88241db942521fb49529166aa198d.png",
+    "assets/1703642482-a00d8e9b0a4c8e2dbeedb287da19291d.png",
+    "assets/1703642482-b380bec94e216f0a1aa00850e399f0f9.png",
+    "assets/1703642482-1ab209fb4c742f628c171cb455010e50.png",
+    "assets/1703642482-c730d5bd4ee2d2ecc0d0a6753c3a1a6c.svg",
+    "IntelliJ-IDEA-中的日常重构技巧.md"
+  ]
+}

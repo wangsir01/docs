@@ -1,39 +1,43 @@
 
-# [](#Hacking-FernFlower "Hacking FernFlower")Hacking FernFlower
+Hacking FernFlower
 
-## [](#%E5%89%8D%E8%A8%80 "前言")前言
+- - -
 
-​ 今天很开心，第一次作为speacker参与了议题的分享，也很感谢补天白帽大会给了我这样的一次机会
+# Hacking FernFlower
 
-​ 其实本该在去年来讲Java混淆的议题，不过当时赶上疫情爆发，学校出于安全的考虑没让出省。在当时我更想分享的是对抗所有反混淆的工具cfr、procyon，但今年在准备过程中发现主题太大了其实不太好讲，再考虑到受众都是做web安全的，因此我最终还是将主题定为了对抗反编译工具，在这里选了一些方便大家理解的例子来介绍混淆，主要是想分享一些不一样的思路吧。
+## 前言
 
-​ 在这次议题当中我仅仅分享了`部分较为简单的混淆方式`，但他们却很直观易懂，如果你想要更深入的去做更高难度的混淆，还可以尝试对书籍`深入理解JAVA虚拟机`做一些简单的阅读。
+今天很开心，第一次作为speaker参与了议题的分享，也很感谢补天白帽大会给了我这样的一次机会
 
-​ 在这篇文章当中我也会尽量不使用过于复杂的概念，用大家更能接受的形式来讲述一个混淆的例子，当然有些地方可能表述也会存在表述不当的情况，请见谅，全文文章以`JDK8`为例(懒，并不想测试所有版本支持情况)。
+其实本该在去年来讲Java混淆的议题，不过当时赶上疫情爆发，学校出于安全的考虑没让出省。在当时我更想分享的是对抗所有反混淆的工具cfr、procyon，但今年在准备过程中发现主题太大了其实不太好讲，再考虑到受众都是做web安全的，因此我最终还是将主题定为了对抗反编译工具，在这里选了一些方便大家理解的例子来介绍混淆，主要是想分享一些不一样的思路吧。
 
-​ 同时在文章中也会分享部分议题中没有讲的内容，主要是在议题时考虑到时间原因临时做了删除调整。
+在这次议题当中我仅仅分享了`部分较为简单的混淆方式`，但他们却很直观易懂，如果你想要更深入的去做更高难度的混淆，还可以尝试对书籍`深入理解JAVA虚拟机`做一些简单的阅读。
 
-## [](#%E6%AD%A3%E6%96%87 "正文")正文
+在这篇文章当中我也会尽量不使用过于复杂的概念，用大家更能接受的形式来讲述一个混淆的例子，当然有些地方可能表述也会存在表述不当的情况，请见谅，全文文章以`JDK8`为例(懒，并不想测试所有版本支持情况)。
 
-### [](#%E5%89%8D%E7%BD%AE "前置")前置
+同时在文章中也会分享部分议题中没有讲的内容，主要是在议题时考虑到时间原因临时做了删除调整。
 
-​ 首先在开始之前我们需要了解ASM的一些简单用法，ASM其实有两套API，一个是Core API，另一个是Tree API，在这里如果你只是想要学习到在今天议题分享过程当中的一些基本原理那么我认为了解Core API的用法就够了，如果你需要做工具开发，那么我更推荐使用Tree API去完成一个工具的开发，Tree API能更灵活的帮助我们完成我们的需求(比如我们想要在某个指定的字节码操作后做指令的添加)，或者也可以使用其他字节码处理框架。在这里我不会花大篇量的篇幅去写一个关于ASM的教程，但是对于一些关键的点我仍会点出(关于ASM的使用教程网上有很多，对不了解的使用方法部分可以尝试多百度)。
+## 正文
 
-#### [](#%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81 "测试代码")测试代码
+## 前置
+
+首先在开始之前我们需要了解ASM的一些简单用法，ASM其实有两套API，一个是Core API，另一个是Tree API，在这里如果你只是想要学习到在今天议题分享过程当中的一些基本原理那么我认为了解Core API的用法就够了，如果你需要做工具开发，那么我更推荐使用Tree API去完成一个工具的开发，Tree API能更灵活的帮助我们完成我们的需求(比如我们想要在某个指定的字节码操作后做指令的添加)，或者也可以使用其他字节码处理框架。在这里我不会花大篇量的篇幅去写一个关于ASM的教程，但是对于一些关键的点我仍会点出(关于ASM的使用教程网上有很多，对不了解的使用方法部分可以尝试多百度)。
+
+### 测试代码
 
 见[https://github.com/Y4tacker/HackingFernFlower](https://github.com/Y4tacker/HackingFernFlower)
 
-#### [](#%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AA%E7%B1%BB "如何生成一个类")如何生成一个类
+### 如何生成一个类
 
 在这里我们想要生成这样的一个类，类名为Test、字段名为abc、方法名为test
 
-![image-20231222214855961](assets/1703486882-d3501e77d02b0ef1745d01ce7d89bc11.png)
+[![](assets/1703640240-2cd8fc289d0d9f79f97776f8e28eb4d6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226183942-1415b552-a3db-1.png)
 
 首先我们需要实例化一个ClassWriter对象
 
-|     |     |
-| --- | --- |
-| ```plain<br>1<br>``` | ```plain<br>ClassWriter classWriter = new ClassWriter(0);<br>``` |
+```plain
+ClassWriter classWriter = new ClassWriter(0);
+```
 
 在这个构造函数当中我们也可以传入其他选项，如`ClassWriter.COMPUTE_FRAMES/ClassWriter.COMPUTE_MAX`
 
@@ -44,23 +48,35 @@
 
 生成一个类，参数分别是*Java版本号*、*修饰符*、*类名*、签名、*父类*、接口（关注红色字即可）
 
-|     |     |
-| --- | --- |
-| ```plain<br>1<br>``` | ```plain<br>classWriter.visit(V1_8, ACC_PUBLIC \| ACC_SUPER, "Test", null, "java/lang/Object", null);<br>``` |
+```plain
+classWriter.visit(V1_8, ACC_PUBLIC | ACC_SUPER, "Test", null, "java/lang/Object", null);
+```
 
 生成一个字段，参数分别是*修饰符*、*字段名*、*字段类型*、签名、值
 
-|     |     |
-| --- | --- |
-| ```plain<br>1<br>2<br>3<br>4<br>``` | ```plain<br>{<br>fieldVisitor = classWriter.visitField(ACC_PUBLIC \| ACC_STATIC, "abc", "Ljava/lang/String;", null, null);<br>fieldVisitor.visitEnd();<br>}<br>``` |
+```plain
+{
+fieldVisitor = classWriter.visitField(ACC_PUBLIC | ACC_STATIC, "abc", "Ljava/lang/String;", null, null);
+fieldVisitor.visitEnd();
+}
+```
 
-生成一个方法，参数分别是*修饰符*、*方法名*、\*方法描述符(入参与返回值)\*、签名、异常
+生成一个方法，参数分别是*修饰符*、*方法名*、*方法描述符(入参与返回值)*、签名、异常
 
-|     |     |
-| --- | --- |
-| ```plain<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>``` | ```plain<br>{<br>methodVisitor = classWriter.visitMethod(ACC_PUBLIC \| ACC_STATIC, "test", "()V", null, null);<br>methodVisitor.visitCode();<br>methodVisitor.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");<br>methodVisitor.visitInsn(ICONST_1);<br>methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(I)V", false);<br>methodVisitor.visitInsn(RETURN);<br>methodVisitor.visitMaxs(2, 0);<br>methodVisitor.visitEnd();<br>}<br>``` |
+```plain
+{
+methodVisitor = classWriter.visitMethod(ACC_PUBLIC | ACC_STATIC, "test", "()V", null, null);
+methodVisitor.visitCode();
+methodVisitor.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+methodVisitor.visitInsn(ICONST_1);
+methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(I)V", false);
+methodVisitor.visitInsn(RETURN);
+methodVisitor.visitMaxs(2, 0);
+methodVisitor.visitEnd();
+}
+```
 
-#### [](#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9F%A5%E7%9C%8B%E4%B8%80%E4%B8%AA%E7%B1%BB%E6%80%8E%E4%B9%88%E9%80%9A%E8%BF%87ASM%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90-%E5%BF%85%E7%9C%8B "自定义查看一个类怎么通过ASM代码生成(必看)")自定义查看一个类怎么通过ASM代码生成(必看)
+### 自定义查看一个类怎么通过ASM代码生成(必看)
 
 当然在开始之前我希望你多了解下ASM的一些代码写法，自己多写几个类，多查看其ASM的生成代码
 
@@ -68,17 +84,31 @@
 
 比如在这里我们需要查看Test.class该如何使用ASM框架的代码生成
 
-![image-20231222221527222](assets/1703486882-3297ad192787fa5171926336d3d62cc1.png)
+[![](assets/1703640240-d1cb7da3ad2579f4a561ec2fbb137526.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226184001-1f43275c-a3db-1.png)
 
 通过执行下面的代码你可以获得这个写法(初学时一定要启用参数SKIP\_DEBUG、SKIP\_FRAMES)，在后面熟练以后可以尝试将其替换为`int parsingOptions = ClassReader.EXPAND_FRAMES`
 
-|     |     |
-| --- | --- |
-| ```plain<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>``` | ```plain<br>public static void main(String[] args) throws Exception{<br>        //需要处理的Class<br>        String inputFilename = "./target/classes/Test.class";<br>        String outputFilename = "output.txt";<br>        FileInputStream fileInputStream = new FileInputStream(new File(inputFilename));<br>        // SKIP_DEBUG:用于指示ClassReader在读取类文件时是否跳过调试信息。调试信息包括源代码行号、局部变量名称和范围等信息<br>        // SKIP_FRAMES:指示ClassReader在读取类文件时是否跳过帧信息。帧信息是用于存储方法调用和异常处理的数据结构。如果指定了SKIP_FRAMES常量，那么在读取类文件时将会跳过帧信息，从而减少读取和处理的时间和内存消耗<br>        // EXPAND_FRAMES：指示在生成类文件时是否应该展开帧。帧用于在Java类文件中表示方法的执行状态，包括操作数栈和局部变量表的内容。如果指定了EXPAND_FRAMES常量，那么在生成类文件时将会展开帧信息，从而确保生成的类文件包含完整的帧信息<br>        int parsingOptions =  ClassReader.SKIP_DEBUG \| ClassReader.SKIP_FRAMES;<br>        Printer printer = new ASMifier();<br>        FileOutputStream fileOutputStream = new FileOutputStream(new File(outputFilename));<br>        PrintWriter printWriter = new PrintWriter(fileOutputStream);<br>        TraceClassVisitor traceClassVisitor = new TraceClassVisitor(null, printer, printWriter);<br>        new ClassReader(fileInputStream).accept(traceClassVisitor, parsingOptions);<br>    }<br>``` |
+```plain
+public static void main(String[] args) throws Exception{
+        //需要处理的Class
+        String inputFilename = "./target/classes/Test.class";
+        String outputFilename = "output.txt";
+        FileInputStream fileInputStream = new FileInputStream(new File(inputFilename));
+        // SKIP_DEBUG:用于指示ClassReader在读取类文件时是否跳过调试信息。调试信息包括源代码行号、局部变量名称和范围等信息
+        // SKIP_FRAMES:指示ClassReader在读取类文件时是否跳过帧信息。帧信息是用于存储方法调用和异常处理的数据结构。如果指定了SKIP_FRAMES常量，那么在读取类文件时将会跳过帧信息，从而减少读取和处理的时间和内存消耗
+        // EXPAND_FRAMES：指示在生成类文件时是否应该展开帧。帧用于在Java类文件中表示方法的执行状态，包括操作数栈和局部变量表的内容。如果指定了EXPAND_FRAMES常量，那么在生成类文件时将会展开帧信息，从而确保生成的类文件包含完整的帧信息
+        int parsingOptions =  ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES;
+        Printer printer = new ASMifier();
+        FileOutputStream fileOutputStream = new FileOutputStream(new File(outputFilename));
+        PrintWriter printWriter = new PrintWriter(fileOutputStream);
+        TraceClassVisitor traceClassVisitor = new TraceClassVisitor(null, printer, printWriter);
+        new ClassReader(fileInputStream).accept(traceClassVisitor, parsingOptions);
+    }
+```
 
-### [](#%E7%86%9F%E7%9F%A5%E7%9A%84Java%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99%E7%9C%9F%E7%9A%84%E6%98%AF%E8%BF%99%E6%A0%B7%E5%90%97%EF%BC%9F "熟知的Java命名规则真的是这样吗？")熟知的Java命名规则真的是这样吗？
+## 熟知的Java命名规则真的是这样吗？
 
-#### [](#%E5%91%BD%E5%90%8D%E6%B7%B7%E6%B7%86 "命名混淆")命名混淆
+### 命名混淆
 
 接下来通过一个开胃小菜来帮助我们熟悉ASM的使用方法
 
@@ -86,74 +116,124 @@
 
 这都是常态化的思维固化了我们，理所当然的认为变量名只能是
 
-> 1.  名称只能由字母、数字、下划线、$符号组成？
-> 2.  不能以数字开头？
-> 3.  名称不能使用JAVA中的关键字？
-> 4.  坚决不允许出现中文及拼音命名？
+> 1) 名称只能由字母、数字、下划线、$符号组成？  
+> 2) 不能以数字开头？  
+> 3) 名称不能使用JAVA中的关键字？  
+> 4) 坚决不允许出现中文及拼音命名？
 
 通过测试并不是这样的，这个限制其实只发生在编译的过程(javac)，而在执行过程无限制(java)
 
-|     |     |
-| --- | --- |
-| ```plain<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>``` | ```plain<br>int start = 0;<br>int end = 65535;<br>String jdk = "jdk8u341";<br>boolean onlyDefineClass = true;<br>System.out.println("---以下是在defineClass下测试_{jdk}--".replace("{jdk}",jdk));<br>for (int i = start; i <= end; i++) {<br>    char unicodeChar = (char) i;<br>    FuzzMethodName(unicodeChar, jdk, onlyDefineClass);<br>    FuzzFieldName(unicodeChar, jdk, onlyDefineClass);<br>}<br>System.out.println("----------------------------");<br>onlyDefineClass = false;<br>System.out.println("---以下在非defineClass下测试_{jdk}--".replace("{jdk}",jdk));<br>for (int i = start; i <= end; i++) {<br>    char unicodeChar = (char) i;<br>    FuzzMethodName(unicodeChar, jdk, onlyDefineClass);<br>    FuzzFieldName(unicodeChar, jdk, onlyDefineClass);<br>}<br>``` |
+```plain
+int start = 0;
+int end = 65535;
+String jdk = "jdk8u341";
+boolean onlyDefineClass = true;
+System.out.println("---以下是在defineClass下测试_{jdk}--".replace("{jdk}",jdk));
+for (int i = start; i <= end; i++) {
+    char unicodeChar = (char) i;
+    FuzzMethodName(unicodeChar, jdk, onlyDefineClass);
+    FuzzFieldName(unicodeChar, jdk, onlyDefineClass);
+}
+System.out.println("----------------------------");
+onlyDefineClass = false;
+System.out.println("---以下在非defineClass下测试_{jdk}--".replace("{jdk}",jdk));
+for (int i = start; i <= end; i++) {
+    char unicodeChar = (char) i;
+    FuzzMethodName(unicodeChar, jdk, onlyDefineClass);
+    FuzzFieldName(unicodeChar, jdk, onlyDefineClass);
+}
+```
 
 在这里我们仅仅只是想要让大家知道在不同小版本间有差异，我没有去比对每一个版本，只想让大家知道不同版本间有一些差异即可
 
 Jdk8u20
 
-![image-20231222223208025](assets/1703486882-6597f68ea3640859daff7926066d2299.png)
+[![](assets/1703640240-6c8ad4a3fc463e7fddddb7cd100d470b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226184024-2d5f2dea-a3db-1.png)
 
 jdk8u341
 
-![image-20231222223249577](assets/1703486882-ae394dfc3d84c0f4fa4fe279a67cf2be.png)
+[![](assets/1703640240-57452852af939b067a8f7a9662ccbd3b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226184041-374296d0-a3db-1.png)
 
 因此接下来我们可以通过修改参数`name`为任意我们想要的值
 
-|     |     |
-| --- | --- |
-| ```plain<br>1<br>2<br>3<br>4<br>5<br>``` | ```plain<br>{<br>    fieldVisitor =  classWriter.visitField(ACC_PUBLIC\| ACC_STATIC\| ACC_FINAL,"abc{\nsuper man supersuper\n}","[Ljava/lang/String;",null,null);<br>    fieldVisitor.visitEnd();<br><br>}<br>``` |
+```plain
+{
+    fieldVisitor =  classWriter.visitField(ACC_PUBLIC| ACC_STATIC| ACC_FINAL,"abc{\nsuper man supersuper\n}","[Ljava/lang/String;",null,null);
+    fieldVisitor.visitEnd();
+
+}
+```
 
 因此我们可以实现这样的类，如下图所示，可以看到在视觉上非常具有混淆的效果(测试环境jdk8u20，高版本下部分字母不支持)
 
-![image-20231222224150852](assets/1703486882-0e65473afb75c6848d029bfc1121a013.png)
+[![](assets/1703640240-239eafcbecb88b5fe475007d3975afcf.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226184100-4249a604-a3db-1.png)
 
-#### [](#%E4%B8%80%E4%B8%AA%E6%9C%89%E8%B6%A3%E7%9A%84%E7%8E%B0%E8%B1%A1 "一个有趣的现象")一个有趣的现象
+### 一个有趣的现象
 
-在fuzz的过程当中我发现，当方法名(或其他参数)中出现了`\r(退格键)`这个字符，出现了这样一个有趣的现象，类无法拖入IDEA当中做反编译了![1](assets/1703486882-8e6db993ba4ddc7894892b19883a3bcd.gif)通过手动执行`java -cp org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler -jar fernflower.jar /Users/y4tacker/Desktop/MCMSv/HackingFernflower/output/Test.class ./testcode`，发现可以正常反编译，因此可以猜测和IDEA其他组件部分代码有关，这里和主题无关就不继续深入研究了
+在fuzz的过程当中我发现，当方法名(或其他参数)中出现了`\r(退格键)`这个字符，出现了这样一个有趣的现象，类无法拖入IDEA当中做反编译了!
+
+[![](assets/1703640240-af9eefae1f4df182fb80db80373c6ee3.gif)](https://xzfile.aliyuncs.com/media/upload/picture/20231226184138-59123de2-a3db-1.gif)
+
+通过手动执行`java -cp org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler -jar fernflower.jar /Users/y4tacker/Desktop/MCMSv/HackingFernflower/output/Test.class ./testcode`，发现可以正常反编译，因此可以猜测和IDEA其他组件部分代码有关，这里和主题无关就不继续深入研究了
 
 同时通过终端查看字节码时也会发现，这里的显示也很混乱(和`\r`退格键在控制台中的输出作用有关)，当然如果你通过`javap -v Test`将内容输出到文件中打开可正常查看
 
-![img](assets/1703486882-5d59f7536662b35bc61c36bea9a1d3a3.png)
+[![](assets/1703640240-300de988b8b3f97099bf4d1f85972621.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226184337-9fea0fd8-a3db-1.png)
 
-### [](#%E5%85%B3%E6%B3%A8%E5%8F%8D%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE "关注反编译器的默认配置")关注反编译器的默认配置
+## 关注反编译器的默认配置
 
 关于fernflower的代码可以在github上查找到社区版的代码,[https://github.com/fesh0r/fernflower](https://github.com/fesh0r/fernflower)
 
 当然你也可以在IDEA中获取到专业版代码，以mac为例子，右键程序显示包内容，位置在`IntelliJ IDEA.app/Contents/plugins/java-decompiler/lib`
 
-![image-20231222230754090](assets/1703486882-1efbce95a6b7634d3de9d9df5e42c303.png)
+[![](assets/1703640240-3be3cdbeadb9b474894a436e6fe8d01d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226184355-ab07f97a-a3db-1.png)
 
 在org.jetbrains.java.decompiler.main.extern.IFernflowerPreferences当中有一些默认配置
 
 这里仅列出了默认激活的属性(值为1)
 
-|     |     |
-| --- | --- |
-| ```plain<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>``` | ```plain<br>defaults.put(REMOVE_BRIDGE, "1");<br>defaults.put(REMOVE_SYNTHETIC, "0");<br>defaults.put(DECOMPILE_ENUM, "1");<br>defaults.put(USE_DEBUG_VAR_NAMES, "1");<br>defaults.put(USE_METHOD_PARAMETERS, "1");<br>defaults.put(FINALLY_DEINLINE, "1");<br>defaults.put(DECOMPILE_INNER, "1");<br>defaults.put(DECOMPILE_CLASS_1_4, "1");<br>defaults.put(DECOMPILE_ASSERTIONS, "1");<br>defaults.put(IDEA_NOT_NULL_ANNOTATION, "1");<br>defaults.put(NO_EXCEPTIONS_RETURN, "1");<br>defaults.put(REMOVE_GET_CLASS_NEW, "1");<br>defaults.put(ENSURE_SYNCHRONIZED_MONITOR, "1");<br>defaults.put(BOOLEAN_TRUE_ONE, "1");<br>defaults.put(UNDEFINED_PARAM_TYPE_OBJECT, "1");<br>defaults.put(HIDE_EMPTY_SUPER, "1");<br>defaults.put(HIDE_DEFAULT_CONSTRUCTOR, "1");<br>defaults.put(REMOVE_EMPTY_RANGES, "1");<br>``` |
+```plain
+defaults.put(REMOVE_BRIDGE, "1");
+defaults.put(REMOVE_SYNTHETIC, "0");
+defaults.put(DECOMPILE_ENUM, "1");
+defaults.put(USE_DEBUG_VAR_NAMES, "1");
+defaults.put(USE_METHOD_PARAMETERS, "1");
+defaults.put(FINALLY_DEINLINE, "1");
+defaults.put(DECOMPILE_INNER, "1");
+defaults.put(DECOMPILE_CLASS_1_4, "1");
+defaults.put(DECOMPILE_ASSERTIONS, "1");
+defaults.put(IDEA_NOT_NULL_ANNOTATION, "1");
+defaults.put(NO_EXCEPTIONS_RETURN, "1");
+defaults.put(REMOVE_GET_CLASS_NEW, "1");
+defaults.put(ENSURE_SYNCHRONIZED_MONITOR, "1");
+defaults.put(BOOLEAN_TRUE_ONE, "1");
+defaults.put(UNDEFINED_PARAM_TYPE_OBJECT, "1");
+defaults.put(HIDE_EMPTY_SUPER, "1");
+defaults.put(HIDE_DEFAULT_CONSTRUCTOR, "1");
+defaults.put(REMOVE_EMPTY_RANGES, "1");
+```
 
 从这些默认配置当中我们发现了几个有趣的配置选项
 
-|     |     |
-| --- | --- |
-| ```plain<br>1<br>2<br>3<br>4<br>5<br>``` | ```plain<br>REMOVE_BRIDGE(桥接方法)<br>REMOVE_SYNTHETIC(虽然是0,但是通过IDEA反编译的时候仍然可以做到隐藏的效果，猜测运行时修改了默认属性java -jar fernflower.jar -rsy=1 xxx.class)<br><br>USE_DEBUG_VAR_NAMES(对应org.jetbrains.java.decompiler.main.rels.ClassWrapper#applyDebugInfo)<br>USE_METHOD_PARAMETERS(对应org.jetbrains.java.decompiler.main.rels.ClassWrapper#applyParameterNames)<br>``` |
+```plain
+REMOVE_BRIDGE(桥接方法)
+REMOVE_SYNTHETIC(虽然是0,但是通过IDEA反编译的时候仍然可以做到隐藏的效果，猜测运行时修改了默认属性java -jar fernflower.jar -rsy=1 xxx.class)
 
-#### [](#REMOVE-BRIDGE-REMOVE-SYNTHETIC "REMOVE_BRIDGE/REMOVE_SYNTHETIC")REMOVE\_BRIDGE/REMOVE\_SYNTHETIC
+USE_DEBUG_VAR_NAMES(对应org.jetbrains.java.decompiler.main.rels.ClassWrapper#applyDebugInfo)
+USE_METHOD_PARAMETERS(对应org.jetbrains.java.decompiler.main.rels.ClassWrapper#applyParameterNames)
+```
 
-##### [](#%E9%9A%90%E8%97%8F%E6%96%B9%E6%B3%95 "隐藏方法")隐藏方法
+### REMOVE\_BRIDGE/REMOVE\_SYNTHETIC
 
-发现这个属性的读取与处理在最终代码的拼接过程，也就是在org.jetbrains.java.decompiler.main.ClassWriter#classToJava![image](assets/1703486882-a2089ae620ba21fcd5f70a1a8c710857.png)
+#### 隐藏方法
 
-可以看到如果我们能让hide为true，那么就能让当前方法的输出被跳过![image-20231222231332244](assets/1703486882-421277641a3670e500f9848e84286642.png)
+发现这个属性的读取与处理在最终代码的拼接过程，也就是在org.jetbrains.java.decompiler.main.ClassWriter#classToJava
+
+[![](assets/1703640240-a37077b0971e3768008f3e2052af0dbe.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226184421-ba816350-a3db-1.png)
+
+可以看到如果我们能让hide为true，那么就能让当前方法的输出被跳过
+
+[![](assets/1703640240-f46aab7fec99cd4a4668d595eddb3f88.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226184455-ceaf7b28-a3db-1.png)
 
 如何让hide为true，可以看到这里有三个条件，满足其一即可
 
@@ -161,7 +241,7 @@ jdk8u341
 2.  方法是桥接方法并且REMOVE\_BRIDGE属性为1
 3.  在hiddenmenmers对象当中
 
-###### [](#isSynthetic-isBridge "isSynthetic/isBridge")isSynthetic/isBridge
+##### isSynthetic/isBridge
 
 在开始前我们可以思考为什么IDEA会选择隐藏这两个方法，因为他们都是由编译器生成的方法
 
@@ -179,45 +259,60 @@ Ps：一些简单的备注，更详细的可以百度看看
 
 首先来看如何满足isSynthetic的条件，修饰符带ACC\_SYNTHETIC即可，或者带Synthetic属性即可
 
-|     |     |
-| --- | --- |
-| ```plain<br>1<br>2<br>3<br>4<br>5<br>``` | ```plain<br>public boolean isSynthetic() {<br>    return hasModifier(CodeConstants.ACC_SYNTHETIC) \| hasAttribute(StructGeneralAttribute.ATTRIBUTE_SYNTHETIC);<br>}<br><br>public static final Key<StructGeneralAttribute> ATTRIBUTE_SYNTHETIC = new Key<>("Synthetic");<br>``` |
+```plain
+public boolean isSynthetic() {
+    return hasModifier(CodeConstants.ACC_SYNTHETIC) || hasAttribute(StructGeneralAttribute.ATTRIBUTE_SYNTHETIC);
+}
+
+public static final Key<StructGeneralAttribute> ATTRIBUTE_SYNTHETIC = new Key<>("Synthetic");
+```
 
 那么我们可以通过ASM很简单的为方法添加修饰符(ACC\_BRIDGE/ACC\_VOLATILE/ACC\_STATIC\_PHASE都是0x0040)
 
-|     |     |
-| --- | --- |
-| ```plain<br>1<br>2<br>3<br>4<br>``` | ```plain<br>cw.visitMethod(ACC_PUBLIC \| ACC_SYNTHETIC, "abc", "()V", null, null);<br>cw.visitMethod(ACC_PUBLIC \| ACC_BRIDGE, "abc", "()V", null, null);<br>cw.visitMethod(ACC_PUBLIC \| ACC_VOLATILE, "abc", "()V", null, null);<br>cw.visitMethod(ACC_PUBLIC \| ACC_STATIC_PHASE, "abc", "()V", null, null);<br>``` |
+```plain
+cw.visitMethod(ACC_PUBLIC | ACC_SYNTHETIC, "abc", "()V", null, null);
+cw.visitMethod(ACC_PUBLIC | ACC_BRIDGE, "abc", "()V", null, null);
+cw.visitMethod(ACC_PUBLIC | ACC_VOLATILE, "abc", "()V", null, null);
+cw.visitMethod(ACC_PUBLIC | ACC_STATIC_PHASE, "abc", "()V", null, null);
+```
 
 如何通过ASM为方法添加属性,调用`methodVisitor.visitAttribute(new SyntheticAttribute());`即可
 
 Ps：自定义实现的SyntheticAttribute类构造函数当中的super代表属性的type
 
-![image-20231222232630124](assets/1703486882-108be5d0293e68ca5168aaf85c7bf553.png)
+[![](assets/1703640240-c6a30984d675692d99cdd047e34f5683.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226184516-db3214b4-a3db-1.png)
 
 成功实现对abc方法的隐藏
 
-![image](assets/1703486882-cc7afad775dd15184119d54d35ea6a46.png)
+[![](assets/1703640240-ffe998339d34fadbd214c9b1f9df2eff.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226184537-e7e678a8-a3db-1.png)
 
 对于桥接方法的条件，和上面同理，不再重复讲解，这里仅列出效果图
 
-![image-20231222233802305](assets/1703486882-dce6c17eff7e01a6b6358436ebe73450.png)
+[![](assets/1703640240-b3dc53b32830bff27a1bc81cf19d01ba.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226184633-08d71aae-a3dc-1.png)
 
-![image-20231222233859682](assets/1703486882-bf2c028763690703e6fc95ac2f541fa5.png)
+[![](assets/1703640240-52477ccd40f5f62fbe87caa8045aaea8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226184723-26bf6a12-a3dc-1.png)
 
-###### [](#%E5%A6%82%E4%BD%95%E8%BD%AC%E6%8D%A2%E4%B8%80%E4%B8%AA%E7%B1%BB-%E5%A4%87%E6%B3%A8%E7%AF%87 "如何转换一个类(备注篇)")如何转换一个类(备注篇)
+##### 如何转换一个类(备注篇)
 
 可能有人会好奇能不能通过ASM转换现有的方法呢？当然可以
 
 写一个类继承ClassVisitor
 
-![image-20231222233527538](assets/1703486882-5f77566116c47dcbdb872972d0f67760.png)串联ClassWriter即可![image-20231222233545816](assets/1703486882-e9948049bea7ab3674bca8510b8df6e9.png)
+[![](assets/1703640240-d0093b6f49961b0b8ea653d18dcf28f9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226184747-353da0b8-a3dc-1.png)
 
-结合IDEA的显示特性达到迷惑效果，同时我们在隐藏的方法当中加点料，比如执行一个计算器![image](assets/1703486882-69d8a7b089e0bf2549e898b1e77f7a6c.png)
+串联ClassWriter即可
 
-###### [](#hiddenMembers%E5%AF%B9%E8%B1%A1 "hiddenMembers对象")hiddenMembers对象
+[![](assets/1703640240-7477985f1baff04736a7b147aa31b14b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226184802-3e4f32de-a3dc-1.png)
 
-过查找发现hiddenMembers的添加主要在几个Processor方法下![image-20231222233942630](assets/1703486882-c15b8e0d1d88b5c4de539750c9062250.png)
+结合IDEA的显示特性达到迷惑效果，同时我们在隐藏的方法当中加点料，比如执行一个计算器
+
+[![](assets/1703640240-a828c43f35a77d55536304b5d3baf4e8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226184907-6518ff76-a3dc-1.png)
+
+##### hiddenMembers对象
+
+过查找发现hiddenMembers的添加主要在几个Processor方法下
+
+[![](assets/1703640240-e284bdab3b1dfa96a195d175e2b3b516.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226184942-7968e2ca-a3dc-1.png)
 
 和方法相关的比较好用的有EnumProcessor和ClassReference14Processor，这里仅以EnumProcessor为例
 
@@ -229,46 +324,54 @@ Ps：自定义实现的SyntheticAttribute类构造函数当中的super代表属�
 
 (其中()代表入参为空，\[为数组，中间的变量为全类名利用方法的重载)
 
-![image-20231222234551547](assets/1703486882-09d69bce24437e10169418d18ad44c3e.png)
+[![](assets/1703640240-f8ff1070a74f238a9a447002a703a970.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185026-940af0dc-a3dc-1.png)
 
 甚至更进一步，我们可以结合方法重载的特性，再搞一个同名方法迷惑视线
 
-![image](assets/1703486882-a56511fe1a7e46788b1dabed81bedfb2.png)
+[![](assets/1703640240-a4e810187ba751e4b29bde4bb79fb0bb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185042-9d6c7f10-a3dc-1.png)
 
-##### [](#%E9%9A%90%E8%97%8F%E5%AD%97%E6%AE%B5 "隐藏字段")隐藏字段
+#### 隐藏字段
 
 同理满足任一条件即可
 
 1.  isSynthetic并且REMOVE\_SYNTHETIC属性为1
 2.  在Hiddenmenmers对象当中
 
-![image-20231222235206330](assets/1703486882-9bbe8e7d02059f80834d162db7bb1462.png)
+[![](assets/1703640240-743c061e1785f438d517f6c4b9e09b1e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185113-b0320e9e-a3dc-1.png)
 
-###### [](#isSynthetic "isSynthetic")isSynthetic
+##### isSynthetic
 
 isSynthetic条件同上，修饰符或添加属性，具体可查看我的代码，位置在`src/main/java/hidden/field/Synthetic`
 
-|     |     |
-| --- | --- |
-| ```plain<br>1<br>2<br>3<br>``` | ```plain<br>public boolean isSynthetic() {<br>  return hasModifier(CodeConstants.ACC_SYNTHETIC) \| hasAttribute(StructGeneralAttribute.ATTRIBUTE_SYNTHETIC);<br>}<br>``` |
+```plain
+public boolean isSynthetic() {
+  return hasModifier(CodeConstants.ACC_SYNTHETIC) || hasAttribute(StructGeneralAttribute.ATTRIBUTE_SYNTHETIC);
+}
+```
 
-###### [](#hiddenMembers%E5%AF%B9%E8%B1%A1-1 "hiddenMembers对象")hiddenMembers对象
+##### hiddenMembers对象
 
 同理仅选一个为例子演示
 
 在`org.jetbrains.java.decompiler.main.AssertProcessor#buildAssertions`中对hiddenMembers添加了字段对象的处理，如果`findAssertionField`返回不为空即可实现添加
 
-![image-20231222235856997](assets/1703486882-8e32331c0470c03df3b90c392061d429.png)条件很简单字段为Static\\Final\\Synthetic修饰即可![image-20231222235838893](assets/1703486882-96f7a80652b3065213eac287e0095b9b.png)
+[![](assets/1703640240-8fc64641fe2a91588d9cb4f04187b514.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185135-bd255c14-a3dc-1.png)
 
-|     |     |
-| --- | --- |
-| ```plain<br>1<br>``` | ```plain<br>cw.visitField(ACC_PUBLIC \| ACC_STATIC \| ACC_FINAL\| ACC_SYNTHETIC, fieldName, "Ljava/lang/String;", null, null);<br>``` |
+条件很简单字段为Static\\Final\\Synthetic修饰即可
 
-运行发现，字段也做到了隐藏的效果![image-20231223000035883](assets/1703486882-9f4d375ea474630e42ca0a2da2867e8d.png)
+[![](assets/1703640240-6bce7cca928f7d4d76415c2b3bd5c8fe.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185155-c93da75e-a3dc-1.png)
 
-#### [](#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0 "自定义方法参数")自定义方法参数
+```plain
+cw.visitField(ACC_PUBLIC | ACC_STATIC | ACC_FINAL| ACC_SYNTHETIC, fieldName, "Ljava/lang/String;", null, null);
+```
 
-##### [](#%E4%B8%80%E4%BA%9B%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86 "一些需要知道的基础知识")一些需要知道的基础知识
+运行发现，字段也做到了隐藏的效果
+
+[![](assets/1703640240-260c17a23453885b8b311d44450c5743.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185216-d538d952-a3dc-1.png)
+
+### 自定义方法参数
+
+#### 一些需要知道的基础知识
 
 Java字节码的attribute\_info用于存储与类、字段、方法、代码等相关的附加信息。它是一个可选的部分，可以用来提供一些额外的元数据或调试信息。
 
@@ -285,7 +388,7 @@ JVM在运行时并不直接关注字节码中的attributes，它主要关注的�
 
 例如，Code attribute中包含了方法体的字节码指令、异常处理器、局部变量表等信息。JVM在执行方法时会解析这些字节码指令，并根据异常处理器处理异常，同时也会使用局部变量表来存储方法中的局部变量。另外，LineNumberTable attribute中包含了源码行号和字节码行号的对应关系，这对于调试非常有用。当发生异常或进行追踪时，JVM可以使用这些信息来显示源码的行号，帮助开发人员进行调试。
 
-##### [](#METHOD-PARAMETERS "METHOD_PARAMETERS")METHOD\_PARAMETERS
+#### METHOD\_PARAMETERS
 
 我们可以在代码中自定义一些调试信息，这与默认配置中的`USE_METHOD_PARAMETERS/USE_DEBUG_VAR_NAMES`有关
 
@@ -293,19 +396,30 @@ JVM在运行时并不直接关注字节码中的attributes，它主要关注的�
 
 不知道大家有没有发现一个现象，自己在IDEA写的类，反编译后可以看到，方法的参数名都是有一些特定含义的
 
-![image-20231223000649017](assets/1703486882-873143c17e294b6af51bc630c933cc0e.png)但是从网上下载的代码却没有(因为被做了优化将属性做了移除)![image-20231223000657055](assets/1703486882-7b89f03d0faa1ffdad984f1efb1eb636.png)
+[![](assets/1703640240-5f54bfa9cafd14ad1ca010fc904c1a30.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185235-e0b52bc8-a3dc-1.png)
 
-|     |     |
-| --- | --- |
-| ```plain<br>1<br>2<br>``` | ```plain<br>USE_DEBUG_VAR_NAMES(对应处理org.jetbrains.java.decompiler.main.rels.ClassWrapper#applyDebugInfo)<br>USE_METHOD_PARAMETERS(对应处理org.jetbrains.java.decompiler.main.rels.ClassWrapper#applyParameterNames)<br>``` |
+但是从网上下载的代码却没有(因为被做了优化将属性做了移除)
+
+[![](assets/1703640240-4fda83aacd82fb3a0f5f47f18b757287.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185301-f03a5d66-a3dc-1.png)
+
+```plain
+USE_DEBUG_VAR_NAMES(对应处理org.jetbrains.java.decompiler.main.rels.ClassWrapper#applyDebugInfo)
+USE_METHOD_PARAMETERS(对应处理org.jetbrains.java.decompiler.main.rels.ClassWrapper#applyParameterNames)
+```
 
 仔细阅读代码你会发现其实这两个参数最终效果是一致，但是USE\_METHOD\_PARAMETERS在IDEA的代码层没有做参数的限制(jdk8测试无，但是较高版本java\[jdk<=8u271\]运行时也有限制了，限制条件同USE\_DEBUG\_VAR\_NAMES，当然其实这些限制都无所谓)，而USE\_DEBUG\_VAR\_NAMES则有
 
-![image-20231223000948318](assets/1703486882-2270279d67e35f3c7ca3e538cba1263b.png)通过简单的fuzz发现限制蛮大的(部分输出)![image-20231223001121735](assets/1703486882-9c6ade380864216ca549fdfdf0bef1a9.png)
+[![](assets/1703640240-34b108c0568d114232cacd1b9d53117d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185319-fb14ce10-a3dc-1.png)
+
+通过简单的fuzz发现限制蛮大的(部分输出)
+
+[![](assets/1703640240-56f48872271f5075b1f06121bb7f3706.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185342-0889096c-a3dd-1.png)
 
 因此，在这里我们以USE\_METHOD\_PARAMETERS的构造为主
 
-查看它的处理流程，其实很简单，获取方法中的`MethodParameters`属性，再通过for循环便利建立字段的映射![image-20231223001223970](assets/1703486882-532977206fbfe2834c7f08fc8a3fb9a0.png)
+查看它的处理流程，其实很简单，获取方法中的`MethodParameters`属性，再通过for循环便利建立字段的映射
+
+[![](assets/1703640240-5b78f2381ab5e5c46b2353af45ca9c04.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185407-178057c2-a3dd-1.png)
 
 既然限制我们已经知道了IDEA是如何处理的，那么接下来就需要知道这些属性是如何传入
 
@@ -317,7 +431,11 @@ JVM在运行时并不直接关注字节码中的attributes，它主要关注的�
 2.  读取方法的参数名在本地变量表当中的映射(关键)
 3.  读取方法参数类型
 
-![image-20231223001640453](assets/1703486882-849bc962960e1eb36ab364c69e61e9a0.png)那么在接下来我们便开始构造属性，继承Attibute类重写其write方法来实现自定义的写入，这里我比较偷懒的写了一个，能用就行![image-20231223002010588](assets/1703486882-081ac96ce8c56742e9f5f266b8bf5e63.png)
+[![](assets/1703640240-39ef34c46d1bd1f3d38a4a503e4d955e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185432-269939fe-a3dd-1.png)
+
+那么在接下来我们便开始构造属性，继承Attibute类重写其write方法来实现自定义的写入，这里我比较偷懒的写了一个，能用就行
+
+[![](assets/1703640240-c3f26523acec50fa40856ad11ea4e4f8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185449-30ca35a4-a3dd-1.png)
 
 调用`mv.visitAttribute(new MethodParameterAttribute(3,5));`即可实现属性添加
 
@@ -325,47 +443,51 @@ Ps:老版本会有一点BUG，函数名中显示没问题，在具体函数功�
 
 在这里我们可以看到所有的方法参数都被我们修改为同一名字，大大加大了阅读理解代码的难度
 
-![image-20231223002521559](assets/1703486882-318dbfe04e1a0828e50e0880da687c10.png)虽然在较高版本中也对fieldname做了限制，但也也只是一些特殊符号的限制，简单写首诗还是可以的(小皮一下),以jdk11为例
+[![](assets/1703640240-c9e214354d911479aab12e1e28d0f5a7.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185544-51bdb20e-a3dd-1.png)
+
+虽然在较高版本中也对fieldname做了限制，但也也只是一些特殊符号的限制，简单写首诗还是可以的(小皮一下),以jdk11为例
 
 (忽略颜色变成白底了找了张老图懒得自己打字了)
 
-![image](assets/1703486882-6d3e3e5b0063ca29eaa9b671fda5a425.png)
+[![](assets/1703640240-16408056caeece549f8f9e016b39569b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185601-5bc00400-a3dd-1.png)
 
-#### [](#%E5%B1%9E%E6%80%A7%E4%B8%8A%E8%BF%98%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F "属性上还能做什么？")属性上还能做什么？
+### 属性上还能做什么？
 
 上面也提到了，Java运行时一般而言对属性没有直接的依赖，利用这一点我们便可以想想能不能控制属性让IDEA在反编译的过程中报错导致反编译过程提前结束，当然其实有好几种办法，这里我们仅以其中一个为例，这串代码其实就是上面讲到的方法参数的处理过程
 
-![image-20231223003624120](assets/1703486882-12a303394af40d881e4ecdf2a9aa0e23.png)我们可以看到有个对`md.params[i]`的数组下标取值的过程，这时候如果我们多在属性中添加一位，就会因为发生组越界导致反编译失败(比如一个方法拥有三个参数，我们在属性中声明它拥有四个参数)
+[![](assets/1703640240-71640803a332fab8152493b579b650a0.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185641-732a0302-a3dd-1.png)
+
+我们可以看到有个对`md.params[i]`的数组下标取值的过程，这时候如果我们多在属性中添加一位，就会因为发生组越界导致反编译失败(比如一个方法拥有三个参数，我们在属性中声明它拥有四个参数)
 
 查看代码效果，此时反编译因出错提前退出，显示效果如图
 
-![image-20231223003813855](assets/1703486882-2af7636a4d414c1b3dd0ae31ffadfb2b.png)
+[![](assets/1703640240-e11ccd86200741a370a60a86c1af8a29.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185709-844f3706-a3dd-1.png)
 
-#### [](#%E5%86%8D%E8%BF%9B%E4%B8%80%E6%AD%A5%EF%BC%8C%E7%AE%80%E5%8D%95%E5%8F%8D%E5%88%B6IDEA "再进一步，简单反制IDEA")再进一步，简单反制IDEA
+### 再进一步，简单反制IDEA
 
 既然都看了方法的参数了，那么不妨再往上看看，方法参数又是怎么解析的呢？
 
 仅看这一串代码你能发现什么么？注意我的光标
 
-![image-20231223003956266](assets/1703486882-52fc43ebdf5678ce3ee91022e03bb2e6.png)
+[![](assets/1703640240-511efc29570a16e1e03adfd158b19e8c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185724-8d54762c-a3dd-1.png)
 
 以`(Ljava/lang/String;)Ljava/lang/String;`为例
 
 1.  先获取最后括号内的内容
-2.  第一位L进入Case ‘L’分支
+2.  第一位L进入Case ‘L'分支
 3.  让 index 为 ; 所在位置下标
 
 而如果我们不写上最后一个;符号，对java来说一般找不到默认为-1，导致反编译永远卡在这个while循环当中，实现一个DOS攻击
 
-Ps：很狗的是很早之前我给官方提出了这个问题，他们表示并不care也不会做修复，但是在我写PPT前几天无意中更新了IDEA发现似乎被修复了🐶，具体原因还未查看(懒)
+Ps：很狗的是很早之前我给官方提出了这个问题，他们表示并不care也不会做修复，但是在我写PPT前几天无意中更新了IDEA发现似乎被修复了，具体原因还未查看(懒)
 
-![image-20231223004218893](assets/1703486882-0e5b8510de57ee3219e85fe0a0e533f7.png)
+[![](assets/1703640240-3445e4e000701bd57ef33b5c821091c5.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185835-b77ac154-a3dd-1.png)
 
 这时候有人会问，既然都破坏了类的完整性，那么肯定都无法运行了，确实如此，但是换个角度，如果我们向我们的jar文件当中存入多个这样的class，当有人想反编译jar查看代码的时候，不小心点到了这个类，是不是就会触发小惊喜(手动狗头)
 
-#### [](#%E8%BF%98%E8%83%BD%E9%9A%90%E8%97%8F%E4%BB%80%E4%B9%88%EF%BC%9F-%E7%A5%9E%E5%A5%87%E7%9A%84JSR "还能隐藏什么？(神奇的JSR)")还能隐藏什么？(神奇的JSR)
+### 还能隐藏什么？(神奇的JSR)
 
-![image-20231223004805605](assets/1703486882-a7034731b7acf9ccb6d8925e3c910f28.png)
+[![](assets/1703640240-026a897f9bd6fd6165cdc4127465e7eb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185923-d3be7036-a3dd-1.png)
 
 刚刚我们已经实现了对方法以及字段的隐藏，还能隐藏什么呢？通过阅读反编译的源码我发现了个有趣的指令jsr，在过去它是和ret指令成对出现，用于实现try-catch当中的finally快，但随着jvm的发展后面被移除了，但是java的运行有着向下兼容的特性，因此我们仍然是能使用这个指令
 
@@ -376,15 +498,24 @@ Ps：很狗的是很早之前我给官方提出了这个问题，他们表示并
 
 首先通过下面的例子带大家简单了解下JSR的使用，在这里通过JSR跳转到了label1，在这个过程中会将下一条指令的地址压入栈中，之后执行完`Code Here`，我们通过ASTORE将栈上地址保存到本地变量表当中指定位置，并通过RET指令实现对`Continue Code Here`的继续执行
 
-![image-20231223005018837](assets/1703486882-5f8db76e20948e8b1ce8fe4b4866ea2e.png)利用这个jsr我们能达到这样的混淆效果，可以看到实际运行与显示不符合![image-20231223004842726](assets/1703486882-049b531ce33fdb3d9aa54835e8717f11.png)
+[![](assets/1703640240-2e06b82ae65428ea0ab2abe7a51e2294.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226185950-e3fa9768-a3dd-1.png)
+
+利用这个jsr我们能达到这样的混淆效果，可以看到实际运行与显示不符合
+
+[![](assets/1703640240-e1023d59cc68c4203d65d2ec8075dcbe.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190009-ef5cad30-a3dd-1.png)
 
 那到底是如何做到的呢？可以看到jsr的处理是在代码生成CFG的过程中，在这里仅仅只是对JSR/RET做了处理(正常情况下jsr/ret的出现是成对的，并且不会有其他指令)
 
-![image-20231223005244897](assets/1703486882-981503746af6c2bb7b2978fc59a4779d.png)调用栈如下
+[![](assets/1703640240-4a6b032af9f43faa02a761e17f6c4858.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190044-041128fa-a3de-1.png)
 
-|     |     |
-| --- | --- |
-| ```plain<br>1<br>2<br>3<br>4<br>``` | ```plain<br>setSubroutineEdges:374, ControlFlowGraph<br>buildBlocks:204, ControlFlowGraph<br><init>:44, ControlFlowGraph<br>codeToJava:74, MethodProcessorRunnable<br>``` |
+调用栈如下
+
+```plain
+setSubroutineEdges:374, ControlFlowGraph
+buildBlocks:204, ControlFlowGraph
+<init>:44, ControlFlowGraph
+codeToJava:74, MethodProcessorRunnable
+```
 
 但是毕竟我们是黑客，总想搞一些骚操作，通过对字节码指令的翻阅我发现了两个有趣的指令
 
@@ -394,37 +525,53 @@ Ps：很狗的是很早之前我给官方提出了这个问题，他们表示并
 
 因此我们便可以构造出这样的ASM代码(Y4计算器的原理)
 
-![image-20231223005510814](assets/1703486882-4204f8632bbfcd94101de8dcffa11106.png)
+[![](assets/1703640240-d84b07ff22c63b7e978b257bfd78701d.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190129-1f2a678c-a3de-1.png)
 
-##### [](#%E4%BB%A3%E7%A0%81%E7%9C%9F%E5%AE%9E%E6%89%A7%E8%A1%8C%E4%B8%8EIDEA%E8%A7%A3%E6%9E%90%E7%9A%84%E5%B7%AE%E5%BC%82%E6%80%A7 "代码真实执行与IDEA解析的差异性")代码真实执行与IDEA解析的差异性
+#### 代码真实执行与IDEA解析的差异性
 
 首先我们来看看代码的真实执行过程(懒了直接偷演讲时的PPT动画)
 
-首先通过JSR跳转到label1，并向栈中压入下一条指令的地址![image-20231223005610036](assets/1703486882-1fe49caa688831227d887d3e7b4aa6ea.png)
+首先通过JSR跳转到label1，并向栈中压入下一条指令的地址
 
-接着再次通过JSR跳转到label2，并向栈中压入下一条指令的地址![image-20231223005659914](assets/1703486882-27d0831ae523f7d058b12f5f2f942da8.png)
+[![](assets/1703640240-2c2e95a2d818485ffa0adc8f7f853fec.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190150-2b68531a-a3de-1.png)
 
-之后我们手动插入了一个POP指令的调用，RA2被弹出，因此最终RET指令返回执行时会执行`Real Code Here`![image-20231223005747367](assets/1703486882-0019561940a6de23e8d4ed326f895ee4.png)
+接着再次通过JSR跳转到label2，并向栈中压入下一条指令的地址
 
-那么我们接下来再看看IDEA的解析处理，通过两次JSR跳转压入两条指令返回地址![image-20231223005659914](assets/1703486882-27d0831ae523f7d058b12f5f2f942da8.png)
+[![](assets/1703640240-76e2719d2ab168eafec37fe26375063c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190211-37fab280-a3de-1.png)
 
-由于并没有对POP做处理，因此最终返回执行RA2所指向的`Fake Code Here`![image-20231223010033291](assets/1703486882-9a6017e3f8de773423551e9fb58cc3ce.png)
+之后我们手动插入了一个POP指令的调用，RA2被弹出，因此最终RET指令返回执行时会执行`Real Code Here`
 
-因此我们便可以利用IDEA解析与真实执行的差异性构造出这样的混淆例子，将真实代码隐藏，虚假代码做展示达到一个很好的混淆效果(IDEA所有版本均可)![image-20231223010139535](assets/1703486882-8605223e39afba6efca593708f093031.png)
+[![](assets/1703640240-7b0800f281ed17a873256a57cad74d58.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190247-4d5e04d8-a3de-1.png)
 
-##### [](#SWAP "SWAP")SWAP
+那么我们接下来再看看IDEA的解析处理，通过两次JSR跳转压入两条指令返回地址
+
+[![](assets/1703640240-b40064a9c05bf9c6f5a197d75bacf54e.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190311-5bcd87aa-a3de-1.png)
+
+由于并没有对POP做处理，因此最终返回执行RA2所指向的`Fake Code Here`
+
+[![](assets/1703640240-b93aa026683710c25400ef564f682a63.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190757-066f4608-a3df-1.png)
+
+因此我们便可以利用IDEA解析与真实执行的差异性构造出这样的混淆例子，将真实代码隐藏，虚假代码做展示达到一个很好的混淆效果(IDEA所有版本均可)
+
+[![](assets/1703640240-7775c8686c5d87282a2dcdbd66db0417.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190734-f8de2b9e-a3de-1.png)
+
+#### SWAP
 
 同样的道理，仅演示
 
 通过两次JSR跳转压入两条指令返回地址
 
-![image-20231223010939231](assets/1703486882-df699fef34bae1822dde5705cbf3f22f.png)通过SWAP指令交换地址![image-20231223010859252](assets/1703486882-c60ce96c36324fcabd44a51ae89240cf.png)
+[![](assets/1703640240-66869fba0302c44ab0a805b819967ea8.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190715-ed975e22-a3de-1.png)
+
+通过SWAP指令交换地址
+
+[![](assets/1703640240-1dc9ab736e2af22dda53d4429c1fddcd.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190700-e481078e-a3de-1.png)
 
 生成的类触发报错无法反编译(最新版可以，旧版不行，具体版本懒得测)
 
-![image-20231223011006263](assets/1703486882-159a4c8423cf5cc2897e80d6d10a1d02.png)
+[![](assets/1703640240-cb5b1a3923a15a7260fee82d8b790ef1.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190639-d807e1da-a3de-1.png)
 
-#### [](#%E5%85%B3%E6%B3%A8%E7%89%B9%E6%AE%8A%E7%9A%84%E7%BB%93%E6%9E%84 "关注特殊的结构")关注特殊的结构
+### 关注特殊的结构
 
 除了关注程序的一些默认配置，我们还可以将视线聚焦在放在一些特殊的结构上面，毕竟结构越特殊，反编译器的处理也会越复杂。
 
@@ -432,9 +579,15 @@ Ps：很狗的是很早之前我给官方提出了这个问题，他们表示并
 
 对于我们Java调用方法而言有两种情况，如果方法是静态方法就可以直接调用，而如果方法是非静态方法那么就需要先实例化一个类再执行调用，而如下图所示Exception调用的方法是非静态方法。因此可以猜测在运行过程中生成了这一个对象并存入了栈中，同时我们也可以通过javap指令简单从astore的前后调用做一个验证
 
-![image-20231223011416095](assets/1703486882-e53a295211ca208ac02cb81969e8cd25.png)在这里为了方便大家更直观的感受，我写了一个模拟栈与本地变量表之间变化关系的程序，输出如下，可以看到确实很直观的有一个Exception对象的生成![image-20231223011544516](assets/1703486882-b928f6587a40b641247decfc6dfb9e01.png)
+[![](assets/1703640240-45521c1571f66daa3c66b86d75ecdafc.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190624-cebc9a12-a3de-1.png)
 
-在接下来我们需要简单了解下java自身生成的try-catch的字节码表示，在这里为了防止编译优化，在每个执行中插入了一些输出的字节码指令序列![image-20231223011641162](assets/1703486882-f2e4409a95626396c4aed758ecfbe2ea.png)
+在这里为了方便大家更直观的感受，我写了一个模拟栈与本地变量表之间变化关系的程序，输出如下，可以看到确实很直观的有一个Exception对象的生成
+
+[![](assets/1703640240-7c8054dd527f25cea0e795c46cbb6303.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190609-c5c8ec6c-a3de-1.png)
+
+在接下来我们需要简单了解下java自身生成的try-catch的字节码表示，在这里为了防止编译优化，在每个执行中插入了一些输出的字节码指令序列
+
+[![](assets/1703640240-1c15ac717f62c396bf305f9152fbceef.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190552-bc045bd0-a3de-1.png)
 
 在这里我们主要关注这个异常表，这个异常表定义了异常处理的范围
 
@@ -442,25 +595,43 @@ Ps：很狗的是很早之前我给官方提出了这个问题，他们表示并
 
 如果在指令0-8之间运行产生了错误，就会跳转到target指向的指令11去捕获异常处理，从指令11继续往下执行直到程序退出
 
-在这里为了方便新手对接下来混淆的理解，我们可以尝试在不使用GOTO以及不对结构顺序做调整的情况下实现这个try-catch，如下图所示，从右边来看，程序执行的流动是从startLabel流向endLabel并通过return返回，从handlerLabel流向endLabel并通过return返回，那么可以构造如左图所示的ASM代码片段(因为不使用跳转HandlerLabel只能给其插入一个RETURN保证程序正常退出)![image-20231223012009386](assets/1703486882-4df7f69ae205be55cf2c31143fb6d2e6.png)
+在这里为了方便新手对接下来混淆的理解，我们可以尝试在不使用GOTO以及不对结构顺序做调整的情况下实现这个try-catch，如下图所示，从右边来看，程序执行的流动是从startLabel流向endLabel并通过return返回，从handlerLabel流向endLabel并通过return返回，那么可以构造如左图所示的ASM代码片段(因为不使用跳转HandlerLabel只能给其插入一个RETURN保证程序正常退出)
+
+[![](assets/1703640240-669a24507bd267ad9b5067d507188fe3.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190535-b1e40dda-a3de-1.png)
 
 那么既然知道了程序的执行方向都是向下执行并且最终通过RETURN指令退出
 
-那么我们是不是就能大胆假设，在这里将endLabel下的RETURN做移除，那么至少从表面上看执行顺序是没问题的![image-20231223012308310](assets/1703486882-34bd01eddce28030eb0930e3bce39872.png)
+那么我们是不是就能大胆假设，在这里将endLabel下的RETURN做移除，那么至少从表面上看执行顺序是没问题的
+
+[![](assets/1703640240-c444f8c8166491c4f178a991ff32ca9c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190520-a8cb90c4-a3de-1.png)
 
 但这时候我们再运行生成好的程序，成功喜提一个VerifyError的报错，这是因为在执行前，java会对类做验证，如果验证通过才能继续执行，反之抛出异常并退出
 
-![image-20231223012449793](assets/1703486882-c43686713c3f1cbb04a4dd0c8b702021.png)但是在这里我们首要关心的不应该是是否验证有异常，而是关心是否能正确执行，在这里我们通过`-Xnoverify`手动跳过这个过程，可以发现是可以正常执行的![image-20231223012931682](assets/1703486882-f609c98f1895021316b36e6def5a0b88.png)
+[![](assets/1703640240-bf51955035c6df58ca275a0de1525b50.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190459-9c3ac7bc-a3de-1.png)
 
-因此接下来我们便可以尝试是否能够欺骗验证过程，从而能够正确执行，我们仔细查看这个报错原因，发现其实和frame有关(什么是frame可自行百度)，在这里教大家一个ASM的小技巧![image-20231223013045265](assets/1703486882-c37b3f04ae7fdbaaa30fe421ba23d035.png)
+但是在这里我们首要关心的不应该是是否验证有异常，而是关心是否能正确执行，在这里我们通过`-Xnoverify`手动跳过这个过程，可以发现是可以正常执行的
 
-既然和FRAME有关那么，我们便可以在生成这个类的时候将参数替换为`ClassWriter.COMPUTE_FRAMES`,上面一开始也提到过这个参数的作用(在写入方法字节码时，会自动计算方法的堆栈映射帧和局部变量表的大小)![image-20231223013335512](assets/1703486882-a7e03230def7e97291c0a6b33898de3d.png)
+[![](assets/1703640240-c2cac0c9d3702f94219a38bfc4fd67a6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190443-92ed77ea-a3de-1.png)
+
+因此接下来我们便可以尝试是否能够欺骗验证过程，从而能够正确执行，我们仔细查看这个报错原因，发现其实和frame有关(什么是frame可自行百度)，在这里教大家一个ASM的小技巧
+
+[![](assets/1703640240-93a5ce518a74559ce4dd968d58b832a5.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190427-8902d6ee-a3de-1.png)
+
+既然和FRAME有关那么，我们便可以在生成这个类的时候将参数替换为`ClassWriter.COMPUTE_FRAMES`,上面一开始也提到过这个参数的作用(在写入方法字节码时，会自动计算方法的堆栈映射帧和局部变量表的大小)
+
+[![](assets/1703640240-f9bb024ef057d325822b6507682e7afb.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190407-7d9083ba-a3de-1.png)
 
 因此我们在此生成类并运行可以发现，报错变得非常直观，帧栈的大小不匹配
 
-![image-20231223013451434](assets/1703486882-2ba6505bc9ce057502bb51c2dfae8dd0.png)那么既然少了一个我们便给他补齐一个即可(插入任意对象，仅验证大小的匹配)![image-20231223013705668](assets/1703486882-da2dfbaf792f5083437e5c45d280b5fc.png)
+[![](assets/1703640240-ec8e65b6dec525be7352595e44bca2e6.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190353-7530c324-a3de-1.png)
 
-再次生成这个类，我们可以发现，VerifyError的错误消失，程序成功运行，也达到了我们混淆的目的![image-20231223013755722](assets/1703486882-7465309af8d949b91c53d5684ce82bb9.png)
+那么既然少了一个我们便给他补齐一个即可(插入任意对象，仅验证大小的匹配)
+
+[![](assets/1703640240-53f713d0d8bfdb413a24488fc816ea5b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190338-6c3bff86-a3de-1.png)
+
+再次生成这个类，我们可以发现，VerifyError的错误消失，程序成功运行，也达到了我们混淆的目的
+
+[![](assets/1703640240-df3a586ce18e1b666b9f693eb52ac1f9.png)](https://xzfile.aliyuncs.com/media/upload/picture/20231226190323-6352fdca-a3de-1.png)
 
 当然我们还能做什么呢？比如
 
@@ -468,8 +639,10 @@ Ps：很狗的是很早之前我给官方提出了这个问题，他们表示并
 -   多个try-catch结构的交叉或者首尾重叠
 -   关注其他的特殊结构
 -   关注java动态语言和函数式编程的特性的实现
--   …….(自由发挥，主要是看IDEA的代码，当然也可以尝试去对抗反混淆工具也很有意思，也能做到欺骗实现的代码执行或者报错)
+-   .......(自由发挥，主要是看IDEA的代码，当然也可以尝试去对抗反混淆工具也很有意思，也能做到欺骗实现的代码执行或者报错)
 
-## [](#%E6%80%BB%E7%BB%93 "总结")总结
+## 总结
 
 在这次议题分享当中我们做到了对方法、字段以及代码片段的隐藏，同时实现了自定义的方法参数以及能够让IDEA反编译报错，因此我们便可以灵活使用这些结果，提升蓝队反编译分析的难度，为攻击争取更多的时间，同时针对隐藏的混淆效果，我们也可以将其运用到写插件后门的场景，实现一个定向投毒.
+
+原文： [https://y4tacker.github.io/2023/12/22/year/2023/12/Hacking-FernFlower/](https://y4tacker.github.io/2023/12/22/year/2023/12/Hacking-FernFlower/)
