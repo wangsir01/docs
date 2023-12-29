@@ -1,0 +1,28 @@
+{
+  "version": "2.0",
+  "clipId": "1703837877",
+  "format": "md",
+  "title": "在编写Nuclei“网络”模板时处理I/O",
+  "link": "https://blog.unapibageek.io/p/dealing-with-io-when-writing-nuclei",
+  "category": "default",
+  "tags": [
+    "blog.unapibageek.io"
+  ],
+  "created_at": "2023-12-29 16:17:57",
+  "mainPath": "在编写Nuclei-网络-模板时处理I-O.md",
+  "paths": [
+    "在编写Nuclei-网络-模板时处理I-O.index.json",
+    "assets/1703837877-4fd99228eb8861f4386c3b762804b4c0.png",
+    "assets/1703837877-d72eb4eed80ebbd096ea71d808918718.png",
+    "assets/1703837877-7d70c88cbf20249125942df3fee0a185.png",
+    "assets/1703837877-b951aa2752b47b8a15d7b441dd278726.png",
+    "assets/1703837877-451f46adb77d6f1c9610a73951198ce4.png",
+    "assets/1703837877-7df672484a2e3909ee8267b58b99d7c9.png",
+    "assets/1703837877-d3c8e1012ea4bb23a18360558c12e144.png",
+    "assets/1703837877-db717a33c771a1f57ac821e3e5abe996.png",
+    "assets/1703837877-6b22336635365e53b17a4302b2a9c7aa.png",
+    "assets/1703837877-ba56e31aec5f5697f138ed0a9f8f66d8.png",
+    "assets/1703837877-1342918426640e6f3ad19fa28c0390a8.png",
+    "在编写Nuclei-网络-模板时处理I-O.md"
+  ]
+}
