@@ -1,0 +1,34 @@
+{
+  "version": "2.0",
+  "clipId": "1704182823",
+  "format": "md",
+  "title": "Windows之clfs日志提权漏洞 - 先知社区",
+  "link": "https://xz.aliyun.com/t/13219",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2024-01-02 16:07:03",
+  "mainPath": "Windows之clfs日志提权漏洞-先知社区.md",
+  "paths": [
+    "Windows之clfs日志提权漏洞-先知社区.index.json",
+    "assets/1704182823-74a707f76766273536f08df6c34649a4.png",
+    "assets/1704182823-94dcad77d7d2f8d4fffc510fa2298883.png",
+    "assets/1704182823-1760d60d93930ce7651b11c0e1461690.png",
+    "assets/1704182823-e9baf09e27187c45b43204ff7c398d13.png",
+    "assets/1704182823-7eaaf84ec38ae59824e526194979f9b2.png",
+    "assets/1704182823-ba249c4eddfb59d87df3aaa75412e6b6.png",
+    "assets/1704182823-a252aac0d222323211e4416f1aac689c.png",
+    "assets/1704182823-d0cbb987cef0b5c650063bb893cf07ab.png",
+    "assets/1704182823-dba394d7d7fb795fa86695c709c996f6.png",
+    "assets/1704182823-40f0c1bb3e848cf76565370e0b71b09d.png",
+    "assets/1704182823-c21a5f012e79a9189bc138f28828b3cb.png",
+    "assets/1704182823-222641701bcd638b9dd00f9a26b2f88f.png",
+    "assets/1704182823-f0a74f8516e95363bd1e5b0aa9932209.png",
+    "assets/1704182823-b11560b142a864c874fc030408e99f37.png",
+    "assets/1704182823-b8c9f2d017224ce8681b38efcc31a7f2.png",
+    "assets/1704182823-4214e47f8ef75fd650c09da9ad7c71be.png",
+    "assets/1704182823-0d469464101b2052d03be4313327561b.png",
+    "Windows之clfs日志提权漏洞-先知社区.md"
+  ]
+}
