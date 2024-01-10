@@ -1,0 +1,19 @@
+{
+  "version": "2.0",
+  "clipId": "1704850708",
+  "format": "md",
+  "title": "WAF对WebShell流量检测的性能分析 - FreeBuf网络安全行业门户",
+  "link": "https://www.freebuf.com/articles/web/226053.html",
+  "category": "default",
+  "tags": [
+    "www.freebuf.com"
+  ],
+  "created_at": "2024-01-10 09:38:28",
+  "mainPath": "WAF对WebShell流量检测的性能分析-FreeBuf网络安全行业门户.md",
+  "paths": [
+    "WAF对WebShell流量检测的性能分析-FreeBuf网络安全行业门户.index.json",
+    "assets/1704850708-9d48a05e2d131d508213ee4bbf6cdb04.png",
+    "assets/1704850708-9d02f8b1ee294c396eb0e3cf79bc4f3b.png",
+    "WAF对WebShell流量检测的性能分析-FreeBuf网络安全行业门户.md"
+  ]
+}

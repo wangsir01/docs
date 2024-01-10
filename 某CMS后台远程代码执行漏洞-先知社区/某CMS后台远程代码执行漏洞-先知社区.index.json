@@ -1,0 +1,27 @@
+{
+  "version": "2.0",
+  "clipId": "1704850579",
+  "format": "md",
+  "title": "某CMS后台远程代码执行漏洞 - 先知社区",
+  "link": "http://xz.aliyun.com/t/6974",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2024-01-10 09:36:19",
+  "mainPath": "某CMS后台远程代码执行漏洞-先知社区.md",
+  "paths": [
+    "某CMS后台远程代码执行漏洞-先知社区.index.json",
+    "assets/1704850579-7ced7f47efb6378e6fa8c3b501fc9af6.png",
+    "assets/1704850579-8dd2c8f47a0fe7d52e8906e4994aba2e.png",
+    "assets/1704850579-ee8bd97a35fe029993aa581cc5f75c86.png",
+    "assets/1704850579-0312beb13952c9e7f76913a7f21dcb77.png",
+    "assets/1704850579-b2a59a7e8bf3a013a2ee6484c133926b.png",
+    "assets/1704850579-ee176a8e3e86c99f08b07c7f2e4c4900.png",
+    "assets/1704850579-f54ed4d0e00626b03b1be58ae34951d3.png",
+    "assets/1704850579-b09aa14c512d314cb26df60b03cb21b9.png",
+    "assets/1704850579-afa92983e2475a8152237d616d65e013.png",
+    "assets/1704850579-663464d888fd5f376245a4175a138847.png",
+    "某CMS后台远程代码执行漏洞-先知社区.md"
+  ]
+}

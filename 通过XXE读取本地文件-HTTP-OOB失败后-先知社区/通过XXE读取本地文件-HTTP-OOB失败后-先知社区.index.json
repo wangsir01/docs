@@ -1,0 +1,19 @@
+{
+  "version": "2.0",
+  "clipId": "1704850652",
+  "format": "md",
+  "title": "通过XXE读取本地文件(HTTP OOB失败后） - 先知社区",
+  "link": "http://xz.aliyun.com/t/6913",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2024-01-10 09:37:32",
+  "mainPath": "通过XXE读取本地文件-HTTP-OOB失败后-先知社区.md",
+  "paths": [
+    "通过XXE读取本地文件-HTTP-OOB失败后-先知社区.index.json",
+    "assets/1704850652-489b1f389a50470141e3bad16dba7859.png",
+    "assets/1704850652-164cd86a7406796de5aaeac4676ff06c.png",
+    "通过XXE读取本地文件-HTTP-OOB失败后-先知社区.md"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "version": "2.0",
+  "clipId": "1704859803",
+  "format": "md",
+  "title": "奇安信攻防社区-某cms模板渲染导致rce漏洞分析",
+  "link": "https://forum.butian.net/share/2675",
+  "category": "default",
+  "tags": [
+    "forum.butian.net"
+  ],
+  "created_at": "2024-01-10 12:10:03",
+  "mainPath": "奇安信攻防社区-某cms模板渲染导致rce漏洞分析.md",
+  "paths": [
+    "奇安信攻防社区-某cms模板渲染导致rce漏洞分析.index.json",
+    "assets/1704859803-7ac8afc3861c0720fc19aa787dd7c906.jpg",
+    "assets/1704859803-de1a4c1e7a40c64adea122ce7d73daa0.jpg",
+    "assets/1704859803-245ba43555e7053331bd8ed7d1ead2a1.jpg",
+    "assets/1704859803-a4e7a5da3417bb436047c1e8b0432d75.jpg",
+    "assets/1704859803-e8209743f9ca63b9f5e60e630f5aaaeb.jpg",
+    "assets/1704859803-af7832a3ded39f833f3e65e35319b246.jpg",
+    "assets/1704859803-b72de3aa45d1f0798abf6a3924121462.jpg",
+    "assets/1704859803-9512a20f6ebbe27d09a1feec0d5d883b.jpg",
+    "assets/1704859803-d37f0f7bccc58624c69c4a72edaa593b.jpg",
+    "assets/1704859803-32a3f17aadb6d3493b8038766e43ef69.jpg",
+    "assets/1704859803-2fde120a0ceb7cf1de818fb814c254aa.jpg",
+    "assets/1704859803-adbc874a3a4369d50f17a6086ce0ec46.jpg",
+    "assets/1704859803-53476a3e63a4b5d235823e7c18a50966.jpg",
+    "assets/1704859803-e728b50f9f070548337bb983d03bb0e3.jpg",
+    "assets/1704859803-2fe1c1dad6e1fc78d04d0ac2bc4f9d10.jpg",
+    "奇安信攻防社区-某cms模板渲染导致rce漏洞分析.md"
+  ]
+}

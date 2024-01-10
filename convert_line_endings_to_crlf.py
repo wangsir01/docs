@@ -1,7 +1,7 @@
 import os
 
 # 定义需要转换的文件扩展名
-extensions = ['.json', '.md']
+extensions = ['.json', '.md', '.yaml']
 
 # 定义一个函数来转换文件的行尾
 def convert_line_endings_to_crlf(file_path):
