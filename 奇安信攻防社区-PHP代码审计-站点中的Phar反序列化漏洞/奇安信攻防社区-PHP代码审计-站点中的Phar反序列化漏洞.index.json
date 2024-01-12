@@ -1,0 +1,28 @@
+{
+  "version": "2.0",
+  "clipId": "1705049596",
+  "format": "md",
+  "title": "奇安信攻防社区-【PHP代码审计】站点中的Phar反序列化漏洞",
+  "link": "https://forum.butian.net/share/2678",
+  "category": "default",
+  "tags": [
+    "forum.butian.net"
+  ],
+  "created_at": "2024-01-12 16:53:16",
+  "mainPath": "奇安信攻防社区-PHP代码审计-站点中的Phar反序列化漏洞.md",
+  "paths": [
+    "奇安信攻防社区-PHP代码审计-站点中的Phar反序列化漏洞.index.json",
+    "assets/1705049596-ffcb8bc758c936df41b0764ba88fe79b.jpg",
+    "assets/1705049596-40988a737768208eb39bccc047d1981b.jpg",
+    "assets/1705049596-9f5494b5bd0696ab206a54a9390ee58c.jpg",
+    "assets/1705049596-ee52c50cb616319551386c18778275e6.jpg",
+    "assets/1705049596-550dc85d7ee80ffe9b88de87a4866db8.jpg",
+    "assets/1705049596-2545103ee3036c6f85368b32924164bd.jpg",
+    "assets/1705049596-42c7be78325743a4d53dbf629b755f4b.jpg",
+    "assets/1705049596-846264692333caf4f7525bab31356da9.jpg",
+    "assets/1705049596-270f3868af00da7208dad2649e2b1499.jpg",
+    "assets/1705049596-22c96d23c50fc4f748970a4e5c1a90e7.jpg",
+    "assets/1705049596-80cfe0c03d731941d576116569d9583f.jpg",
+    "奇安信攻防社区-PHP代码审计-站点中的Phar反序列化漏洞.md"
+  ]
+}
