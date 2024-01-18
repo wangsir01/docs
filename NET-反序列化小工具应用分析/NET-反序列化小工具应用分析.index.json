@@ -1,0 +1,32 @@
+{
+  "version": "2.0",
+  "clipId": "1705540695",
+  "format": "md",
+  "title": ".NET 反序列化小工具应用分析",
+  "link": "https://paper.seebug.org/3106/?continueFlag=e537ce5772293e3530c1b3ffce7c38b2",
+  "category": "default",
+  "tags": [
+    "paper.seebug.org"
+  ],
+  "created_at": "2024-01-18 09:18:15",
+  "mainPath": "NET-反序列化小工具应用分析.md",
+  "paths": [
+    "NET-反序列化小工具应用分析.index.json",
+    "assets/1705540695-7254b1ddd899c851c2e6ae4ab56121e3.png",
+    "assets/1705540695-19757b5efa459d806ea19ff814fb6635.png",
+    "assets/1705540695-eba73c07f4fb6e9076dcb16094d8239a.png",
+    "assets/1705540695-d5ca689893a917ce6064d2fb15bdd812.png",
+    "assets/1705540695-4e0d0a67a22227be664c8decde1e7dbd.png",
+    "assets/1705540695-5cb41574cb22faf8ddbd9e76e782a435.png",
+    "assets/1705540695-7bab02ddeaada0b309aec7092bfc18bc.png",
+    "assets/1705540695-1cf09355c3d571231d7ad0e5306534d5.png",
+    "assets/1705540695-10eff4f327005a805f3869d410d5b6fe.png",
+    "assets/1705540695-ddee0c05fb6147a38e041eaba62c7840.png",
+    "assets/1705540695-effc33405dfaf9f9be5b042ee96764c1.png",
+    "assets/1705540695-028d3016d8196541022c4a42e9aa5acd.png",
+    "assets/1705540695-9e41d2d6470c9e3e2e4ec348b90bc939.png",
+    "assets/1705540695-446834a71d30acd0479540c0e3cdf1d3.jpeg",
+    "assets/1705540695-114c0f4b584ef1c1e73b309cd26ea837.jpg",
+    "NET-反序列化小工具应用分析.md"
+  ]
+}
