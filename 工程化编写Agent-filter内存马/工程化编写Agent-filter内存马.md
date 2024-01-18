@@ -17,22 +17,22 @@
 ## filter工作原理
 
 这里首先要解释一下filter的执行顺序，百度了一张图  
-[![](assets/1705483297-ac26b381280a4dda1a8db65544e4f141.png)](https://xzfile.aliyuncs.com/media/upload/picture/20240117154035-b32faf62-b50b-1.png)
+[![](assets/1705540489-ac26b381280a4dda1a8db65544e4f141.png)](https://xzfile.aliyuncs.com/media/upload/picture/20240117154035-b32faf62-b50b-1.png)
 
 可以很清晰的看到，当客户端发起请求后，首先是从底层调用内核容器的filter，然后再到web应用filter，最后到自定义的filter以及资源的请求，每一个filter都会有一个doFilter方法，然而每个doFilter方法中都会有一个FilterChain.doFilter，这样就会形成一个递归调用，我们拿shiro举例子,debug后的调用堆栈如下：  
-[![](assets/1705483297-23ad6d5f2529b50aa4105e5a1626034b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20240117154107-c6c79486-b50b-1.png)
+[![](assets/1705540489-23ad6d5f2529b50aa4105e5a1626034b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20240117154107-c6c79486-b50b-1.png)
 
 这时候要对vm内存中的doFilterInternal进行篡改，这里可以选择两种方式，一种是通过org.javassist动态更改，另外一种是通过更原始的org.ow2.asm动态更改，之所以选择后者的原因是编译后的jar包很小，经测试只有10k；为了实现这个目标，对比一下两段代码，以shiro举例子(org.apache.shiro.web.servlet.AbstractShiroFilter)。  
 篡改前：  
-[![](assets/1705483297-dfeeceec3e350ec34cebbea9c1ca2c63.png)](https://xzfile.aliyuncs.com/media/upload/picture/20240117154212-ed658e18-b50b-1.png)  
+[![](assets/1705540489-dfeeceec3e350ec34cebbea9c1ca2c63.png)](https://xzfile.aliyuncs.com/media/upload/picture/20240117154212-ed658e18-b50b-1.png)  
 篡改后：  
-[![](assets/1705483297-ee53584fce937771c850fed84e9e639c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20240117154235-faf0348e-b50b-1.png)
+[![](assets/1705540489-ee53584fce937771c850fed84e9e639c.png)](https://xzfile.aliyuncs.com/media/upload/picture/20240117154235-faf0348e-b50b-1.png)
 
 这里要注意一些比较踩坑的问题，就是有些中间件是会在agent运行的时候自行加入依赖包，有些是不用的，经过分析统计jetty，spring,tomcat,weblogic不需要通过反射来加载运行的agent，jboss和shiro是需要通过反射来加载运营的agent；再举一个spring的例子(org.springframework.web.filter.DelegatingFilterProxy)  
 篡改前：  
-[![](assets/1705483297-6cb9247acc0af2545fe56b72c6dab87b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20240117154322-17336f76-b50c-1.png)  
+[![](assets/1705540489-6cb9247acc0af2545fe56b72c6dab87b.png)](https://xzfile.aliyuncs.com/media/upload/picture/20240117154322-17336f76-b50c-1.png)  
 篡改后：  
-[![](assets/1705483297-3189f78ab9fc9e023c07ec44180e79fe.png)](https://xzfile.aliyuncs.com/media/upload/picture/20240117154340-21ee3a40-b50c-1.png)
+[![](assets/1705540489-3189f78ab9fc9e023c07ec44180e79fe.png)](https://xzfile.aliyuncs.com/media/upload/picture/20240117154340-21ee3a40-b50c-1.png)
 
 很明显对比之下，spring的写法相对来说简单多了，原因是什么？，答案：就是有些上下文是不加载本地依赖的
 
@@ -382,15 +382,15 @@ public void visitCode() {
 ## 实现HookFunc
 
 因为篡改后要调用HookFunc函数，所以隐藏的后门实现都在这里面，代码如下：  
-[![](assets/1705483297-8dd65656554d779a1200eb76b4ae5f97.png)](https://xzfile.aliyuncs.com/media/upload/picture/20240117160733-77b13aba-b50f-1.png)  
+[![](assets/1705540489-8dd65656554d779a1200eb76b4ae5f97.png)](https://xzfile.aliyuncs.com/media/upload/picture/20240117160733-77b13aba-b50f-1.png)  
 可以看到这里面全部都是通过反射调用实现的，所以我们为了集中工程化，还得实现自定义的request，header，response等等，如图：  
-[![](assets/1705483297-c826dfba3392e10ad540aca13ff16965.png)](https://xzfile.aliyuncs.com/media/upload/picture/20240117160918-b6a1d112-b50f-1.png)  
+[![](assets/1705540489-c826dfba3392e10ad540aca13ff16965.png)](https://xzfile.aliyuncs.com/media/upload/picture/20240117160918-b6a1d112-b50f-1.png)  
 这里面也包括对冰蝎，以及proxy的改造等等，这里就不贴代码了
 
 ## 工程化实现
 
 完整的代码架构如下：  
-[![](assets/1705483297-023e2efa31cbe52f85a000df0011a096.png)](https://xzfile.aliyuncs.com/media/upload/picture/20240117161054-ef9d7d68-b50f-1.png)  
+[![](assets/1705540489-023e2efa31cbe52f85a000df0011a096.png)](https://xzfile.aliyuncs.com/media/upload/picture/20240117161054-ef9d7d68-b50f-1.png)  
 MANIFEST.MF编译时候的入口设置，这样设置的好处就是可以根据上下文环境制定特定的agent，减少文件的大小，如果全部都默认的话，这里只需要指定plugins.Agent
 
 ```plain
@@ -482,4 +482,4 @@ Signature: bl4ckH0le
 
 好久没有编写文章了，可能有些地方比较晦涩难懂，交流可以私信，此工程适配的容器以及javaweb 范围比较大，均在测试环境进行，版本跨度也比较大，实际使用还是要慎重，给予内存字节码篡改的，对于java的vm版本跨度大的要求还是比较高，完整的工程代码附件在文章结尾
 
-![](assets/1705483297-c1a690c3008373b105f447e452f0cfec.gif)memAgent.zip (0.029 MB) [下载附件](https://xzfile.aliyuncs.com/upload/affix/20240117162411-cac03c2c-b511-1.zip)
+![](assets/1705540489-c1a690c3008373b105f447e452f0cfec.gif)memAgent.zip (0.029 MB) [下载附件](https://xzfile.aliyuncs.com/upload/affix/20240117162411-cac03c2c-b511-1.zip)
