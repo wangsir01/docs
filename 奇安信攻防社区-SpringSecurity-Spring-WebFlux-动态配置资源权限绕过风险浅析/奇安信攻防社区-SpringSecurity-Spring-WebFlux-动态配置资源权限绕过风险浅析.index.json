@@ -1,0 +1,33 @@
+{
+  "version": "2.0",
+  "clipId": "1705902978",
+  "format": "md",
+  "title": "奇安信攻防社区-SpringSecurity（Spring-WebFlux）动态配置资源权限绕过风险浅析",
+  "link": "https://forum.butian.net/share/2698",
+  "category": "default",
+  "tags": [
+    "forum.butian.net"
+  ],
+  "created_at": "2024-01-22 13:56:18",
+  "mainPath": "奇安信攻防社区-SpringSecurity-Spring-WebFlux-动态配置资源权限绕过风险浅析.md",
+  "paths": [
+    "奇安信攻防社区-SpringSecurity-Spring-WebFlux-动态配置资源权限绕过风险浅析.index.json",
+    "assets/1705902978-5e89d5eba6bedf74431928c8785f59a5.png",
+    "assets/1705902978-f825f40b6aa5d05dc4fb07ba47367690.png",
+    "assets/1705902978-bf8eadba9ece065b84bd8ac6db2278de.png",
+    "assets/1705902978-a8a8f5c92bb32ed03cc6fc943849ad49.png",
+    "assets/1705902978-676b2a70977c26cb6d0a02f40f800aa1.png",
+    "assets/1705902978-cd0ca3840efb2873f42f8e7958688c7e.png",
+    "assets/1705902978-8c7743d51517b2f7e0d255ffa060e3f8.png",
+    "assets/1705902978-7025d203218e077afa7cd2be875b0fc8.png",
+    "assets/1705902978-7d14df12c5ddd53c1e31bcaa97ee7974.png",
+    "assets/1705902978-2027d045ea494427219068f9de7b5bc5.png",
+    "assets/1705902978-348e9bb05a1177005b9749e30a7d1fbf.png",
+    "assets/1705902978-118d6d1fce15750e470d08ba13e8829a.png",
+    "assets/1705902978-f1ca4a01624fe019d9b28e0e7202b1fa.png",
+    "assets/1705902978-0d6bde14d831a22f087559135e2adb69.png",
+    "assets/1705902978-36f6406ed2abeee20c3a03b144274e62.png",
+    "assets/1705902978-4ab33941efc506514bcdfee3417f479e.png",
+    "奇安信攻防社区-SpringSecurity-Spring-WebFlux-动态配置资源权限绕过风险浅析.md"
+  ]
+}
