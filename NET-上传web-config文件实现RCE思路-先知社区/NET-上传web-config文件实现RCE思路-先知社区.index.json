@@ -1,0 +1,21 @@
+{
+  "version": "2.0",
+  "clipId": "1705981862",
+  "format": "md",
+  "title": ".NET 上传web.config文件实现RCE思路 - 先知社区",
+  "link": "https://xz.aliyun.com/t/13330?time__1311=mqmxnDBG0QiQqDKDsuKBKYAIxfhReeYe4D",
+  "category": "default",
+  "tags": [
+    "xz.aliyun.com"
+  ],
+  "created_at": "2024-01-23 11:51:02",
+  "mainPath": "NET-上传web-config文件实现RCE思路-先知社区.md",
+  "paths": [
+    "NET-上传web-config文件实现RCE思路-先知社区.index.json",
+    "assets/1705981862-f6f271ebf17898f995b301505ee42e94.png",
+    "assets/1705981862-a0e2908af0e5941822c4c79bea8d8b16.png",
+    "assets/1705981862-6d8faeb168fb459f9fd86abfa4511644.png",
+    "assets/1705981862-ba7648edbe25a583bce4e31ec0c1a532.png",
+    "NET-上传web-config文件实现RCE思路-先知社区.md"
+  ]
+}
